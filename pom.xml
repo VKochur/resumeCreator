@@ -31,6 +31,14 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
+                    <excludes>
+                        <exclude>
+                            com/simbirsoft/maketalents/resume_builder/MainForIde.class
+                        </exclude>
+                        <exclude>
+                            person.properties
+                        </exclude>
+                    </excludes>
                     <archive>
                         <manifest>
                             <mainClass>
