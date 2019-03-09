@@ -1,7 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder.service;
 
 import com.simbirsoft.maketalents.resume_builder.dal.impl.PropertiesFileLoader;
-import com.simbirsoft.maketalents.resume_builder.dal.impl.PropertiesFileScanner;
 import com.simbirsoft.maketalents.resume_builder.dal.impl.TagTypes;
 import com.simbirsoft.maketalents.resume_builder.image.impl.HtmlResumeCodeCreator;
 import com.simbirsoft.maketalents.resume_builder.image.impl.HtmlResumePrinter;
