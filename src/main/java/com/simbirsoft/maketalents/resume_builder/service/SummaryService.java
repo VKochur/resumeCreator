@@ -7,12 +7,28 @@ import com.simbirsoft.maketalents.resume_builder.image.impl.HtmlResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.image.impl.TemplateReplacer;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 
+import org.apache.log4j.*;
+
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.InvalidPropertiesFormatException;
-import java.util.logging.Level;
 
+/**
+ * Service for building html resume by file .properties
+ * writes log in "executable dir/resume_builder.log"
+ */
 public class SummaryService {
+
+    private static Logger logger;
+    static {
+        logger = Logger.getLogger(SummaryService.class);
+        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+        try {
+            logger.addAppender(new FileAppender(new SimpleLayout(), Util.getPathExecutableDir() + "\\resume_builder.log", false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private String pathDirPropertiesFile;
     private String propertiesFileName;
@@ -26,14 +42,11 @@ public class SummaryService {
         this.htmlFileName = htmlFileName;
     }
 
-    /**
-     *
-     */
     public void buildResume() {
-        Util.getLogger().info("Name properties file: " + this.propertiesFileName);
-        Util.getLogger().info("Dir properties file: " + this.pathDirPropertiesFile);
-        Util.getLogger().info("Name html file: " + this.htmlFileName);
-        Util.getLogger().info("Dir html file: " + this.pathDirHtmlFile);
+        logger.info("Name properties file: " + this.propertiesFileName);
+        logger.info("Dir properties file: " + this.pathDirPropertiesFile);
+        logger.info("Name html file: " + this.htmlFileName);
+        logger.info("Dir html file: " + this.pathDirHtmlFile);
 
         try {
             HtmlResumeCodeCreator htmlResumeCodeCreator = new TemplateReplacer("html/template.html");
@@ -43,13 +56,13 @@ public class SummaryService {
             htmlResumePrinter.setPathDirToFile(pathDirHtmlFile);
             htmlResumePrinter.setNameFile(htmlFileName);
             htmlResumePrinter.print();
-            Util.getLogger().info("success");
+            logger.info("success");
 
         } catch (InvalidPropertiesFormatException e) {
-            Util.getLogger().log(Level.SEVERE, "Illegal properties file. Encode file must be UTF-8 without BOM." +
+            logger.log(Priority.ERROR, "Illegal properties file. Encode file must be UTF-8 without BOM." +
                     " Legal tags: " + Arrays.toString(TagTypes.values()) + "\n " + e.getMessage(), e);
         } catch (IOException e) {
-            Util.getLogger().log(Level.SEVERE, e.getMessage(), e);
+            logger.log(Priority.ERROR, e.getMessage(), e);
         }
     }
 }
