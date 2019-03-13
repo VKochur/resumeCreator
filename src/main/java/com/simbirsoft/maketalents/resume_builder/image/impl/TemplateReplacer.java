@@ -1,5 +1,7 @@
 package com.simbirsoft.maketalents.resume_builder.image.impl;
 
+import com.simbirsoft.maketalents.resume_builder.entity.ResumeData;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -11,7 +13,7 @@ import java.util.Map;
 
 /**
  * Creates html cod by replace template
- *
+ * <p>
  * template is html code in resources
  * All substrings in template like ${keyValue} replaces to value : getSubstitution().getKey(keyValue) = value
  */
@@ -31,7 +33,6 @@ public class TemplateReplacer extends CodeReplacerHtmlCreator {
             throw new IOException("not found template resource for html: " + resourcePath, e);
         }
         preCod = fileContent.toString();
-
     }
 
     @Override
@@ -41,19 +42,20 @@ public class TemplateReplacer extends CodeReplacerHtmlCreator {
 
     @Override
     public Map<String, String> getSubstitution() {
+        ResumeData resumeData = getProvider().getData();
         Map<String, String> substitution = new HashMap<>();
-        substitution.put("name", getProvider().getName());
-        substitution.put("careerTarget", getProvider().getCareerTarget());
-        substitution.put("dateOfBorn", getProvider().getDateOfBorn());
-        substitution.put("phone", getPresent(getProvider().getPhoneNumbers()));
-        substitution.put("email", getPresent(getProvider().getEmails()));
-        substitution.put("skype", getProvider().getSkype());
-        substitution.put("avatarUrl", getProvider().getUrlAvatar());
-        substitution.put("target", getPresent(getProvider().getTargets()));
-        substitution.put("experience", getPresent(getProvider().getExperience()));
-        substitution.put("baseEducation", getPresent(getProvider().getBasicEducation()));
-        substitution.put("addedEducation", getPresent(getProvider().getAdditionalEducation()));
-        substitution.put("otherInfo", getProvider().getOtherInfo());
+        substitution.put("name", resumeData.getName());
+        substitution.put("careerTarget", resumeData.getCareerTarget());
+        substitution.put("dateOfBorn", resumeData.getDateOfBorn());
+        substitution.put("phone", getPresent(resumeData.getPhoneNumbers()));
+        substitution.put("email", getPresent(resumeData.getEmails()));
+        substitution.put("skype", resumeData.getSkypeLogin());
+        substitution.put("avatarUrl", resumeData.getUrlAvatar());
+        substitution.put("target", getPresent(resumeData.getTargets()));
+        substitution.put("experience", getPresent(resumeData.getExperiences()));
+        substitution.put("baseEducation", getPresent(resumeData.getBasicEducations()));
+        substitution.put("addedEducation", getPresent(resumeData.getAdditionalEducations()));
+        substitution.put("otherInfo", resumeData.getOtherInfo());
         return substitution;
     }
 

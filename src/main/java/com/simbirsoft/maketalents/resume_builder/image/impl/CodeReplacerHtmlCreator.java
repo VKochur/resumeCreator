@@ -1,6 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder.image.impl;
 
-import com.simbirsoft.maketalents.resume_builder.dal.ResumeProvider;
+import com.simbirsoft.maketalents.resume_builder.dao.ResumeProvider;
 
 /**
  * Creates html code by replace template
