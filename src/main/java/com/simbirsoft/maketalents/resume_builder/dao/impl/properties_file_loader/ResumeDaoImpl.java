@@ -1,8 +1,8 @@
-package com.simbirsoft.maketalents.resume_builder.dao.impl;
+package com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader;
 
-import com.simbirsoft.maketalents.resume_builder.dao.ResumeProvider;
-import com.simbirsoft.maketalents.resume_builder.entity.ResumeData;
-import com.simbirsoft.maketalents.resume_builder.model.ResumeDataBuilder;
+import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
+import com.simbirsoft.maketalents.resume_builder.entity.Resume;
+import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -31,7 +31,7 @@ import java.util.Properties;
  * TARGET=target1|target2|target3
  * CAREER_TARGET=career target
  */
-public class PropertiesFileLoader implements ResumeProvider {
+public class ResumeDaoImpl implements ResumeDao {
 
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
     private static final String DEFAULT_VALUE_CONTEXT = "";
@@ -42,7 +42,7 @@ public class PropertiesFileLoader implements ResumeProvider {
      * @param pathFile path to file properties
      * @throws IOException in case inaccessibility file properties
      */
-    public PropertiesFileLoader(String pathFile) throws IOException {
+    public ResumeDaoImpl(String pathFile) throws IOException {
         properties = new Properties();
         try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(pathFile), StandardCharsets.UTF_8.name())) {
             properties.load(inputStreamReader);
@@ -50,8 +50,8 @@ public class PropertiesFileLoader implements ResumeProvider {
     }
 
     @Override
-    public ResumeData getData() {
-        return new ResumeDataBuilder()
+    public Resume getData() {
+        return new ResumeBuilder()
                 .setCareerTarget(getPropValueByTag(TagTypes.CAREER_TARGET))
                 .setName(getPropValueByTag(TagTypes.FIO))
                 .setDataOfBorn(getPropValueByTag(TagTypes.DOB))

@@ -2,7 +2,7 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 
 import java.util.List;
 
-public class ResumeData {
+public class Resume {
 
     private String careerTarget;
     private String name;
@@ -17,7 +17,7 @@ public class ResumeData {
     private List<String> additionalEducations;
     private String otherInfo;
 
-    public ResumeData() {
+    public Resume() {
     }
 
     public String getCareerTarget() {

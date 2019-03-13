@@ -1,4 +1,4 @@
-package com.simbirsoft.maketalents.resume_builder.image.impl;
+package com.simbirsoft.maketalents.resume_builder.model.image.impl;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

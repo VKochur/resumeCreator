@@ -1,6 +1,8 @@
-package com.simbirsoft.maketalents.resume_builder.image.impl;
+package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
 
-import com.simbirsoft.maketalents.resume_builder.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
+import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.image.impl.FileCreator;
 
 import java.io.*;
 
@@ -30,7 +32,8 @@ public class HtmlResumePrinter implements ResumePrinter, FileCreator {
      * @throws IOException
      */
     @Override
-    public void print() throws IOException {
+    public void print(ResumeDao resumeDao) throws IOException {
+        htmlResumeCodeCreator.setProvider(resumeDao);
         createFile(htmlResumeCodeCreator.getHtmlCode(), "html");
     }
 

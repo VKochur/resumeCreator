@@ -1,17 +1,15 @@
 package com.simbirsoft.maketalents.resume_builder.service;
 
-import com.simbirsoft.maketalents.resume_builder.dao.impl.PropertiesFileLoader;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.TagTypes;
-import com.simbirsoft.maketalents.resume_builder.image.impl.HtmlResumeCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.image.impl.HtmlResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.image.impl.TemplateReplacer;
+import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
+import com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader.ResumeDaoImpl;
+import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.HtmlResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.ReplacerCodeByTemplate;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 
 import org.apache.log4j.*;
 
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.InvalidPropertiesFormatException;
 
 /**
  * Service for building html resume by file .properties
@@ -49,19 +47,15 @@ public class SummaryService {
         logger.info("Dir html file: " + this.pathDirHtmlFile);
 
         try {
-            HtmlResumeCodeCreator htmlResumeCodeCreator = new TemplateReplacer("html/template.html");
-            htmlResumeCodeCreator.setProvider(new PropertiesFileLoader(pathDirPropertiesFile + "\\" + propertiesFileName));
-            HtmlResumePrinter htmlResumePrinter = new HtmlResumePrinter();
-            htmlResumePrinter.setHtmlResumeCodeCreator(htmlResumeCodeCreator);
-            htmlResumePrinter.setPathDirToFile(pathDirHtmlFile);
-            htmlResumePrinter.setNameFile(htmlFileName);
-            htmlResumePrinter.print();
+            ResumePrinter resumePrinter = new HtmlResumePrinter();
+            ((HtmlResumePrinter) resumePrinter).setHtmlResumeCodeCreator(new ReplacerCodeByTemplate("html/template.html"));
+            ((HtmlResumePrinter) resumePrinter).setPathDirToFile(pathDirHtmlFile);
+            ((HtmlResumePrinter) resumePrinter).setNameFile(htmlFileName);
+            ResumeDao providerResume = new ResumeDaoImpl(pathDirPropertiesFile + "\\" + propertiesFileName);
+            resumePrinter.print(providerResume);
             logger.info("success");
 
-        } catch (InvalidPropertiesFormatException e) {
-            logger.log(Priority.ERROR, "Illegal properties file. Encode file must be UTF-8 without BOM." +
-                    " Legal tags: " + Arrays.toString(TagTypes.values()) + "\n " + e.getMessage(), e);
-        } catch (IOException e) {
+        } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);
         }
     }

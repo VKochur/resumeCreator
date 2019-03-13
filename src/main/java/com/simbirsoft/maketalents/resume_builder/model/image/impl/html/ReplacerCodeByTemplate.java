@@ -1,6 +1,6 @@
-package com.simbirsoft.maketalents.resume_builder.image.impl;
+package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
 
-import com.simbirsoft.maketalents.resume_builder.entity.ResumeData;
+import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,11 +17,11 @@ import java.util.Map;
  * template is html code in resources
  * All substrings in template like ${keyValue} replaces to value : getSubstitution().getKey(keyValue) = value
  */
-public class TemplateReplacer extends CodeReplacerHtmlCreator {
+public class ReplacerCodeByTemplate extends ReplacerHtmlCodeCreator {
 
     private String preCod;
 
-    public TemplateReplacer(String resourcePath) throws IOException {
+    public ReplacerCodeByTemplate(String resourcePath) throws IOException {
         InputStream inputTemplate = getClass().getClassLoader().getResourceAsStream(resourcePath);
         StringBuilder fileContent = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputTemplate, StandardCharsets.UTF_8.name()))) {
@@ -42,7 +42,7 @@ public class TemplateReplacer extends CodeReplacerHtmlCreator {
 
     @Override
     public Map<String, String> getSubstitution() {
-        ResumeData resumeData = getProvider().getData();
+        Resume resumeData = getProvider().getData();
         Map<String, String> substitution = new HashMap<>();
         substitution.put("name", resumeData.getName());
         substitution.put("careerTarget", resumeData.getCareerTarget());

@@ -1,4 +1,4 @@
-package com.simbirsoft.maketalents.resume_builder.dao.impl;
+package com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader;
 
 /**
  * Allowed tags for property file
