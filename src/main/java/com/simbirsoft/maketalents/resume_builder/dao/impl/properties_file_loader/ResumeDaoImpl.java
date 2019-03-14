@@ -36,7 +36,7 @@ public class ResumeDaoImpl implements ResumeDao {
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
     private static final String DEFAULT_VALUE_CONTEXT = "";
 
-    Properties properties;
+    private Properties properties;
 
     /**
      * @param pathFile path to file properties
@@ -50,7 +50,7 @@ public class ResumeDaoImpl implements ResumeDao {
     }
 
     @Override
-    public Resume getData() {
+    public Resume getResume() {
         return new ResumeBuilder()
                 .setCareerTarget(getPropValueByTag(TagTypes.CAREER_TARGET))
                 .setName(getPropValueByTag(TagTypes.FIO))

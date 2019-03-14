@@ -7,6 +7,6 @@ import com.simbirsoft.maketalents.resume_builder.entity.Resume;
  */
 public interface ResumeDao {
 
-    Resume getData();
+    Resume getResume();
 
 }

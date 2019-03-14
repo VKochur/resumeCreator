@@ -1,7 +1,5 @@
 package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
 
-import com.simbirsoft.maketalents.resume_builder.entity.Resume;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -42,20 +40,19 @@ public class ReplacerCodeByTemplate extends ReplacerHtmlCodeCreator {
 
     @Override
     public Map<String, String> getSubstitution() {
-        Resume resumeData = getProvider().getData();
         Map<String, String> substitution = new HashMap<>();
-        substitution.put("name", resumeData.getName());
-        substitution.put("careerTarget", resumeData.getCareerTarget());
-        substitution.put("dateOfBorn", resumeData.getDateOfBorn());
-        substitution.put("phone", getPresent(resumeData.getPhoneNumbers()));
-        substitution.put("email", getPresent(resumeData.getEmails()));
-        substitution.put("skype", resumeData.getSkypeLogin());
-        substitution.put("avatarUrl", resumeData.getUrlAvatar());
-        substitution.put("target", getPresent(resumeData.getTargets()));
-        substitution.put("experience", getPresent(resumeData.getExperiences()));
-        substitution.put("baseEducation", getPresent(resumeData.getBasicEducations()));
-        substitution.put("addedEducation", getPresent(resumeData.getAdditionalEducations()));
-        substitution.put("otherInfo", resumeData.getOtherInfo());
+        substitution.put("name", getResume().getName());
+        substitution.put("careerTarget", getResume().getCareerTarget());
+        substitution.put("dateOfBorn", getResume().getDateOfBorn());
+        substitution.put("phone", getPresent(getResume().getPhoneNumbers()));
+        substitution.put("email", getPresent(getResume().getEmails()));
+        substitution.put("skype", getResume().getSkypeLogin());
+        substitution.put("avatarUrl", getResume().getUrlAvatar());
+        substitution.put("target", getPresent(getResume().getTargets()));
+        substitution.put("experience", getPresent(getResume().getExperiences()));
+        substitution.put("baseEducation", getPresent(getResume().getBasicEducations()));
+        substitution.put("addedEducation", getPresent(getResume().getAdditionalEducations()));
+        substitution.put("otherInfo", getResume().getOtherInfo());
         return substitution;
     }
 

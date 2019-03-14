@@ -51,8 +51,7 @@ public class SummaryService {
             ((HtmlResumePrinter) resumePrinter).setHtmlResumeCodeCreator(new ReplacerCodeByTemplate("html/template.html"));
             ((HtmlResumePrinter) resumePrinter).setPathDirToFile(pathDirHtmlFile);
             ((HtmlResumePrinter) resumePrinter).setNameFile(htmlFileName);
-            ResumeDao providerResume = new ResumeDaoImpl(pathDirPropertiesFile + "\\" + propertiesFileName);
-            resumePrinter.print(providerResume);
+            resumePrinter.print(new ResumeDaoImpl(pathDirPropertiesFile + "\\" + propertiesFileName).getResume());
             logger.info("success");
 
         } catch (Exception e) {

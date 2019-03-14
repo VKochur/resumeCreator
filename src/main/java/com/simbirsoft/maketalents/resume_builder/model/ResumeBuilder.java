@@ -6,73 +6,73 @@ import java.util.List;
 
 public class ResumeBuilder {
 
-    private Resume resumeData;
+    private Resume resume;
 
     public ResumeBuilder() {
-        resumeData = new Resume();
+        resume = new Resume();
     }
 
-    public ResumeBuilder setCareerTarget(String carrerTarget){
-        resumeData.setCareerTarget(carrerTarget);
+    public ResumeBuilder setCareerTarget(String careerTarget){
+        resume.setCareerTarget(careerTarget);
         return this;
     }
 
     public ResumeBuilder setName(String name){
-        resumeData.setName(name);
+        resume.setName(name);
         return this;
     }
 
     public ResumeBuilder setDataOfBorn(String dateOfBorn) {
-        resumeData.setDateOfBorn(dateOfBorn);
+        resume.setDateOfBorn(dateOfBorn);
         return this;
     }
 
     public ResumeBuilder setPhoneNumbers(List<String> phoneNumbers){
-        resumeData.setPhoneNumbers(phoneNumbers);
+        resume.setPhoneNumbers(phoneNumbers);
         return this;
     }
 
     public ResumeBuilder setEmails(List<String> emails){
-        resumeData.setEmails(emails);
+        resume.setEmails(emails);
         return this;
     }
 
     public ResumeBuilder setSkypeLogin(String skypeLogin){
-        resumeData.setSkypeLogin(skypeLogin);
+        resume.setSkypeLogin(skypeLogin);
         return this;
     }
 
     public ResumeBuilder setUrlAvatar(String url){
-        resumeData.setUrlAvatar(url);
+        resume.setUrlAvatar(url);
         return this;
     }
 
     public ResumeBuilder setTargets(List<String> targets){
-        resumeData.setTargets(targets);
+        resume.setTargets(targets);
         return this;
     }
 
     public ResumeBuilder setExperiences(List<String> experiences){
-        resumeData.setExperiences(experiences);
+        resume.setExperiences(experiences);
         return this;
     }
 
     public ResumeBuilder setBasicEducations(List<String> educations){
-        resumeData.setBasicEducations(educations);
+        resume.setBasicEducations(educations);
         return this;
     }
 
     public ResumeBuilder setAdditionalEdications(List<String> educations){
-        resumeData.setAdditionalEducations(educations);
+        resume.setAdditionalEducations(educations);
         return this;
     }
 
     public ResumeBuilder setOtherInfo(String info){
-        resumeData.setOtherInfo(info);
+        resume.setOtherInfo(info);
         return this;
     }
 
     public Resume build() {
-        return resumeData;
+        return resume;
     }
 }
