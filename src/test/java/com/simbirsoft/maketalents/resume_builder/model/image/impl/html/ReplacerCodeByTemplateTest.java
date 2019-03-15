@@ -4,25 +4,28 @@ import org.junit.Test;
 
 import java.io.IOException;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ReplacerCodeByTemplateTest {
 
-
-    //TODO test fails. needs see reading last line in template (ends '\n' or not)
     @Test
     public void testGetPreCode() throws IOException {
         ReplacerHtmlCodeCreator codeCreator = new ReplacerCodeByTemplate("template.html");
         String expected =
-                "<html>\n" +
+                        "<html>\n" +
                         " <head>\n" +
                         "     This template for test\n" +
                         " </head>\n" +
                         " <body>\n" +
                         "    something\n" +
                         " </body>\n" +
-                        "</html>";
+                        "</html>\n";
 
         assertEquals(expected, codeCreator.getPreCode());
+    }
+
+    @Test(expected = IOException.class)
+    public void testGetPreCode2() throws IOException {
+        new ReplacerCodeByTemplate("notexiststemplate.html");
     }
 }

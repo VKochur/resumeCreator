@@ -14,6 +14,11 @@ import java.util.Map;
  * <p>
  * template is html code in resources
  * All substrings in template like ${keyValue} replaces to value : getSubstitution().getKey(keyValue) = value
+ *
+ *
+ * warning: code, that returns method getPreCode can be different from code in template
+ * if code in template not ends with '\n', getPreCode returns template's code and '\n' at the end
+ * if code in template ends with '\n', getPreCode returns template's code
  */
 public class ReplacerCodeByTemplate extends ReplacerHtmlCodeCreator {
 
@@ -25,7 +30,7 @@ public class ReplacerCodeByTemplate extends ReplacerHtmlCodeCreator {
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputTemplate, StandardCharsets.UTF_8.name()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                fileContent.append(line).append("\n");
+                    fileContent.append(line).append("\n");
             }
         } catch (NullPointerException e) {
             throw new IOException("not found template resource for html: " + resourcePath, e);

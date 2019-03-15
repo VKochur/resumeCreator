@@ -56,6 +56,4 @@ public class ResumeDaoImplTest {
     public void testGetResume3() throws IOException, URISyntaxException {
         new ResumeDaoImpl(definePathTestClasses() + "\\notexists.properties");
     }
-
-
 }
