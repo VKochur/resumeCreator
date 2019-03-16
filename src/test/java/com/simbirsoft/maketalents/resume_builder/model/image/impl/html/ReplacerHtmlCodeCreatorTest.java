@@ -10,7 +10,7 @@ import static org.junit.Assert.*;
 public class ReplacerHtmlCodeCreatorTest {
 
     @Test
-    public void testGetHtmlCode() {
+    public void testGetHtmlCode() throws Exception {
         ReplacerHtmlCodeCreator codeCreatorCreator = new ReplacerHtmlCodeCreator() {
             @Override
             public String getPreCode() {
@@ -26,6 +26,8 @@ public class ReplacerHtmlCodeCreatorTest {
             }
         };
 
+
         assertEquals("VALUE1 other VALUE1 ${var2} VALUE3", codeCreatorCreator.getHtmlCode());
+
     }
 }

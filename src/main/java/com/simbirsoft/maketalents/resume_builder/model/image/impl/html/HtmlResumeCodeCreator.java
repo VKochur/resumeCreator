@@ -19,5 +19,5 @@ public abstract class HtmlResumeCodeCreator {
         return resume;
     }
 
-    public abstract String getHtmlCode();
+    public abstract String getHtmlCode() throws Exception;
 }

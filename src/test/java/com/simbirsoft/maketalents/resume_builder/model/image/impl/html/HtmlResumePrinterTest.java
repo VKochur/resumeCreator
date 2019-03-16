@@ -18,7 +18,7 @@ public class HtmlResumePrinterTest {
     }
 
     @Test
-    public void testPrint() throws IOException, URISyntaxException {
+    public void testPrint() throws Exception {
         Resume resume = new Resume();
         String name = "fio";
         String dateOfBorn = "dob";
@@ -64,7 +64,7 @@ public class HtmlResumePrinterTest {
     }
 
     @Test(expected = IOException.class)
-    public void testPrint2() throws URISyntaxException, IOException {
+    public void testPrint2() throws Exception {
         HtmlResumePrinter resumePrinter = new HtmlResumePrinter();
         resumePrinter.setHtmlResumeCodeCreator(new HtmlResumeCodeCreator() {
             @Override

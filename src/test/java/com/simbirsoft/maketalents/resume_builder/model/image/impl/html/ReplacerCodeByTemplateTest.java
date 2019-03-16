@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 public class ReplacerCodeByTemplateTest {
 
     @Test
-    public void testGetPreCode() throws IOException {
+    public void testGetPreCode() throws Exception {
         ReplacerHtmlCodeCreator codeCreator = new ReplacerCodeByTemplate("template.html");
         String expected =
                         "<html>\n" +
@@ -26,6 +26,6 @@ public class ReplacerCodeByTemplateTest {
 
     @Test(expected = IOException.class)
     public void testGetPreCode2() throws IOException {
-        new ReplacerCodeByTemplate("notexiststemplate.html");
+        new ReplacerCodeByTemplate("notexiststemplate.html").getPreCode();
     }
 }

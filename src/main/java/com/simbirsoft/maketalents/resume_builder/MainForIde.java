@@ -1,6 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
+import com.simbirsoft.maketalents.resume_builder.service.impl.SummaryServiceImpl;
 
 import java.io.File;
 
@@ -12,7 +12,7 @@ import java.io.File;
 public class MainForIde {
 
     public static void main(String[] args) {
-        SummaryService summaryService = new SummaryService(
+        SummaryServiceImpl summaryService = new SummaryServiceImpl(
                 new File("").getAbsolutePath() + "\\src\\main\\resources",
                 "person.properties",
                 new File("").getAbsolutePath() + "\\src\\main\\webapp",

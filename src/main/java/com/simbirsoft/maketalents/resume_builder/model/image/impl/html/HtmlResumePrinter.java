@@ -32,7 +32,7 @@ public class HtmlResumePrinter implements ResumePrinter, FileCreator {
      * @throws IOException if not able to create html
      */
     @Override
-    public void print(Resume resume) throws IOException {
+    public void print(Resume resume) throws Exception {
         htmlResumeCodeCreator.setResume(resume);
         createFile(htmlResumeCodeCreator.getHtmlCode(), "html");
     }

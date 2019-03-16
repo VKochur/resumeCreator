@@ -1,9 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
@@ -22,25 +19,25 @@ import java.util.Map;
  */
 public class ReplacerCodeByTemplate extends ReplacerHtmlCodeCreator {
 
-    private String preCod;
+    private String resourcePath;
 
-    public ReplacerCodeByTemplate(String resourcePath) throws IOException {
+    public ReplacerCodeByTemplate(String resourcePath){
+        this.resourcePath = resourcePath;
+    }
+
+    @Override
+    public String getPreCode() throws IOException {
         InputStream inputTemplate = getClass().getClassLoader().getResourceAsStream(resourcePath);
         StringBuilder fileContent = new StringBuilder();
         try (BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputTemplate, StandardCharsets.UTF_8.name()))) {
             String line;
             while ((line = bufferedReader.readLine()) != null) {
-                    fileContent.append(line).append("\n");
+                fileContent.append(line).append("\n");
             }
         } catch (NullPointerException e) {
             throw new IOException("not found template resource for html: " + resourcePath, e);
         }
-        preCod = fileContent.toString();
-    }
-
-    @Override
-    public String getPreCode() {
-        return preCod;
+        return fileContent.toString();
     }
 
     @Override

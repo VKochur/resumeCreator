@@ -11,12 +11,12 @@ import java.util.Set;
  */
 public abstract class ReplacerHtmlCodeCreator extends HtmlResumeCodeCreator {
 
-    public abstract String getPreCode();
+    public abstract String getPreCode() throws Exception;
 
     public abstract Map<String,String> getSubstitution();
 
     @Override
-    public String getHtmlCode() {
+    public String getHtmlCode() throws Exception {
         String postCode = new String(getPreCode());
         Set<Map.Entry<String, String>> entrySet = getSubstitution().entrySet();
         for (Map.Entry<String, String> entry : entrySet) {

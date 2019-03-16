@@ -35,22 +35,24 @@ public class ResumeDaoImpl implements ResumeDao {
 
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
     private static final String DEFAULT_VALUE_CONTEXT = "";
+    private final String pathFile;
 
     private Properties properties;
 
     /**
      * @param pathFile path to file properties
-     * @throws IOException in case inaccessibility file properties
      */
-    public ResumeDaoImpl(String pathFile) throws IOException {
+    public ResumeDaoImpl(String pathFile){
+        this.pathFile = pathFile;
+    }
+
+    @Override
+    public Resume getResume() throws IOException {
         properties = new Properties();
         try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(pathFile), StandardCharsets.UTF_8.name())) {
             properties.load(inputStreamReader);
         }
-    }
 
-    @Override
-    public Resume getResume() {
         return new ResumeBuilder()
                 .setCareerTarget(getPropValueByTag(TagTypes.CAREER_TARGET))
                 .setName(getPropValueByTag(TagTypes.FIO))
