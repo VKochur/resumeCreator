@@ -13,20 +13,15 @@ import org.apache.log4j.*;
 import java.io.IOException;
 
 /*
- * Service prints html file by file .properties
- * writes log in "executable dir/resume_builder.log"
+ * Service prints html file by file .properties. Writes log.
+ * By default writes log in System.out
+ *
  */
 public class SummaryServiceImpl implements SummaryService {
 
-    private static Logger logger;
+    private static final Logger DEFAULT_LOGGER = Logger.getLogger(SummaryServiceImpl.class);
     static {
-        logger = Logger.getLogger(SummaryServiceImpl.class);
-        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
-        try {
-            logger.addAppender(new FileAppender(new SimpleLayout(), Util.getPathExecutableDir() + "\\resume_builder.log", false));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        DEFAULT_LOGGER.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
 
     private String pathDirPropertiesFile;
@@ -34,11 +29,14 @@ public class SummaryServiceImpl implements SummaryService {
     private String pathDirHtmlFile;
     private String htmlFileName;
 
+    private Logger logger;
+
     public SummaryServiceImpl(String pathDirPropertiesFile, String propertiesFileName, String pathDirHtmlFile, String htmlFileName) {
         this.pathDirPropertiesFile = pathDirPropertiesFile;
         this.propertiesFileName = propertiesFileName;
         this.pathDirHtmlFile = pathDirHtmlFile;
         this.htmlFileName = htmlFileName;
+        setLogger(DEFAULT_LOGGER);
     }
 
     @Override
@@ -55,7 +53,6 @@ public class SummaryServiceImpl implements SummaryService {
         return resumePrinter;
     }
 
-
     @Override
     public void buildResume() {
         logger.info("Name properties file: " + this.propertiesFileName);
@@ -69,5 +66,13 @@ public class SummaryServiceImpl implements SummaryService {
         } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);
         }
+    }
+
+    public Logger getLogger() {
+        return logger;
+    }
+
+    public void setLogger(Logger logger) {
+        this.logger = logger;
     }
 }

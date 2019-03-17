@@ -19,7 +19,7 @@ public interface FileCreator {
     /**
      * Creates text file
      *
-     * @param content
+     * @param content file content
      * @param typeFile sample: "txt", "html", "java" etc
      * @throws IOException in case if not exists specific directory, or no access
      */

@@ -2,13 +2,31 @@ package com.simbirsoft.maketalents.resume_builder;
 
 import com.simbirsoft.maketalents.resume_builder.service.impl.SummaryServiceImpl;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Main class for building jar
+ * writes log in "executable dir/resume_builder.log"
+ *
  */
 public class Main {
+
+    private static Logger logger;
+    static {
+        logger = Logger.getLogger(Main.class);
+        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+        try {
+            logger.addAppender(new FileAppender(new SimpleLayout(), Util.getPathExecutableDir() + "\\resume_builder.log", false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     private static final String DEFAULT_NAME_PROPERTY_FILE = "resume.properties";
     private static final String DEFAULT_NAME_HTML_FILE = "resume";
@@ -30,6 +48,7 @@ public class Main {
         } else {
             summaryService = new SummaryServiceImpl(Util.getPathExecutableDir(), DEFAULT_NAME_PROPERTY_FILE, Util.getPathExecutableDir(), DEFAULT_NAME_HTML_FILE);
         }
+        summaryService.setLogger(Main.logger);
         summaryService.buildResume();
     }
 }

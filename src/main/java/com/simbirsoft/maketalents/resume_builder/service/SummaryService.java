@@ -20,7 +20,7 @@ public interface SummaryService {
     ResumeDao getProviderData();
 
     /**
-     * method builds Resume
+     * method builds resume
      */
     default void buildResume() throws Exception {
         getPrinterData().print(getProviderData().getResume());
