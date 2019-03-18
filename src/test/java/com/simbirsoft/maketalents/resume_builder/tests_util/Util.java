@@ -1,7 +1,5 @@
 package com.simbirsoft.maketalents.resume_builder.tests_util;
 
-import com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader.ResumeDaoImplTest;
-
 import java.io.*;
 import java.net.URISyntaxException;
 import java.nio.charset.StandardCharsets;

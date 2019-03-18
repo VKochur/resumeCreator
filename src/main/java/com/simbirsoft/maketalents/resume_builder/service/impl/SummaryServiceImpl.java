@@ -6,11 +6,8 @@ import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.HtmlResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.ReplacerCodeByTemplate;
 import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
-import com.simbirsoft.maketalents.resume_builder.util.Util;
 
 import org.apache.log4j.*;
-
-import java.io.IOException;
 
 /*
  * Service prints html file by file .properties. Writes log.
