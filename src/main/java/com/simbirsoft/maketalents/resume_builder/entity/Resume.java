@@ -1,6 +1,7 @@
 package com.simbirsoft.maketalents.resume_builder.entity;
 
 import java.util.List;
+import java.util.Map;
 
 public class Resume {
 
@@ -16,6 +17,7 @@ public class Resume {
     private List<String> basicEducations;
     private List<String> additionalEducations;
     private String otherInfo;
+    private Map<String, Integer> skills;
 
     public Resume() {
     }
@@ -114,5 +116,13 @@ public class Resume {
 
     public void setEmails(List<String> emails) {
         this.emails = emails;
+    }
+
+    public Map<String, Integer> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(Map<String, Integer> skills) {
+        this.skills = skills;
     }
 }

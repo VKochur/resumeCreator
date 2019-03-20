@@ -3,6 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.model;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 
 import java.util.List;
+import java.util.Map;
 
 public class ResumeBuilder {
 
@@ -69,6 +70,11 @@ public class ResumeBuilder {
 
     public ResumeBuilder setOtherInfo(String info){
         resume.setOtherInfo(info);
+        return this;
+    }
+
+    public ResumeBuilder setSkills(Map<String, Integer> skills){
+        resume.setSkills(skills);
         return this;
     }
 

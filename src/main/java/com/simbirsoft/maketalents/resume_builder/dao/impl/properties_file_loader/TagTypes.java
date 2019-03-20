@@ -15,5 +15,6 @@ public enum TagTypes {
     BS_EDUCATIONS,
     AD_EDUCATIONS,
     OTHER_INFO,
-    CAREER_TARGET
+    CAREER_TARGET,
+    SKILLS
 }
