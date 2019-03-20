@@ -15,9 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /*
  * Service prints html file by file .properties. Writes log.
@@ -119,7 +117,18 @@ public class SummaryServiceImpl implements SummaryService {
                 substitution.put("baseEducation", getPresent(getResume().getBasicEducations()));
                 substitution.put("addedEducation", getPresent(getResume().getAdditionalEducations()));
                 substitution.put("otherInfo", getResume().getOtherInfo());
+                substitution.put("skills", getPresentSkills(getResume().getSkills()));
                 return substitution;
+            }
+
+            private String getPresentSkills(Map<String,Integer> skills) {
+                Set<Map.Entry<String,Integer>> sortedSkills = new TreeSet<>((o1, o2) ->  o2.getValue() - o1.getValue());
+                sortedSkills.addAll(skills.entrySet());
+                StringBuilder result = new StringBuilder();
+                for (Map.Entry<String,Integer> el: sortedSkills) {
+                    result.append(el.getKey()).append(" - ").append(el.getValue().toString()).append("мес.; ");
+                }
+                return result.toString();
             }
 
             private String getPresent(List<String> lines) {

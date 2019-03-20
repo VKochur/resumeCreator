@@ -30,7 +30,8 @@ public class SummaryServiceImplTest {
                         "    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1, shrink-to-fit=no\">\n" +
                         "\n" +
                         "    <!-- Bootstrap CSS -->\n" +
-                        "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\" integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">\n" +
+                        "    <link rel=\"stylesheet\" href=\"https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css\"\n" +
+                        "          integrity=\"sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T\" crossorigin=\"anonymous\">\n" +
                         "\n" +
                         "    <title>Резюме testFIO</title>\n" +
                         "</head>\n" +
@@ -42,11 +43,26 @@ public class SummaryServiceImplTest {
                         "    <div class=\"row\">\n" +
                         "        <div class=\"col-8\">\n" +
                         "            <table class=\"table\">\n" +
-                        "                <tr><td class=\"text-right\">ФИО:</td><td>testFIO</td></tr>\n" +
-                        "                <tr><td class=\"text-right\">Дата рождения:</td><td>testDOB</td></tr>\n" +
-                        "                <tr><td class=\"text-right\">Телефон:</td><td>80011<br></td></tr>\n" +
-                        "                <tr><td class=\"text-right\">e-mail:</td><td>test<br>test@gmail.com<br></td></tr>\n" +
-                        "                <tr><td class=\"text-right\">Skype:</td><td>login|login2</td></tr>\n" +
+                        "                <tr>\n" +
+                        "                    <td class=\"text-right\">ФИО:</td>\n" +
+                        "                    <td>testFIO</td>\n" +
+                        "                </tr>\n" +
+                        "                <tr>\n" +
+                        "                    <td class=\"text-right\">Дата рождения:</td>\n" +
+                        "                    <td>testDOB</td>\n" +
+                        "                </tr>\n" +
+                        "                <tr>\n" +
+                        "                    <td class=\"text-right\">Телефон:</td>\n" +
+                        "                    <td>80011<br></td>\n" +
+                        "                </tr>\n" +
+                        "                <tr>\n" +
+                        "                    <td class=\"text-right\">e-mail:</td>\n" +
+                        "                    <td>test<br>test@gmail.com<br></td>\n" +
+                        "                </tr>\n" +
+                        "                <tr>\n" +
+                        "                    <td class=\"text-right\">Skype:</td>\n" +
+                        "                    <td>login|login2</td>\n" +
+                        "                </tr>\n" +
                         "            </table>\n" +
                         "        </div>\n" +
                         "        <div class=\"col-4\">\n" +
@@ -61,6 +77,10 @@ public class SummaryServiceImplTest {
                         "    <div class=\"col-12\">\n" +
                         "        <h2>Опыт работы:</h2>\n" +
                         "        <p>организация1<br>организация2<br>организация3<br></p>\n" +
+                        "    </div>\n" +
+                        "    <div class=\"col-12\">\n" +
+                        "        <h2>Используемые технологии:</h2>\n" +
+                        "        <p>sql - 24мес.; java - 18мес.; c++ - 12мес.; IIdea - 6мес.; </p>\n" +
                         "    </div>\n" +
                         "    <div class=\"col-12\">\n" +
                         "        <h2>Образование:</h2>\n" +
