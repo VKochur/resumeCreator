@@ -1,9 +1,10 @@
 package com.simbirsoft.maketalents.resume_builder.entity;
 
-import java.util.List;
-import java.util.Map;
+import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
 
-public class Resume {
+import java.util.*;
+
+public class Resume implements Cloneable{
 
     private String careerTarget;
     private String name;
@@ -124,5 +125,23 @@ public class Resume {
 
     public void setSkills(Map<String, Integer> skills) {
         this.skills = skills;
+    }
+
+    @Override
+    public Resume clone(){
+        return new ResumeBuilder().setName(this.name)
+                .setDataOfBorn(this.dateOfBorn)
+                .setCareerTarget(this.careerTarget)
+                .setPhoneNumbers(new ArrayList<>(this.phoneNumbers))
+                .setEmails(new ArrayList<>(this.emails))
+                .setSkypeLogin(this.skypeLogin)
+                .setUrlAvatar(this.urlAvatar)
+                .setTargets(new ArrayList<>(this.targets))
+                .setExperiences(new ArrayList<>(this.experiences))
+                .setBasicEducations(new ArrayList<>(this.basicEducations))
+                .setAdditionalEdications(new ArrayList<>(this.additionalEducations))
+                .setOtherInfo(this.otherInfo)
+                .setSkills(new HashMap<>(this.skills))
+                .build();
     }
 }
