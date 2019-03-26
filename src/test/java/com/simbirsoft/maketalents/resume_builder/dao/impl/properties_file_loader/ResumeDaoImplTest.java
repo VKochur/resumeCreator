@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 
 public class ResumeDaoImplTest {
 
-
     @Test
     public void testGetResume1() throws IOException, URISyntaxException {
         Resume resume = new ResumeDaoImpl(Util.definePathTestClasses() + "\\test.properties").getResume();

@@ -2,10 +2,7 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 
 import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Resume implements Cloneable {
 
@@ -146,5 +143,23 @@ public class Resume implements Cloneable {
                 .setOtherInfo(this.otherInfo)
                 .setSkills((this.skills != null) ? new HashMap<>(this.skills) : null)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder()
+                .append("FIO:").append(getName()).append("\n")
+                .append("Data of born: ").append(getDateOfBorn()).append("\n")
+                .append("Career target: ").append(getCareerTarget()).append("\n")
+                .append("Phones: ").append(getPhoneNumbers()).append("\n")
+                .append("SKYPE: ").append(getSkypeLogin()).append("\n")
+                .append("URL_AVATAR: ").append(getUrlAvatar()).append("\n")
+                .append("Targets: ").append(getTargets()).append("\n")
+                .append("Experiences: ").append(getExperiences()).append("\n")
+                .append("Basic education: ").append(getBasicEducations()).append("\n")
+                .append("Additional education: ").append(getAdditionalEducations()).append("\n")
+                .append("Other info: ").append(getOtherInfo()).append("\n")
+                .append("Skills: ").append(getSkills())
+                .toString();
     }
 }
