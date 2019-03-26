@@ -14,9 +14,14 @@ import java.util.function.Predicate;
  * <p>
  * logic fo defines resulting resume:
  * Data (name, dateOfBorn, emails, basicEducation etc.. ) in list resumes are in order by importance:
- * data from list.get(i) overwritten data from list.get(i+1), if data in list.get(i) not null and not empty
- * if data from list.get(i) is null, then this data overwritten by data from list.get(i+1), if it is not null and not empty
- * if not data in resumes not null and not empty, the data in resulting resume is null
+ * data from resume1 = list.get(i) overwritten data from resume2 = list.get(i+1), if data in resume1 not null and not empty
+ * if data from resume1 is null, then this data overwritten by data from resume2, if it is not null and not empty
+ * <p>
+ * if data from resume is String, then data is considered as empty if data = null, or data = ""
+ * if data is List<String>, then data is considered as empty if data = null, or data.size() == 0, or data.size() ==1,  data.get(1) == (null or "")
+ * if data is Map, then data is considered as empty if data = null, or data.size() == 0
+ * <p>
+ * if not data in list resumes that not null and not empty, the data in resulting resume is null
  * <p>
  * logic can be overrided in this.buildResume(List<Resume>)
  */
@@ -43,67 +48,67 @@ public class Collector implements ResumeDao {
         Resume resume = new Resume();
 
         Optional<Resume> resumeOptional;
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getName()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getName()));
         if (resumeOptional.isPresent()) {
             resume.setName(resumeOptional.get().getName());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getDateOfBorn()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getDateOfBorn()));
         if (resumeOptional.isPresent()) {
             resume.setDateOfBorn(resumeOptional.get().getDateOfBorn());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getCareerTarget()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getCareerTarget()));
         if (resumeOptional.isPresent()) {
             resume.setCareerTarget(resumeOptional.get().getCareerTarget());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getPhoneNumbers()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getPhoneNumbers()));
         if (resumeOptional.isPresent()) {
             resume.setPhoneNumbers(new ArrayList<>(resumeOptional.get().getPhoneNumbers()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getEmails()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getEmails()));
         if (resumeOptional.isPresent()) {
             resume.setEmails(new ArrayList<>(resumeOptional.get().getEmails()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getSkypeLogin()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getSkypeLogin()));
         if (resumeOptional.isPresent()) {
             resume.setSkypeLogin(resumeOptional.get().getSkypeLogin());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getUrlAvatar()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getUrlAvatar()));
         if (resumeOptional.isPresent()) {
             resume.setUrlAvatar(resumeOptional.get().getUrlAvatar());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getTargets()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getTargets()));
         if (resumeOptional.isPresent()) {
             resume.setTargets(new ArrayList<>(resumeOptional.get().getTargets()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getExperiences()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getExperiences()));
         if (resumeOptional.isPresent()) {
             resume.setExperiences(new ArrayList<>(resumeOptional.get().getExperiences()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getBasicEducations()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getBasicEducations()));
         if (resumeOptional.isPresent()) {
             resume.setBasicEducations(new ArrayList<>(resumeOptional.get().getBasicEducations()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getAdditionalEducations()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getAdditionalEducations()));
         if (resumeOptional.isPresent()) {
             resume.setAdditionalEducations(new ArrayList<>(resumeOptional.get().getAdditionalEducations()));
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getOtherInfo()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getOtherInfo()));
         if (resumeOptional.isPresent()) {
             resume.setOtherInfo(resumeOptional.get().getOtherInfo());
         }
 
-        resumeOptional = getFirstSiutable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getSkills()));
+        resumeOptional = getFirstSuitable(resumesFromProviders, currentResume -> notEmptyNotNull(currentResume.getSkills()));
         if (resumeOptional.isPresent()) {
             resume.setSkills(new HashMap<>(resumeOptional.get().getSkills()));
         }
@@ -119,11 +124,19 @@ public class Collector implements ResumeDao {
         }
     }
 
-    private boolean notEmptyNotNull(List list) {
+    private boolean notEmptyNotNull(List<String> list) {
         if (list == null) {
             return false;
         } else {
-            return !list.isEmpty();
+            if (list.isEmpty()) {
+                return false;
+            } else {
+                if (list.size() == 1) {
+                    return notEmptyNotNull(list.get(0));
+                } else {
+                    return true;
+                }
+            }
         }
     }
 
@@ -135,7 +148,7 @@ public class Collector implements ResumeDao {
         }
     }
 
-    private Optional<Resume> getFirstSiutable(List<Resume> resumes, Predicate<Resume> predicate) {
+    private Optional<Resume> getFirstSuitable(List<Resume> resumes, Predicate<Resume> predicate) {
         return resumes.stream().filter(predicate).findFirst();
     }
 
