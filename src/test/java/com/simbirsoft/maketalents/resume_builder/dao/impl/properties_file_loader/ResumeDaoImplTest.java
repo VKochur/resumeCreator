@@ -54,8 +54,9 @@ public class ResumeDaoImplTest {
 
         Map<String, Integer> expectedSkills = new HashMap<>();
         expectedSkills.put("c++", 12);
-        expectedSkills.put("java", 12);
+        expectedSkills.put("java", 18);
         expectedSkills.put("IIdea", 6);
+        expectedSkills.put("sql", 24);
         assertEquals("check skills", expectedSkills, resume.getSkills());
     }
 

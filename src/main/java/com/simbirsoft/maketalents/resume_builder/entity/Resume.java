@@ -2,9 +2,12 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 
 import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class Resume implements Cloneable{
+public class Resume implements Cloneable {
 
     private String careerTarget;
     private String name;
@@ -128,20 +131,20 @@ public class Resume implements Cloneable{
     }
 
     @Override
-    public Resume clone(){
+    public Resume clone() {
         return new ResumeBuilder().setName(this.name)
                 .setDataOfBorn(this.dateOfBorn)
                 .setCareerTarget(this.careerTarget)
-                .setPhoneNumbers(new ArrayList<>(this.phoneNumbers))
-                .setEmails(new ArrayList<>(this.emails))
+                .setPhoneNumbers((this.phoneNumbers != null) ? new ArrayList<>(this.phoneNumbers) : null)
+                .setEmails((this.emails != null) ? new ArrayList<>(this.emails) : null)
                 .setSkypeLogin(this.skypeLogin)
                 .setUrlAvatar(this.urlAvatar)
-                .setTargets(new ArrayList<>(this.targets))
-                .setExperiences(new ArrayList<>(this.experiences))
-                .setBasicEducations(new ArrayList<>(this.basicEducations))
-                .setAdditionalEdications(new ArrayList<>(this.additionalEducations))
+                .setTargets((this.targets != null) ? new ArrayList<>(this.targets) : null)
+                .setExperiences((this.experiences != null) ? new ArrayList<>(this.experiences) : null)
+                .setBasicEducations((this.basicEducations != null) ? new ArrayList<>(this.basicEducations) : null)
+                .setAdditionalEdications((this.additionalEducations != null) ? new ArrayList<>(this.additionalEducations) : null)
                 .setOtherInfo(this.otherInfo)
-                .setSkills(new HashMap<>(this.skills))
+                .setSkills((this.skills != null) ? new HashMap<>(this.skills) : null)
                 .build();
     }
 }
