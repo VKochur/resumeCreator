@@ -12,27 +12,26 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class ResumeDaoImplTest {
 
     @Test
     public void testGetResume1() throws IOException, URISyntaxException {
         Resume resume = new ResumeDaoImpl(Util.definePathTestClasses() + "\\test.properties").getResume();
-        assertEquals("", resume.getName());
+        assertNull(resume.getName());
         assertEquals("testDOB", resume.getDateOfBorn());
         assertEquals(Arrays.asList("test", "test@gmail.com"), resume.getEmails());
         assertEquals(Collections.singletonList("80011"), resume.getPhoneNumbers());
         assertEquals("", resume.getSkypeLogin());
-        assertEquals("", resume.getUrlAvatar());
-        assertEquals(Collections.singletonList(""), resume.getTargets());
-        assertEquals(Collections.singletonList(""), resume.getExperiences());
+        assertNull(resume.getUrlAvatar());
+        assertNull(resume.getTargets());
+        assertNull(resume.getExperiences());
         assertEquals(Collections.singletonList(""), resume.getBasicEducations());
-        assertEquals(Collections.singletonList(""), resume.getBasicEducations());
-        assertEquals(Collections.singletonList(""), resume.getAdditionalEducations());
-        assertEquals("", resume.getOtherInfo());
-        assertEquals("", resume.getCareerTarget());
-        assertEquals("check skills", new HashMap<>(), resume.getSkills());
+        assertNull(resume.getAdditionalEducations());
+        assertNull(resume.getOtherInfo());
+        assertNull(resume.getCareerTarget());
+        assertNull(resume.getSkills());
     }
 
     @Test

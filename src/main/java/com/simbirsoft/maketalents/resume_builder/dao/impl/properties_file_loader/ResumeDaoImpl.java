@@ -18,7 +18,7 @@ import java.util.*;
  * Set of allowed tags is set of TagTypes
  * Separator between key and value is '='
  * In the case of various options for specific key is used '|' as separator
- * In case not found specific tag, the associated context is ""
+ * In case not found specific tag, the associated context is null
  * <p>
  * SKILLS - info about skills in format like: "skill1:countMonthsInUsing1,skill2:countMonthsInUsing2,..."
  *
@@ -36,7 +36,6 @@ import java.util.*;
 public class ResumeDaoImpl implements ResumeDao {
 
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
-    private static final String DEFAULT_VALUE_CONTEXT = "";
     private static final String SEPARATOR_SKILLS = ",";
     private static final String SEPARATOR_DURATION_SKILL = ":";
     private final String pathFile;
@@ -70,17 +69,21 @@ public class ResumeDaoImpl implements ResumeDao {
                 .setBasicEducations(defineListByLine(getPropValueByTag(TagTypes.BS_EDUCATIONS)))
                 .setAdditionalEdications(defineListByLine(getPropValueByTag(TagTypes.AD_EDUCATIONS)))
                 .setOtherInfo(getPropValueByTag(TagTypes.OTHER_INFO))
-                .setSkills(getSkillsByLine(properties.getProperty(TagTypes.SKILLS.name(), DEFAULT_VALUE_CONTEXT)))
+                .setSkills(getSkillsByLine(properties.getProperty(TagTypes.SKILLS.name())))
                 .build();
     }
 
     /**
-     * Builds slills map by string
+     * Builds skills map by string
      *
-     * @param lineSkills info about skills. format: skill1:countInMonths1,skill2:countInMonths2
+     * @param lineSkills info about skills. format: "skill1:countInMonths1,skill2:countInMonths2"
      * @return map of skills. example {skill1 -> countInMonths1 , skill2 -> countInMonths2}
      */
     private Map<String, Integer> getSkillsByLine(String lineSkills) {
+        if (lineSkills == null) {
+            return null;
+        }
+
         Map<String, Integer> skills = new HashMap<>();
         String[] infoSkills = lineSkills.split(SEPARATOR_SKILLS);
         for (String skill : infoSkills) {
@@ -95,13 +98,17 @@ public class ResumeDaoImpl implements ResumeDao {
             }
         }
         return skills;
+
     }
 
     private String getPropValueByTag(TagTypes tag) {
-        return properties.getProperty(tag.name(), DEFAULT_VALUE_CONTEXT);
+        return properties.getProperty(tag.name());
     }
 
     private List<String> defineListByLine(String str) {
+        if (str == null) {
+            return null;
+        }
         return Arrays.asList(str.split(CONTEXT_SEPARATOR_REGEX));
     }
 }
