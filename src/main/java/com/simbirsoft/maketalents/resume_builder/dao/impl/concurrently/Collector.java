@@ -3,6 +3,8 @@ package com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently;
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 
+import org.springframework.stereotype.Service;
+
 import java.util.*;
 import java.util.function.Predicate;
 

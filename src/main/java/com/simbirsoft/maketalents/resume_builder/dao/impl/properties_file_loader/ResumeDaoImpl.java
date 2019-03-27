@@ -38,9 +38,12 @@ public class ResumeDaoImpl implements ResumeDao {
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
     private static final String SEPARATOR_SKILLS = ",";
     private static final String SEPARATOR_DURATION_SKILL = ":";
-    private final String pathFile;
+    private String pathFile;
 
     private Properties properties;
+
+    public ResumeDaoImpl() {
+    }
 
     /**
      * @param pathFile path to file properties

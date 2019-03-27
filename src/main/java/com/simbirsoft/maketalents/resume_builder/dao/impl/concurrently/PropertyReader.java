@@ -8,6 +8,9 @@ import com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader
  */
 public class PropertyReader extends Provider {
 
+    public PropertyReader() {
+    }
+
     public PropertyReader(String pathPropertyFile){
         super.setResumeDao(new ResumeDaoImpl(pathPropertyFile));
         setDescription("provider gets resume from property file" + " " + pathPropertyFile);

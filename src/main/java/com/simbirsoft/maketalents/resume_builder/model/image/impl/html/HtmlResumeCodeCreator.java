@@ -9,8 +9,7 @@ public abstract class HtmlResumeCodeCreator {
 
     private Resume resume;
 
-    //package access for HtmlResumePrinter
-    void setResume(Resume resume) {
+    public void setResume(Resume resume) {
         this.resume = resume;
     }
 
