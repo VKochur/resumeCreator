@@ -4,6 +4,7 @@ import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Collector;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.PropertyReader;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Provider;
+import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
 import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumeCodeCreator;
 import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.ReplacerHtmlCodeCreator;
@@ -18,7 +19,7 @@ import java.util.*;
 @Configuration
 public class AppConfig {
 
-    @Bean
+    @Bean("collector")
     public Collector collector() {
         Collector collector = new Collector();
         List<Provider> providers = new ArrayList<>();
