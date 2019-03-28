@@ -18,7 +18,7 @@ public class ResumeDaoImplTest {
 
     @Test
     public void testGetResume1() throws IOException, URISyntaxException {
-        Resume resume = new ResumeDaoImpl(Util.definePathTestClasses() + "\\test.properties").getResume();
+        Resume resume = new ResumeDaoImpl().getResume(Util.definePathTestClasses() + "\\test.properties");
         assertNull(resume.getName());
         assertEquals("testDOB", resume.getDateOfBorn());
         assertEquals(Arrays.asList("test", "test@gmail.com"), resume.getEmails());
@@ -36,7 +36,7 @@ public class ResumeDaoImplTest {
 
     @Test
     public void testGetResume2() throws IOException, URISyntaxException {
-        Resume resume = new ResumeDaoImpl(Util.definePathTestClasses() + "\\test2.properties").getResume();
+        Resume resume = new ResumeDaoImpl().getResume(Util.definePathTestClasses() + "\\test2.properties");
         assertEquals("testFIO", resume.getName());
         assertEquals("testDOB", resume.getDateOfBorn());
         assertEquals(Arrays.asList("test", "test@gmail.com"), resume.getEmails());
@@ -60,12 +60,12 @@ public class ResumeDaoImplTest {
 
     @Test (expected = IOException.class)
     public void testGetResume3() throws IOException, URISyntaxException {
-        new ResumeDaoImpl(Util.definePathTestClasses() + "\\notexists.properties").getResume();
+        new ResumeDaoImpl().getResume(Util.definePathTestClasses() + "\\notexists.properties");
     }
 
     @Test
     public void testGetResume4() throws IOException, URISyntaxException {
-        Resume resume = new ResumeDaoImpl(Util.definePathTestClasses() + "\\test3.properties").getResume();
+        Resume resume = new ResumeDaoImpl().getResume(Util.definePathTestClasses() + "\\test3.properties");
         Map<String, Integer> expectedSkills = new HashMap<>();
         expectedSkills.put("java", -1);
         expectedSkills.put("sql", -1);

@@ -3,14 +3,16 @@ package com.simbirsoft.maketalents.resume_builder.service.impl;
 import com.simbirsoft.maketalents.resume_builder.config.AppConfig;
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loader.ResumeDaoImpl;
-import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.HtmlResumeCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.HtmlResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumeCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
 import org.apache.log4j.SimpleLayout;
+
+import java.io.File;
 
 /*
  * Service prints html file by file .properties. Writes log.
@@ -25,47 +27,33 @@ public class SummaryServiceImpl implements SummaryService {
         DEFAULT_LOGGER.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
 
-    private String pathDirPropertiesFile;
-    private String propertiesFileName;
-    private String pathDirHtmlFile;
-    private String htmlFileName;
-
     private Logger logger;
 
     public SummaryServiceImpl() {
-    }
-
-    public SummaryServiceImpl(String pathDirPropertiesFile, String propertiesFileName, String pathDirHtmlFile, String htmlFileName) {
-        this.pathDirPropertiesFile = pathDirPropertiesFile;
-        this.propertiesFileName = propertiesFileName;
-        this.pathDirHtmlFile = pathDirHtmlFile;
-        this.htmlFileName = htmlFileName;
         setLogger(DEFAULT_LOGGER);
     }
 
     @Override
     public ResumeDao getProviderData() {
-        return new ResumeDaoImpl(pathDirPropertiesFile + "\\" + propertiesFileName);
+        return new ResumeDaoImpl();
     }
 
     @Override
     public ResumePrinter getPrinterData() {
         HtmlResumePrinter resumePrinter = new HtmlResumePrinter();
         resumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
-        resumePrinter.setPathDirToFile(pathDirHtmlFile);
-        resumePrinter.setNameFile(htmlFileName);
         return resumePrinter;
     }
 
     @Override
-    public void buildResume() {
-        logger.info("Name properties file: " + this.propertiesFileName);
-        logger.info("Dir properties file: " + this.pathDirPropertiesFile);
-        logger.info("Name html file: " + this.htmlFileName);
-        logger.info("Dir html file: " + this.pathDirHtmlFile);
+    public void buildResume(String pathPropertiesFile, String pathHtmlFile) {
+        logger.info("Name properties file: " + new File(pathPropertiesFile).getName());
+        logger.info("Dir properties file: " + new File(pathPropertiesFile).getParent());
+        logger.info("Name html file: " + new File(pathHtmlFile).getName());
+        logger.info("Dir html file: " + new File(pathHtmlFile).getParent());
 
         try {
-            getPrinterData().print(getProviderData().getResume());
+            getPrinterData().print(getProviderData().getResume(pathPropertiesFile), pathHtmlFile);
             logger.info("success");
         } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);

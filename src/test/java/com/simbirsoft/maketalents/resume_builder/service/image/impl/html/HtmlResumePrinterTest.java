@@ -1,4 +1,4 @@
-package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
+package com.simbirsoft.maketalents.resume_builder.service.image.impl.html;
 
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.tests_util.Util;
@@ -25,17 +25,15 @@ public class HtmlResumePrinterTest {
             }
         });
 
-        String fileName = "testHtmlResumePrinter";
+        String fileName = "testHtmlResumePrinter.html";
         File workDir = new File(Util.definePathTestClasses() + "\\work");
-        File html = new File(workDir.getAbsolutePath()+"\\" + fileName + ".html");
+        File html = new File(workDir.getAbsolutePath()+"\\" + fileName);
         if (workDir.exists()){
             throw new IllegalStateException("Cannot run test. Dir already exists: " + workDir);
         } else {
             try {
                 workDir.mkdir();
-                resumePrinter.setPathDirToFile(workDir.getAbsolutePath());
-                resumePrinter.setNameFile(fileName);
-                resumePrinter.print(resume);
+                resumePrinter.print(resume, workDir + "\\" + fileName);
                 Util.checkContentFile(html, "fiodob\n");
             } finally {
                 Files.deleteIfExists(html.toPath());
@@ -53,8 +51,6 @@ public class HtmlResumePrinterTest {
                 return null;
             }
         });
-        resumePrinter.setNameFile("test");
-        resumePrinter.setPathDirToFile(Util.definePathTestClasses() + "\\work");
-        resumePrinter.print(new Resume());
+        resumePrinter.print(new Resume(), Util.definePathTestClasses() + "\\work\\test");
     }
 }

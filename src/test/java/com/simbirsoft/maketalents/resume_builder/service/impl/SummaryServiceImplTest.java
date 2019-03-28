@@ -1,17 +1,21 @@
 package com.simbirsoft.maketalents.resume_builder.service.impl;
 
+import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
 import com.simbirsoft.maketalents.resume_builder.tests_util.Util;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 
 public class SummaryServiceImplTest {
 
     @Test
-    public void testBuildResumeByEmptyData() throws Exception{
-        SummaryServiceImpl summaryService = new SummaryServiceImpl(Util.definePathTestClasses(), "emptyTest.properties", Util.definePathTestClasses(), "emptyTest");
-        summaryService.buildResume();
+    public void testBuildResumeByEmptyData() throws Exception {
+        SummaryService summaryService = new SummaryServiceImpl();
+        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "emptyTest.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "emptyTest.html";
+        summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -87,13 +91,15 @@ public class SummaryServiceImplTest {
                 "</div>\n" +
                 "</body>\n" +
                 "</html>\n";
-        checkCreatedHtml(expected, new File(Util.definePathTestClasses() + "\\" + "emptyTest.html"));
+        checkCreatedHtml(expected, new File(pathHtmlFile));
     }
 
     @Test
     public void testBuildResume() throws Exception {
-        SummaryServiceImpl summaryService = new SummaryServiceImpl(Util.definePathTestClasses(), "test2.properties", Util.definePathTestClasses(), "test2");
-        summaryService.buildResume();
+        SummaryService summaryService = new SummaryServiceImpl();
+        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "test2.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "test2.html";
+        summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -169,7 +175,7 @@ public class SummaryServiceImplTest {
                 "</div>\n" +
                 "</body>\n" +
                 "</html>\n";
-        checkCreatedHtml(expected, new File(Util.definePathTestClasses() + "\\" + "test2.html"));
+        checkCreatedHtml(expected, new File(pathHtmlFile));
     }
 
     private void checkCreatedHtml(String expected, File html) throws IOException {
@@ -183,7 +189,6 @@ public class SummaryServiceImplTest {
             }
         }
     }
-
 
 
 }

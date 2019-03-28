@@ -5,6 +5,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
+import java.io.File;
+
 /**
  * program prints resume's html code in stdout
  * data about resume getting from resources/concurrently/person1 and person2.properties
@@ -15,9 +17,11 @@ public class MainSpringBoot {
 
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(MainSpringBoot.class, args);
-        System.out.println("------------------");
         SummaryService summaryService = (SummaryService) context.getBean("serviceGetsResumeByPartsAndPrintToStOut");
-        summaryService.buildResume();
-        System.out.println("------------------");
+        String pathFilesProperties = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
+        String pathFilesIsKeys = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
+
+        summaryService.buildResume(pathFilesIsKeys, "irrelevant");
+
     }
 }

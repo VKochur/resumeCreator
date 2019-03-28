@@ -13,24 +13,24 @@ public class PropertyReaderTest {
 
     @Test (expected = IllegalThreadStateException.class)
     public void testGetResume() throws Exception {
-        PropertyReader propertyReader = new PropertyReader(Util.definePathTestClasses() + "\\test.properties");
-        propertyReader.getResume();
+        PropertyReader propertyReader = new PropertyReader();
+        propertyReader.getResume(Util.definePathTestClasses() + "\\test.properties");
     }
 
     @Test (expected = FileNotFoundException.class)
     public void test2GetResume() throws Exception {
-        PropertyReader propertyReader = new PropertyReader(Util.definePathTestClasses() + "\\notexists.properties");
-        propertyReader.start();
+        PropertyReader propertyReader = new PropertyReader();
+        propertyReader.startGettingResume(Util.definePathTestClasses() + "\\notexists.properties");
         propertyReader.join();
-        propertyReader.getResume();
+        propertyReader.getResume(Util.definePathTestClasses() + "\\notexists.properties");
     }
 
     @Test
     public void test3GetResume() throws Exception {
-        PropertyReader propertyReader = new PropertyReader(Util.definePathTestClasses() + "\\test2.properties");
-        propertyReader.start();
+        PropertyReader propertyReader = new PropertyReader();
+        propertyReader.startGettingResume(Util.definePathTestClasses() + "\\test2.properties");
         propertyReader.join();
-        Resume actualResume = propertyReader.getResume();
+        Resume actualResume = propertyReader.getResume(Util.definePathTestClasses() + "\\test2.properties");
         assertEquals("testFIO", actualResume.getName());
         assertEquals("https://www04fddb2797c033b087c4247630b2db7.jpg", actualResume.getUrlAvatar());
         assertEquals(Arrays.asList("образование1", "образование2"), actualResume.getBasicEducations());

@@ -4,9 +4,9 @@ import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Collector;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.PropertyReader;
 import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Provider;
-import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.HtmlResumeCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.model.image.impl.html.ReplacerHtmlCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumeCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.ReplacerHtmlCodeCreator;
 import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,20 +21,21 @@ public class AppConfig {
     @Bean
     public Collector collector() {
         Collector collector = new Collector();
-        String pathToFiles = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
         List<Provider> providers = new ArrayList<>();
-        providers.add(new PropertyReader(pathToFiles + "person1.properties"));
-        providers.add(new PropertyReader(pathToFiles + "person2.properties"));
+        providers.add(new PropertyReader());
+        providers.add(new PropertyReader());
         collector.setProviders(providers);
         return collector;
     }
 
     @Bean("printerHtmlToStOut")
     public ResumePrinter resumePrinter() {
-        return resume -> {
+        return (resume, infoForPrinter) -> {
             HtmlResumeCodeCreator htmlResumeCodeCreator = getCodeCreator();
             htmlResumeCodeCreator.setResume(resume);
+            System.out.println("---begin------from bean printerHtmlToStOut--");
             System.out.println(htmlResumeCodeCreator.getHtmlCode());
+            System.out.println("---end--------from bean printerHtmlToStOut--");
         };
     }
 
