@@ -1,4 +1,4 @@
-package com.simbirsoft.maketalents.resume_builder.model.image;
+package com.simbirsoft.maketalents.resume_builder.service.image;
 
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 

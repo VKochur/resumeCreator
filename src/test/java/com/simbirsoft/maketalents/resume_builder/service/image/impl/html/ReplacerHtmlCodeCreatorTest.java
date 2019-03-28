@@ -1,4 +1,4 @@
-package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
+package com.simbirsoft.maketalents.resume_builder.service.image.impl.html;
 
 import org.junit.Test;
 

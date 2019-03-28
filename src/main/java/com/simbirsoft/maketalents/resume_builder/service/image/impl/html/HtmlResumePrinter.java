@@ -1,8 +1,8 @@
-package com.simbirsoft.maketalents.resume_builder.model.image.impl.html;
+package com.simbirsoft.maketalents.resume_builder.service.image.impl.html;
 
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
-import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.model.image.impl.FileCreator;
+import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.service.image.impl.FileCreator;
 
 import java.io.File;
 import java.io.IOException;

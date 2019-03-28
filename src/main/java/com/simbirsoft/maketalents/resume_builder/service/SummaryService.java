@@ -1,7 +1,7 @@
 package com.simbirsoft.maketalents.resume_builder.service;
 
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
-import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
 
 /**
  * Service for building resume
