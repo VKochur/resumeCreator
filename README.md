@@ -69,6 +69,13 @@ java -jar c:\temp\тест\resume.jar "c:\temp\тест тест\1\ivanov.proper
     SKILLS=Java:24,Spring:6,sql:36,IIdea:6,c++:12
     
 #### src
-com.simbiroft.maketalents.resume_builder.Main - точка входа в программу в создаваемом jar файле
-com.simbiroft.maketalents.resume_builder.MainForIde - используется для запуска программы из IDE,
+com.simbirsoft.maketalents.resume_builder.Main - точка входа в программу в создаваемом jar файле
+com.simbirsoft.maketalents.resume_builder.MainForIde - используется для запуска программы из IDE,
 формируя на основе src/main/resources/person.properties файл src/main/webapp/summary.html
+
+указанные далее приложения используют SpringBoot
+com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBoot - может использоваться как точка входа в jar, после настроек pom
+com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBootForIde - используется для запуска программы из IDE,
+формируя на основе src/main/resources/springboot/spring_boot_person.properties файл src/main/webapp/springboot/spring_boot_summary.html
+com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBootMultiThreading - используется для запуска программы из IDE,
+выводя html код по резюме полученному на основе 2 файлов src/main/resources/concurrently/person1 и person2.properties

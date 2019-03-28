@@ -1,27 +1,58 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
+import com.simbirsoft.maketalents.resume_builder.service.HtmlGenerator;
+import com.simbirsoft.maketalents.resume_builder.util.Util;
+import org.apache.log4j.ConsoleAppender;
+import org.apache.log4j.FileAppender;
+import org.apache.log4j.Logger;
+import org.apache.log4j.SimpleLayout;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import java.io.File;
+import java.io.IOException;
 
 /**
- * program prints resume's html code in stdout
- * data about resume getting from resources/concurrently/person1 and person2.properties
- * main thread runs separate threads for reading properties files, join them and collects resulting resume
+ * Main class for building jar
+ * writes log in "executable dir/resume_builder.log"
+ *
  */
 @SpringBootApplication
 public class MainSpringBoot {
 
-    public static void main(String[] args) throws Exception {
+    private static Logger logger;
+    static {
+        logger = Logger.getLogger(Main.class);
+        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+        try {
+            logger.addAppender(new FileAppender(new SimpleLayout(), Util.getPathExecutableDir() + "\\resume_builder.log", false));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static final String DEFAULT_NAME_PROPERTY_FILE = "resume.properties";
+    private static final String DEFAULT_NAME_HTML_FILE = "resume";
+
+    public static void main(String[] args) {
         ApplicationContext context = SpringApplication.run(MainSpringBoot.class, args);
-        SummaryService summaryService = (SummaryService) context.getBean("serviceGetsResumeByPartsAndPrintToStOut");
-        String pathFilesProperties = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
-        String pathFilesIsKeys = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
+        HtmlGenerator htmlGenerator = context.getBean(HtmlGenerator.class);
 
-        summaryService.buildResume(pathFilesIsKeys, "irrelevant");
+        String pathPropertiesFile;
+        String pathDirHtmlFile;
+        String htmlFileName;
 
+        if (args.length > 2) {
+            pathPropertiesFile = args[0];
+            pathDirHtmlFile = args[1];
+            htmlFileName = args[2];
+        } else {
+            pathPropertiesFile = Util.getPathExecutableDir() + "\\" + DEFAULT_NAME_PROPERTY_FILE;
+            pathDirHtmlFile = Util.getPathExecutableDir();
+            htmlFileName = DEFAULT_NAME_HTML_FILE;
+        }
+
+        htmlGenerator.setLogger(MainSpringBoot.logger);
+        htmlGenerator.print(pathPropertiesFile, pathDirHtmlFile + "\\" + htmlFileName + ".html");
     }
 }

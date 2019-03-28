@@ -34,7 +34,7 @@ import java.util.*;
  * CAREER_TARGET=career target
  * SKILLS=java:12,sql:24,IIdea:6
  */
-@Repository
+@Repository("resumeDaoFromPropertiesFile")
 public class ResumeDaoImpl implements ResumeDao {
 
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
