@@ -4,22 +4,43 @@ import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.image.impl.FileCreator;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * Creates file html.
  */
-public class HtmlResumePrinter implements ResumePrinter, FileCreator {
+public class HtmlResumePrinter implements ResumePrinter {
 
-    private static final String DEFAULT_DIR_FILE = "";
-    private static final String DEFAULT_NAME_FILE = "";
-    private String pathDirToFile;
-    private String nameFile;
     private HtmlResumeCodeCreator htmlResumeCodeCreator;
+    private FileCreator fileCreator;
 
     public HtmlResumePrinter() {
-        pathDirToFile = DEFAULT_DIR_FILE;
-        nameFile = DEFAULT_NAME_FILE;
+        fileCreator = new FileCreator() {
+
+            private String pathDirToFile;
+            private String nameFile;
+
+            @Override
+            public String getPathDirToFile() {
+                return pathDirToFile;
+            }
+
+            @Override
+            public void setPathDirToFile(String pathDirToFile) {
+                this.pathDirToFile = pathDirToFile;
+            }
+
+            @Override
+            public String getNameFile() {
+                return nameFile;
+            }
+
+            @Override
+            public void setNameFile(String nameFile) {
+                this.nameFile = nameFile;
+            }
+        };
     }
 
     public void setHtmlResumeCodeCreator(HtmlResumeCodeCreator htmlResumeCodeCreator) {
@@ -36,28 +57,8 @@ public class HtmlResumePrinter implements ResumePrinter, FileCreator {
     @Override
     public void print(Resume resume, String pathHtmlFile) throws Exception {
         htmlResumeCodeCreator.setResume(resume);
-        setNameFile(new File(pathHtmlFile).getName());
-        setPathDirToFile(new File(pathHtmlFile).getParent());
-        createFile(htmlResumeCodeCreator.getHtmlCode());
-    }
-
-    @Override
-    public String getPathDirToFile() {
-        return pathDirToFile;
-    }
-
-    @Override
-    public void setPathDirToFile(String pathDirToFile) {
-        this.pathDirToFile = pathDirToFile;
-    }
-
-    @Override
-    public String getNameFile() {
-        return nameFile;
-    }
-
-    @Override
-    public void setNameFile(String nameFile) {
-        this.nameFile = nameFile;
+        fileCreator.setNameFile((new File(pathHtmlFile).getName()));
+        fileCreator.setPathDirToFile(new File(pathHtmlFile).getParent());
+        fileCreator.createFile(htmlResumeCodeCreator.getHtmlCode());
     }
 }
