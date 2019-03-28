@@ -12,11 +12,9 @@ import java.io.File;
 public class MainForIde {
 
     public static void main(String[] args) {
-        SummaryServiceImpl summaryService = new SummaryServiceImpl(
-                new File("").getAbsolutePath() + "\\src\\main\\resources",
-                "person.properties",
-                new File("").getAbsolutePath() + "\\src\\main\\webapp",
-                "summary");
-        summaryService.buildResume();
+        SummaryServiceImpl summaryService = new SummaryServiceImpl();
+        summaryService.setPathDirHtmlFile(new File("").getAbsolutePath() + "\\src\\main\\webapp");
+        summaryService.setHtmlFileName("summary");
+        summaryService.buildResume(new File("").getAbsolutePath() + "\\src\\main\\resources\\person.properties");
     }
 }

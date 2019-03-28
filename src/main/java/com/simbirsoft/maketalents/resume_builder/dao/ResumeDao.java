@@ -7,6 +7,12 @@ import com.simbirsoft.maketalents.resume_builder.entity.Resume;
  */
 public interface ResumeDao {
 
-    Resume getResume() throws Exception;
+    /**
+     * method gets Resume by unique key
+     * @param id unique key
+     * @return
+     * @throws Exception
+     */
+    Resume getResume(String id) throws Exception;
 
 }

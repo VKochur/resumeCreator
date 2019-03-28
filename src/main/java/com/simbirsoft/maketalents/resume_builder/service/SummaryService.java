@@ -22,7 +22,7 @@ public interface SummaryService {
     /**
      * method builds resume
      */
-    default void buildResume() throws Exception {
-        getPrinterData().print(getProviderData().getResume());
+    default void buildResume(String idResume) throws Exception {
+        getPrinterData().print(getProviderData().getResume(idResume));
     }
 }

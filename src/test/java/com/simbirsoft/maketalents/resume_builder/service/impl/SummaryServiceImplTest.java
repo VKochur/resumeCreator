@@ -1,17 +1,21 @@
 package com.simbirsoft.maketalents.resume_builder.service.impl;
 
+import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
 import com.simbirsoft.maketalents.resume_builder.tests_util.Util;
 import org.junit.Test;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 
 public class SummaryServiceImplTest {
 
     @Test
-    public void testBuildResumeByEmptyData() throws Exception{
-        SummaryServiceImpl summaryService = new SummaryServiceImpl(Util.definePathTestClasses(), "emptyTest.properties", Util.definePathTestClasses(), "emptyTest");
-        summaryService.buildResume();
+    public void testBuildResumeByEmptyData() throws Exception {
+        SummaryService summaryService = new SummaryServiceImpl();
+        ((SummaryServiceImpl) summaryService).setPathDirHtmlFile(Util.definePathTestClasses());
+        ((SummaryServiceImpl) summaryService).setHtmlFileName("emptyTest");
+        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "emptyTest.properties");
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -92,8 +96,11 @@ public class SummaryServiceImplTest {
 
     @Test
     public void testBuildResume() throws Exception {
-        SummaryServiceImpl summaryService = new SummaryServiceImpl(Util.definePathTestClasses(), "test2.properties", Util.definePathTestClasses(), "test2");
-        summaryService.buildResume();
+        SummaryService summaryService = new SummaryServiceImpl();
+        ((SummaryServiceImpl) summaryService).setPathDirHtmlFile(Util.definePathTestClasses());
+        ((SummaryServiceImpl) summaryService).setHtmlFileName("test2");
+        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "emptyTest.properties");
+        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "test2.properties");
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -183,7 +190,6 @@ public class SummaryServiceImplTest {
             }
         }
     }
-
 
 
 }

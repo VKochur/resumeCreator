@@ -12,26 +12,32 @@ import static org.junit.Assert.assertNull;
 
 public class CollectorTest {
 
+    /**
+     * testing getting resume more than once
+     * @throws Exception
+     */
     @Test (expected = IllegalThreadStateException.class)
     public void test1GetResume() throws Exception{
         Collector collector = new Collector();
         collector.setProviders(providers());
-        collector.getResume();
-        collector.getResume();
+        collector.getResume("key1,key2");
+        collector.getResume("key1,key2");
     }
 
     @Test
     public void test2GetResume() throws Exception {
         Collector collector = new Collector();
         collector.setProviders(providers());
-        Resume actualResume = collector.getResume();
+        String keys = "key1,key2";
+        Resume actualResume = collector.getResume(keys);
         check(actualResume);
         assertNull(actualResume.getCareerTarget());
         assertNull(actualResume.getTargets());
         //add reader file
         collector.setProviders(providers());
-        collector.getProviders().add(new PropertyReader(Util.definePathTestClasses() + "\\test2.properties"));
-        actualResume = collector.getResume();
+        collector.getProviders().add(new PropertyReader());
+        keys = "key1,key2," + Util.definePathTestClasses() + "\\test2.properties";
+        actualResume = collector.getResume(keys);
         check(actualResume);
         assertEquals("login|login2", actualResume.getSkypeLogin());
         assertEquals("https://www04fddb2797c033b087c4247630b2db7.jpg", actualResume.getUrlAvatar());
@@ -59,7 +65,7 @@ public class CollectorTest {
         Provider provider = new Provider();
         provider.setResumeDao(new ResumeDao() {
             @Override
-            public Resume getResume() throws Exception {
+            public Resume getResume(String idResume) throws Exception {
                 Resume resume = new Resume();
                 resume.setName("firstName");
                 resume.setEmails(Arrays.asList("firstEmail"));
@@ -71,7 +77,7 @@ public class CollectorTest {
         provider = new Provider();
         provider.setResumeDao(new ResumeDao() {
             @Override
-            public Resume getResume() throws Exception {
+            public Resume getResume(String idResume) throws Exception {
                 Resume resume = new Resume();
                 resume.setName("second");
                 resume.setDateOfBorn("dob");

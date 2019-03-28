@@ -3,6 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loade
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
+import org.springframework.stereotype.Repository;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -33,12 +34,12 @@ import java.util.*;
  * CAREER_TARGET=career target
  * SKILLS=java:12,sql:24,IIdea:6
  */
+@Repository
 public class ResumeDaoImpl implements ResumeDao {
 
     private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
     private static final String SEPARATOR_SKILLS = ",";
     private static final String SEPARATOR_DURATION_SKILL = ":";
-    private String pathFile;
 
     private Properties properties;
 
@@ -46,16 +47,16 @@ public class ResumeDaoImpl implements ResumeDao {
     }
 
     /**
-     * @param pathFile path to file properties
+     * Method returns Resume from properties file
+     * @param id unique key  -  this is path to properties file
+     * @return
+     * @throws IOException
      */
-    public ResumeDaoImpl(String pathFile) {
-        this.pathFile = pathFile;
-    }
-
     @Override
-    public Resume getResume() throws IOException {
+    public Resume getResume(String id) throws IOException {
+
         properties = new Properties();
-        try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(pathFile), StandardCharsets.UTF_8.name())) {
+        try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(id), StandardCharsets.UTF_8.name())) {
             properties.load(inputStreamReader);
         }
 

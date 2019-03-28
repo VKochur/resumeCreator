@@ -3,24 +3,31 @@ package com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently;
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 
-import org.springframework.stereotype.Service;
-
 import java.util.*;
 import java.util.function.Predicate;
 
 /**
  * Class for getting resume from different sources in separate threads
- * Resulting resume bases on list resumes received from sources
- * this.getResume() starts all providers, joins them, and defines resulting resume
- * if any provider already terminated getResume() throws IllegalThreadStateException
  * <p>
- * logic fo defines resulting resume:
+ * Resulting resume bases on list resumes received from sources
+ * this.getResume(stringKeys) starts all providers, joins them, and defines resulting resume
+ * this.getResume(stringKeys) starts providers, because this method throws IllegalThreadStateException,
+ * if was called more then once for the same providers
+ * <p>
+ * method setProviders(List<Provider>) sets list providers for getting resumes from different sources
+ * if any provider already terminated getResume(stringKeys) throws IllegalThreadStateException
+ * stringKeys - data about resume's id, that providers must used at moment getting resume
+ * for getting resume getProviders.get[i] uses keys.get[i]. size of list providers and list keys not checked
+ * example format for stringKeys = "key1,key2,key3".
+ * logic for calculate List<String> keys is method List<String> defineKeys(String keysForGettingResumes) and may be override
+ * <p>
+ * logic for defines resulting resume:
  * Data (name, dateOfBorn, emails, basicEducation etc.. ) in list resumes are in order by importance:
  * data from resume1 = list.get(i) overwritten data from resume2 = list.get(i+1), if data in resume1 not null and not empty
  * if data from resume1 is null, then this data overwritten by data from resume2, if it is not null and not empty
  * <p>
  * if data from resume is String, then data is considered as empty if data = null, or data = ""
- * if data is List<String>, then data is considered as empty if data = null, or data.size() == 0, or data.size() ==1,  data.get(1) == (null or "")
+ * if data is List<String>, then data is considered as empty if data = null, or data.size() == 0, or data.size() == 1,  data.get(1) == (null or "")
  * if data is Map, then data is considered as empty if data = null, or data.size() == 0
  * <p>
  * if not data in list resumes that not null and not empty, the data in resulting resume is null
@@ -32,10 +39,22 @@ public class Collector implements ResumeDao {
     private List<Provider> providers;
 
     @Override
-    public Resume getResume() throws Exception {
-        startAllProviders();
+    public Resume getResume(String keysForGettingResumes) throws Exception {
+        List<String> keys = defineKeys(keysForGettingResumes);
+        startAllProviders(keys);
         joinAllProviders();
-        return buidResume(resumeFromProviders());
+        return buidResume(resumeFromProviders(keys));
+    }
+
+    /**
+     * method for calculate list keys by string
+     * Sample: "sfsf gfsg 42w, werwerwer234, 2,3,4" -> "sfsf gfsg 42w", " werwerwer234", "2", "3", "4"
+     *
+     * @param keysForGettingResumes info about id, which must be used by providers for calculate resumes
+     * @return
+     */
+    public List<String> defineKeys(String keysForGettingResumes) {
+        return new ArrayList<>(Arrays.asList(keysForGettingResumes.split(",")));
     }
 
     /**
@@ -154,13 +173,13 @@ public class Collector implements ResumeDao {
         return resumes.stream().filter(predicate).findFirst();
     }
 
-    private List<Resume> resumeFromProviders() throws Exception {
+    private List<Resume> resumeFromProviders(List<String> keys) throws Exception {
         List<Resume> resumes = new ArrayList<>();
-        for (Provider provider : providers) {
+        for (int i = 0; i < providers.size(); i++) {
             try {
-                resumes.add(provider.getResume());
+                resumes.add(providers.get(i).getResume(keys.get(i)));
             } catch (Exception e) {
-                throw new Exception(e.getMessage() + " " + provider.toString());
+                throw new Exception(e.getMessage() + " " + providers.get(i).toString());
             }
         }
         return resumes;
@@ -172,9 +191,9 @@ public class Collector implements ResumeDao {
         }
     }
 
-    private void startAllProviders() {
-        for (Provider provider : providers) {
-            provider.start();
+    private void startAllProviders(List<String> keys) {
+        for (int i = 0; i < providers.size(); i++) {
+            providers.get(i).startGettingResume(keys.get(i));
         }
     }
 

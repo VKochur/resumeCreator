@@ -7,7 +7,6 @@ import org.apache.log4j.FileAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.SimpleLayout;
 
-import java.io.File;
 import java.io.IOException;
 
 /**
@@ -42,13 +41,18 @@ public class Main {
      * else pathFiles[0] - path to file .properties, pathFiles[1] - path to dir for html file, pathFiles[2] - name for html file
      */
     private static void buildResume(String... pathFiles) {
-        SummaryServiceImpl summaryService;
+        SummaryServiceImpl summaryService = new SummaryServiceImpl();
+        String pathPropertiesFile;
         if (pathFiles.length > 2) {
-            summaryService = new SummaryServiceImpl(new File(pathFiles[0]).getParent(), new File(pathFiles[0]).getName(), pathFiles[1], pathFiles[2]);
+            pathPropertiesFile = pathFiles[0];
+            summaryService.setPathDirHtmlFile(pathFiles[1]);
+            summaryService.setHtmlFileName(pathFiles[2]);
         } else {
-            summaryService = new SummaryServiceImpl(Util.getPathExecutableDir(), DEFAULT_NAME_PROPERTY_FILE, Util.getPathExecutableDir(), DEFAULT_NAME_HTML_FILE);
+            pathPropertiesFile = Util.getPathExecutableDir() + "\\" + DEFAULT_NAME_PROPERTY_FILE;
+            summaryService.setPathDirHtmlFile(Util.getPathExecutableDir());
+            summaryService.setHtmlFileName(DEFAULT_NAME_HTML_FILE);
         }
         summaryService.setLogger(Main.logger);
-        summaryService.buildResume();
+        summaryService.buildResume(pathPropertiesFile);
     }
 }

@@ -21,10 +21,9 @@ public class AppConfig {
     @Bean
     public Collector collector() {
         Collector collector = new Collector();
-        String pathToFiles = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
         List<Provider> providers = new ArrayList<>();
-        providers.add(new PropertyReader(pathToFiles + "person1.properties"));
-        providers.add(new PropertyReader(pathToFiles + "person2.properties"));
+        providers.add(new PropertyReader());
+        providers.add(new PropertyReader());
         collector.setProviders(providers);
         return collector;
     }
