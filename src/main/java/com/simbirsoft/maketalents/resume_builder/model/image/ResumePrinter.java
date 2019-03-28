@@ -7,5 +7,12 @@ import com.simbirsoft.maketalents.resume_builder.entity.Resume;
  */
 public interface ResumePrinter {
 
-    void print(Resume resume) throws Exception;
+    /**
+     * method prints resume
+     * @param resume
+     * @param additionalInfo info that can be useful for implements method
+     *                      (example: file's path if implementation is creating file)
+     * @throws Exception
+     */
+    void print(Resume resume, String additionalInfo) throws Exception;
 }

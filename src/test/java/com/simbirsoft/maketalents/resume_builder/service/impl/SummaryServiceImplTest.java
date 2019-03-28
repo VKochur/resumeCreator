@@ -13,9 +13,9 @@ public class SummaryServiceImplTest {
     @Test
     public void testBuildResumeByEmptyData() throws Exception {
         SummaryService summaryService = new SummaryServiceImpl();
-        ((SummaryServiceImpl) summaryService).setPathDirHtmlFile(Util.definePathTestClasses());
-        ((SummaryServiceImpl) summaryService).setHtmlFileName("emptyTest");
-        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "emptyTest.properties");
+        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "emptyTest.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "emptyTest.html";
+        summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -91,16 +91,15 @@ public class SummaryServiceImplTest {
                 "</div>\n" +
                 "</body>\n" +
                 "</html>\n";
-        checkCreatedHtml(expected, new File(Util.definePathTestClasses() + "\\" + "emptyTest.html"));
+        checkCreatedHtml(expected, new File(pathHtmlFile));
     }
 
     @Test
     public void testBuildResume() throws Exception {
         SummaryService summaryService = new SummaryServiceImpl();
-        ((SummaryServiceImpl) summaryService).setPathDirHtmlFile(Util.definePathTestClasses());
-        ((SummaryServiceImpl) summaryService).setHtmlFileName("test2");
-        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "emptyTest.properties");
-        summaryService.buildResume(Util.definePathTestClasses() + "\\" + "test2.properties");
+        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "test2.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "test2.html";
+        summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
                 "<head>\n" +
@@ -176,7 +175,7 @@ public class SummaryServiceImplTest {
                 "</div>\n" +
                 "</body>\n" +
                 "</html>\n";
-        checkCreatedHtml(expected, new File(Util.definePathTestClasses() + "\\" + "test2.html"));
+        checkCreatedHtml(expected, new File(pathHtmlFile));
     }
 
     private void checkCreatedHtml(String expected, File html) throws IOException {

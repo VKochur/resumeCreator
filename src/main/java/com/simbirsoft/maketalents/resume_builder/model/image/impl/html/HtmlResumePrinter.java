@@ -29,12 +29,16 @@ public class HtmlResumePrinter implements ResumePrinter, FileCreator {
     /**
      * Method creates file html
      *
+     * @param resume
+     * @param pathHtmlFile pathHtmlFile path to file for creation
      * @throws IOException if not able to create html
      */
     @Override
-    public void print(Resume resume) throws Exception {
+    public void print(Resume resume, String pathHtmlFile) throws Exception {
         htmlResumeCodeCreator.setResume(resume);
-        createFile(htmlResumeCodeCreator.getHtmlCode(), "html");
+        setNameFile(new File(pathHtmlFile).getName());
+        setPathDirToFile(new File(pathHtmlFile).getParent());
+        createFile(htmlResumeCodeCreator.getHtmlCode());
     }
 
     @Override

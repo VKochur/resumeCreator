@@ -27,11 +27,6 @@ public class SummaryServiceImpl implements SummaryService {
         DEFAULT_LOGGER.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
 
-    //private String pathDirPropertiesFile;
-    //private String propertiesFileName;
-    private String pathDirHtmlFile;
-    private String htmlFileName;
-
     private Logger logger;
 
     public SummaryServiceImpl() {
@@ -47,20 +42,18 @@ public class SummaryServiceImpl implements SummaryService {
     public ResumePrinter getPrinterData() {
         HtmlResumePrinter resumePrinter = new HtmlResumePrinter();
         resumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
-        resumePrinter.setPathDirToFile(pathDirHtmlFile);
-        resumePrinter.setNameFile(htmlFileName);
         return resumePrinter;
     }
 
     @Override
-    public void buildResume(String pathFile) {
-        logger.info("Name properties file: " + new File(pathFile).getParent());
-        logger.info("Dir properties file: " + new File(pathFile).getName());
-        logger.info("Name html file: " + this.htmlFileName);
-        logger.info("Dir html file: " + this.pathDirHtmlFile);
+    public void buildResume(String pathPropertiesFile, String pathHtmlFile) {
+        logger.info("Name properties file: " + new File(pathPropertiesFile).getName());
+        logger.info("Dir properties file: " + new File(pathPropertiesFile).getParent());
+        logger.info("Name html file: " + new File(pathHtmlFile).getName());
+        logger.info("Dir html file: " + new File(pathHtmlFile).getParent());
 
         try {
-            getPrinterData().print(getProviderData().getResume(pathFile));
+            getPrinterData().print(getProviderData().getResume(pathPropertiesFile), pathHtmlFile);
             logger.info("success");
         } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);
@@ -88,21 +81,5 @@ public class SummaryServiceImpl implements SummaryService {
 
     public void setLogger(Logger logger) {
         this.logger = logger;
-    }
-
-    public String getPathDirHtmlFile() {
-        return pathDirHtmlFile;
-    }
-
-    public void setPathDirHtmlFile(String pathDirHtmlFile) {
-        this.pathDirHtmlFile = pathDirHtmlFile;
-    }
-
-    public String getHtmlFileName() {
-        return htmlFileName;
-    }
-
-    public void setHtmlFileName(String htmlFileName) {
-        this.htmlFileName = htmlFileName;
     }
 }

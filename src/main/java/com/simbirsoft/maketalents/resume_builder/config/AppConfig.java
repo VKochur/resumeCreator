@@ -30,10 +30,12 @@ public class AppConfig {
 
     @Bean("printerHtmlToStOut")
     public ResumePrinter resumePrinter() {
-        return resume -> {
+        return (resume, infoForPrinter) -> {
             HtmlResumeCodeCreator htmlResumeCodeCreator = getCodeCreator();
             htmlResumeCodeCreator.setResume(resume);
+            System.out.println("---begin------from bean printerHtmlToStOut--");
             System.out.println(htmlResumeCodeCreator.getHtmlCode());
+            System.out.println("---end--------from bean printerHtmlToStOut--");
         };
     }
 

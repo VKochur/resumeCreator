@@ -43,16 +43,18 @@ public class Main {
     private static void buildResume(String... pathFiles) {
         SummaryServiceImpl summaryService = new SummaryServiceImpl();
         String pathPropertiesFile;
+        String pathDirHtmlFile;
+        String htmlFileName;
         if (pathFiles.length > 2) {
             pathPropertiesFile = pathFiles[0];
-            summaryService.setPathDirHtmlFile(pathFiles[1]);
-            summaryService.setHtmlFileName(pathFiles[2]);
+            pathDirHtmlFile = pathFiles[1];
+            htmlFileName = pathFiles[2];
         } else {
             pathPropertiesFile = Util.getPathExecutableDir() + "\\" + DEFAULT_NAME_PROPERTY_FILE;
-            summaryService.setPathDirHtmlFile(Util.getPathExecutableDir());
-            summaryService.setHtmlFileName(DEFAULT_NAME_HTML_FILE);
+            pathDirHtmlFile = Util.getPathExecutableDir();
+            htmlFileName = DEFAULT_NAME_HTML_FILE;
         }
         summaryService.setLogger(Main.logger);
-        summaryService.buildResume(pathPropertiesFile);
+        summaryService.buildResume(pathPropertiesFile, pathDirHtmlFile + "\\" + htmlFileName + ".html");
     }
 }

@@ -17,11 +17,11 @@ public class MainSpringBoot {
 
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(MainSpringBoot.class, args);
-        System.out.println("------------------");
         SummaryService summaryService = (SummaryService) context.getBean("serviceGetsResumeByPartsAndPrintToStOut");
         String pathFilesProperties = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
         String pathFilesIsKeys = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
-        summaryService.buildResume(pathFilesIsKeys);
-        System.out.println("------------------");
+
+        summaryService.buildResume(pathFilesIsKeys, "irrelevant");
+
     }
 }

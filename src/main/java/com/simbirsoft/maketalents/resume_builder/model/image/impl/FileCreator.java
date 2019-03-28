@@ -20,17 +20,14 @@ public interface FileCreator {
      * Creates text file
      *
      * @param content file content
-     * @param typeFile sample: "txt", "html", "java" etc
      * @throws IOException in case if not exists specific directory, or no access
      */
-    default void createFile(String content, String typeFile) throws IOException {
+    default void createFile(String content) throws IOException {
         File file = new File(
-                String.format("%s%s%s%c%s",
+                String.format("%s%s%s",
                 new File(getPathDirToFile()).getAbsolutePath(),
                         System.getProperty("file.separator"),
-                        getNameFile(),
-                        '.',
-                        typeFile));
+                        getNameFile()));
         try (Writer writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file), StandardCharsets.UTF_8.name()))) {
             writer.write(content);
             writer.flush();
