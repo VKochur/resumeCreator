@@ -1,5 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder.config;
 
+import com.simbirsoft.maketalents.resume_builder.model.core.SummaryService;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Collector;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.PropertyReader;
@@ -7,12 +8,15 @@ import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrent
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumeCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.ReplacerHtmlCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.model.core.SummaryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
@@ -30,7 +34,7 @@ public class AppConfig {
     }
 
     @Bean("printerHtmlToStOut")
-    public ResumePrinter resumePrinter() {
+    public ResumePrinter resumePrinterToStOut() {
         return (resume, infoForPrinter) -> {
             HtmlResumeCodeCreator htmlResumeCodeCreator = getCodeCreator();
             htmlResumeCodeCreator.setResume(resume);
@@ -115,7 +119,7 @@ public class AppConfig {
         return new SummaryService() {
             @Override
             public ResumePrinter getPrinterData() {
-                return resumePrinter();
+                return resumePrinterToStOut();
             }
 
             @Override
@@ -126,7 +130,14 @@ public class AppConfig {
     }
 
     @Bean("managerDataSourceFromProperties")
-    public ManagerDataSource managerDataSource(){
+    public ManagerDataSource managerDataSource() {
         return new ManagerDataSourceImpl();
+    }
+
+    @Bean("resumePrinterByReplaceTemplate")
+    public ResumePrinter resumePrinter() {
+        HtmlResumePrinter htmlResumePrinter = new HtmlResumePrinter();
+        htmlResumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
+        return htmlResumePrinter;
     }
 }
