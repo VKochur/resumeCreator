@@ -24,7 +24,7 @@ public class MainSpringBoot {
 
     private static Logger logger;
     static {
-        logger = Logger.getLogger(Main.class);
+        logger = Logger.getLogger(MainSpringBoot.class);
         logger.addAppender(new ConsoleAppender(new SimpleLayout()));
         try {
             logger.addAppender(new FileAppender(new SimpleLayout(), Util.getPathExecutableDir() + "\\resume_builder.log", false));

@@ -67,9 +67,6 @@
                             <goal>copy-dependencies</goal>
                         </goals>
                         <configuration>
-                            <excludeArtifactIds>
-                                junit,hamcrest-core
-                            </excludeArtifactIds>
                             <outputDirectory>${project.build.directory}/${project.build.finalName}.lib</outputDirectory>
                             <overWriteReleases>false</overWriteReleases>
                             <overWriteSnapshots>false</overWriteSnapshots>
@@ -83,20 +80,12 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.0.2</version>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            com/simbirsoft/maketalents/resume_builder/MainForIde.class
-                        </exclude>
-                        <exclude>
-                            person.properties
-                        </exclude>
-                    </excludes>
                     <archive>
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>${project.build.finalName}.lib</classpathPrefix>
                             <mainClass>
-                                com.simbirsoft.maketalents.resume_builder.Main
+                                com.simbirsoft.maketalents.resume_builder.MainSpringBoot
                             </mainClass>
                         </manifest>
                     </archive>
