@@ -2,21 +2,32 @@ package com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loade
 
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
-import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
 
 /**
  * Provides info about resume from property file.
  * <p>
  * Encoding file must be UTF-8 without BOM
  * <p>
- * Set of allowed tags is set of TagTypes
+ * Set of allowed tags is
+ * FIO
+ * DOB
+ * EMAILS
+ * PHONES
+ * SKYPE
+ * URL_AVATAR
+ * TARGETS
+ * EXPERIENCES
+ * BS_EDUCATIONS
+ * AD_EDUCATIONS
+ * OTHER_INFO
+ * CAREER_TARGET
+ * SKILLS
  * Separator between key and value is '='
  * In the case of various options for specific key is used '|' as separator
  * In case not found specific tag, the associated context is null
@@ -37,82 +48,20 @@ import java.util.*;
 @Repository("resumeDaoFromPropertiesFile")
 public class ResumeDaoImpl implements ResumeDao {
 
-    private static final String CONTEXT_SEPARATOR_REGEX = "\\|";
-    private static final String SEPARATOR_SKILLS = ",";
-    private static final String SEPARATOR_DURATION_SKILL = ":";
-
-    private Properties properties;
-
-    public ResumeDaoImpl() {
-    }
+    @Autowired
+    @Qualifier("managerDataSourceFromProperties")
+    ManagerDataSource managerDataSource;
 
     /**
      * Method returns Resume from properties file
-     * @param id unique key  -  this is path to properties file
-     * @return
+     *
+     * @param pathPropertiesFile unique key  -  this is path to properties file
+     * @return Resume by data from file
      * @throws IOException
      */
     @Override
-    public Resume getResume(String id) throws IOException {
-
-        properties = new Properties();
-        try (InputStreamReader inputStreamReader = new InputStreamReader(new FileInputStream(id), StandardCharsets.UTF_8.name())) {
-            properties.load(inputStreamReader);
-        }
-
-        return new ResumeBuilder()
-                .setCareerTarget(getPropValueByTag(TagTypes.CAREER_TARGET))
-                .setName(getPropValueByTag(TagTypes.FIO))
-                .setDataOfBorn(getPropValueByTag(TagTypes.DOB))
-                .setPhoneNumbers(defineListByLine(getPropValueByTag(TagTypes.PHONES)))
-                .setEmails(defineListByLine(getPropValueByTag(TagTypes.EMAILS)))
-                .setSkypeLogin(getPropValueByTag(TagTypes.SKYPE))
-                .setUrlAvatar(getPropValueByTag(TagTypes.URL_AVATAR))
-                .setTargets(defineListByLine(getPropValueByTag(TagTypes.TARGETS)))
-                .setExperiences(defineListByLine(getPropValueByTag(TagTypes.EXPERIENCES)))
-                .setBasicEducations(defineListByLine(getPropValueByTag(TagTypes.BS_EDUCATIONS)))
-                .setAdditionalEdications(defineListByLine(getPropValueByTag(TagTypes.AD_EDUCATIONS)))
-                .setOtherInfo(getPropValueByTag(TagTypes.OTHER_INFO))
-                .setSkills(getSkillsByLine(properties.getProperty(TagTypes.SKILLS.name())))
-                .build();
+    public Resume getResume(String pathPropertiesFile) throws Exception {
+        return managerDataSource.getResume(pathPropertiesFile);
     }
 
-    /**
-     * Builds skills map by string
-     *
-     * @param lineSkills info about skills. format: "skill1:countInMonths1,skill2:countInMonths2"
-     * @return map of skills. example {skill1 -> countInMonths1 , skill2 -> countInMonths2}
-     */
-    private Map<String, Integer> getSkillsByLine(String lineSkills) {
-        if (lineSkills == null) {
-            return null;
-        }
-
-        Map<String, Integer> skills = new HashMap<>();
-        String[] infoSkills = lineSkills.split(SEPARATOR_SKILLS);
-        for (String skill : infoSkills) {
-            Integer count;
-            if (skill.contains(SEPARATOR_DURATION_SKILL)) {
-                try {
-                    count = Integer.parseInt(skill.substring(skill.indexOf(SEPARATOR_DURATION_SKILL) + 1, skill.length()));
-                } catch (NumberFormatException e) {
-                    count = -1;
-                }
-                skills.put(skill.substring(0, skill.indexOf(SEPARATOR_DURATION_SKILL)), count);
-            }
-        }
-        return skills;
-
-    }
-
-    private String getPropValueByTag(TagTypes tag) {
-        return properties.getProperty(tag.name());
-    }
-
-    private List<String> defineListByLine(String str) {
-        if (str == null) {
-            return null;
-        }
-        return Arrays.asList(str.split(CONTEXT_SEPARATOR_REGEX));
-    }
 }

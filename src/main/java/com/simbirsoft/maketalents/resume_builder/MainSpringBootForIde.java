@@ -1,9 +1,10 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.HtmlGenerator;
+import com.simbirsoft.maketalents.resume_builder.model.HtmlGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
 
@@ -13,6 +14,7 @@ import java.io.File;
  * Main class for running from IDE
  * creates "spring_boot_summary.html" in "src\main\webapp\springboot\" by "spring_boot_person.properties" located in "src\main\resources\springboot\"
  */
+@ComponentScan("com.simbirsoft.maketalents.resume_builder")
 @SpringBootApplication
 public class MainSpringBootForIde {
 

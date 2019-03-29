@@ -1,6 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.impl.SummaryServiceImpl;
+import com.simbirsoft.maketalents.resume_builder.model.core.SummaryServiceImpl;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;

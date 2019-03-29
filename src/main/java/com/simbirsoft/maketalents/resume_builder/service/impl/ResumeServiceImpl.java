@@ -15,13 +15,13 @@ public class ResumeServiceImpl implements ResumeService{
     private ResumeDao resumeDao;
 
     /**
-     * Method gets resume by file's name
-     * @param id path to file
+     * Method gets resume by properties file
+     * @param pathPropertiesFile path to file
      * @return resume
      * @throws Exception
      */
     @Override
-    public Resume getResume(String id) throws Exception {
-        return resumeDao.getResume(id);
+    public Resume getResume(String pathPropertiesFile) throws Exception {
+        return resumeDao.getResume(pathPropertiesFile);
     }
 }

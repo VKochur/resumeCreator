@@ -1,6 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.HtmlGenerator;
+import com.simbirsoft.maketalents.resume_builder.model.HtmlGenerator;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.FileAppender;
@@ -9,6 +9,7 @@ import org.apache.log4j.SimpleLayout;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import java.io.IOException;
 
@@ -17,6 +18,7 @@ import java.io.IOException;
  * writes log in "executable dir/resume_builder.log"
  *
  */
+@ComponentScan("com.simbirsoft.maketalents.resume_builder")
 @SpringBootApplication
 public class MainSpringBoot {
 

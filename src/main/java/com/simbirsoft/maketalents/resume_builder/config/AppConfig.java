@@ -1,14 +1,14 @@
 package com.simbirsoft.maketalents.resume_builder.config;
 
-import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Collector;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.PropertyReader;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Provider;
-import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
-import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumeCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.ReplacerHtmlCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Collector;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.PropertyReader;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Provider;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumeCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.ReplacerHtmlCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.model.core.SummaryService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -119,9 +119,14 @@ public class AppConfig {
             }
 
             @Override
-            public ResumeDao getProviderData() {
+            public ManagerDataSource getProviderData() {
                 return collector();
             }
         };
+    }
+
+    @Bean("managerDataSourceFromProperties")
+    public ManagerDataSource managerDataSource(){
+        return new ManagerDataSourceImpl();
     }
 }
