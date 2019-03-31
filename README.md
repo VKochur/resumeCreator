@@ -1,6 +1,6 @@
 ## Программа для получения html резюме  на основе properties файла
 
-Программа состоит из "resume.jar" и папки "resume.lib", создаваемых maven при команде
+Программа состоит из "resume.jar" создаваемом maven при команде
 mvn package в "директория проекта"/target
 
 #### Запуск программы в Windows из консоли
@@ -13,7 +13,7 @@ java -version
 Если это не выполняется, то в системную переменную Path должен быть добавлен путь %JAVA_HOME%\bin,
 где JAVA_HOME системная переменная с указаным путем к jdk
 
-Для запуска программы следует разместить resume.jar и resume.lib в одном каталоге, для которого есть права на запись.
+Для запуска программы следует разместить resume.jar в каталоге, для которого есть права на запись.
 При каждом запуске программы, в каталоге размещения resume.jar, пишется resume_builder.log
 с информацией об используемом файле .properties и сгенерированном html, а также проблемах в случае их возникновения.
 
@@ -69,13 +69,17 @@ java -jar c:\temp\тест\resume.jar "c:\temp\тест тест\1\ivanov.proper
     SKILLS=Java:24,Spring:6,sql:36,IIdea:6,c++:12
     
 #### src
-com.simbirsoft.maketalents.resume_builder.Main - точка входа в программу в создаваемом jar файле
+используемые до spring-boot точки входа
+com.simbirsoft.maketalents.resume_builder.Main - точка входа в программу в создаваемом jar файле (требует другого pom)
 com.simbirsoft.maketalents.resume_builder.MainForIde - используется для запуска программы из IDE,
 формируя на основе src/main/resources/person.properties файл src/main/webapp/summary.html
 
 указанные далее приложения используют SpringBoot
-com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBoot - может использоваться как точка входа в jar, после настроек pom
-com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBootForIde - используется для запуска программы из IDE,
+
+com.simbirsoft.maketalents.resume_builder.MainSpringBoot - используется как точка входа в jar
+com.simbirsoft.maketalents.resume_builder.MainSpringBootForIde - используется для запуска программы из IDE,
 формируя на основе src/main/resources/springboot/spring_boot_person.properties файл src/main/webapp/springboot/spring_boot_summary.html
-com.simbirsoft.maketalents.resume_builder.MainForIde.MainSpringBootMultiThreading - используется для запуска программы из IDE,
+
+com.simbirsoft.maketalents.resume_builder.MainSpringBootMultiThreadingForIde - используется для запуска программы из IDE,
 выводя html код по резюме полученному на основе 2 файлов src/main/resources/concurrently/person1 и person2.properties
+com.simbirsoft.maketalents.resume_builder.MainSpringBootMultiThreadingJar - точка входа в jar при задачи чтения резюме из 2х файлов (требует изменения pom mainClass)

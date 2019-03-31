@@ -21,14 +21,7 @@ import java.io.IOException;
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 @SpringBootApplication
 public class MainSpringBoot {
-/*
-    todo удалить
-    статический логгер, так
-    как контекст
-    спринга вне
-    зависимости от
-    прямого вызова
-    */
+
     private static Logger logger;
 
     static {
