@@ -58,7 +58,7 @@
                 <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
                     <mainClass>
-                        com.simbirsoft.maketalents.resume_builder.Main
+                        com.simbirsoft.maketalents.resume_builder.MainSpringBootMultithreadingJar
                     </mainClass>
                     <layout>
                         JAR

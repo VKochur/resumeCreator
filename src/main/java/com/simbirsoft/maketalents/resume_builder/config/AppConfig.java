@@ -23,7 +23,48 @@ import java.util.*;
 @Configuration
 public class AppConfig {
 
-    @Bean("collector")
+    @Bean("serviceGetsResumeByPartsAndPrintToStOut")
+    public SummaryService summaryServiceCollectorAndStOut() {
+        return new SummaryService() {
+            @Override
+            public ResumePrinter getPrinterData() {
+                return resumePrinterToStOut();
+            }
+
+            @Override
+            public ManagerDataSource getProviderData() {
+                return collector();
+            }
+        };
+    }
+
+    @Bean("serviceGetsResumeByPartsAndCreatesHtml")
+    public SummaryService summaryServiceCollectorAndHtml() {
+        return new SummaryService() {
+            @Override
+            public ResumePrinter getPrinterData() {
+                return resumePrinter();
+            }
+
+            @Override
+            public ManagerDataSource getProviderData() {
+                return collector();
+            }
+        };
+    }
+
+    @Bean("managerDataSourceFromProperties")
+    public ManagerDataSource managerDataSource() {
+        return new ManagerDataSourceImpl();
+    }
+
+    @Bean("resumePrinterByReplaceTemplate")
+    public ResumePrinter resumePrinter() {
+        HtmlResumePrinter htmlResumePrinter = new HtmlResumePrinter();
+        htmlResumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
+        return htmlResumePrinter;
+    }
+
     public Collector collector() {
         Collector collector = new Collector();
         List<Provider> providers = new ArrayList<>();
@@ -33,7 +74,6 @@ public class AppConfig {
         return collector;
     }
 
-    @Bean("printerHtmlToStOut")
     public ResumePrinter resumePrinterToStOut() {
         return (resume, infoForPrinter) -> {
             HtmlResumeCodeCreator htmlResumeCodeCreator = getCodeCreator();
@@ -44,7 +84,6 @@ public class AppConfig {
         };
     }
 
-    @Bean("createrCodeByTemplate")
     public HtmlResumeCodeCreator getCodeCreator() {
         return new ReplacerHtmlCodeCreator() {
             @Override
@@ -112,32 +151,5 @@ public class AppConfig {
                 }
             }
         };
-    }
-
-    @Bean("serviceGetsResumeByPartsAndPrintToStOut")
-    public SummaryService summaryService() {
-        return new SummaryService() {
-            @Override
-            public ResumePrinter getPrinterData() {
-                return resumePrinterToStOut();
-            }
-
-            @Override
-            public ManagerDataSource getProviderData() {
-                return collector();
-            }
-        };
-    }
-
-    @Bean("managerDataSourceFromProperties")
-    public ManagerDataSource managerDataSource() {
-        return new ManagerDataSourceImpl();
-    }
-
-    @Bean("resumePrinterByReplaceTemplate")
-    public ResumePrinter resumePrinter() {
-        HtmlResumePrinter htmlResumePrinter = new HtmlResumePrinter();
-        htmlResumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
-        return htmlResumePrinter;
     }
 }

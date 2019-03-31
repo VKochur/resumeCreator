@@ -20,16 +20,12 @@ import java.io.File;
  */
 public class SummaryServiceImpl implements SummaryService {
 
-    private static final Logger DEFAULT_LOGGER = Logger.getLogger(SummaryServiceImpl.class);
-
-    static {
-        DEFAULT_LOGGER.addAppender(new ConsoleAppender(new SimpleLayout()));
-    }
-
     private Logger logger;
 
     public SummaryServiceImpl() {
-        setLogger(DEFAULT_LOGGER);
+        logger = Logger.getLogger(SummaryServiceImpl.class);
+        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
+        setLogger(logger);
     }
 
     @Override

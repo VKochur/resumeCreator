@@ -1,6 +1,5 @@
 package com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently;
 
-
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
 

@@ -16,14 +16,9 @@ import java.io.File;
 @Component
 public class HtmlGenerator{
 
-    private static final Logger DEFAULT_LOGGER = Logger.getLogger(HtmlGenerator.class);
-
-    static {
-        DEFAULT_LOGGER.addAppender(new ConsoleAppender(new SimpleLayout()));
-    }
-
     public HtmlGenerator() {
-        setLogger(DEFAULT_LOGGER);
+        logger = Logger.getLogger(HtmlGenerator.class);
+        logger.addAppender(new ConsoleAppender(new SimpleLayout()));
     }
 
     private Logger logger;

@@ -15,16 +15,15 @@ import java.io.File;
  */
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 @SpringBootApplication
-public class MainSpringBootMultiThreading {
+public class MainSpringBootMultiThreadingForIde {
 
     public static void main(String[] args) throws Exception {
-        ApplicationContext context = SpringApplication.run(MainSpringBootMultiThreading.class, args);
+        ApplicationContext context = SpringApplication.run(MainSpringBootMultiThreadingForIde.class, args);
         SummaryService summaryService = (SummaryService) context.getBean("serviceGetsResumeByPartsAndPrintToStOut");
         String pathFilesProperties = new File("").getAbsolutePath() + File.separator + "src" + File.separator + "main" +
         File.separator + "resources" + File.separator + "concurrently" + File.separator;
-        String pathFilesIsKeys = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
+        String keysIsPathFiles = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
 
-        summaryService.buildResume(pathFilesIsKeys, "irrelevant");
-
+        summaryService.buildResume(keysIsPathFiles, "irrelevant");
     }
 }

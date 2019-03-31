@@ -9,8 +9,6 @@ import org.springframework.context.annotation.ComponentScan;
 import java.io.File;
 
 /**
- * main for task5 (multithreading) is MainSpringBootMultithreading
- * <p>
  * Main class for running from IDE
  * creates "spring_boot_summary.html" in "src\main\webapp\springboot\" by "spring_boot_person.properties" located in "src\main\resources\springboot\"
  */
