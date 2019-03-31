@@ -4,6 +4,7 @@ import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.tests_util.Util;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -17,7 +18,7 @@ public class ManagerDataSourceImplTest {
 
     @Test
     public void testGetResume1() throws IOException, URISyntaxException {
-        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + "\\test.properties");
+        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + File.separator + "test.properties");
         assertNull(resume.getName());
         assertEquals("testDOB", resume.getDateOfBorn());
         assertEquals(Arrays.asList("test", "test@gmail.com"), resume.getEmails());
@@ -35,7 +36,7 @@ public class ManagerDataSourceImplTest {
 
     @Test
     public void testGetResume2() throws IOException, URISyntaxException {
-        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + "\\test2.properties");
+        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + File.separator + "test2.properties");
         assertEquals("testFIO", resume.getName());
         assertEquals("testDOB", resume.getDateOfBorn());
         assertEquals(Arrays.asList("test", "test@gmail.com"), resume.getEmails());
@@ -57,14 +58,14 @@ public class ManagerDataSourceImplTest {
         assertEquals("check skills", expectedSkills, resume.getSkills());
     }
 
-    @Test (expected = IOException.class)
+    @Test(expected = IOException.class)
     public void testGetResume3() throws IOException, URISyntaxException {
-        new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + "\\notexists.properties");
+        new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + File.separator + "notexists.properties");
     }
 
     @Test
     public void testGetResume4() throws IOException, URISyntaxException {
-        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + "\\test3.properties");
+        Resume resume = new ManagerDataSourceImpl().getResume(Util.definePathTestClasses() + File.separator + "test3.properties");
         Map<String, Integer> expectedSkills = new HashMap<>();
         expectedSkills.put("java", -1);
         expectedSkills.put("sql", -1);

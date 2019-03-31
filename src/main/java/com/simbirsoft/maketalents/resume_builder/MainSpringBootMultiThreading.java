@@ -20,7 +20,8 @@ public class MainSpringBootMultiThreading {
     public static void main(String[] args) throws Exception {
         ApplicationContext context = SpringApplication.run(MainSpringBootMultiThreading.class, args);
         SummaryService summaryService = (SummaryService) context.getBean("serviceGetsResumeByPartsAndPrintToStOut");
-        String pathFilesProperties = new File("").getAbsolutePath() + "\\src\\main\\resources\\concurrently\\";
+        String pathFilesProperties = new File("").getAbsolutePath() + File.separator + "src" + File.separator + "main" +
+        File.separator + "resources" + File.separator + "concurrently" + File.separator;
         String pathFilesIsKeys = String.format("%s%s,%s%s", pathFilesProperties, "person1.properties", pathFilesProperties, "person2.properties");
 
         summaryService.buildResume(pathFilesIsKeys, "irrelevant");

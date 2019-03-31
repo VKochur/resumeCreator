@@ -26,14 +26,14 @@ public class HtmlResumePrinterTest {
         });
 
         String fileName = "testHtmlResumePrinter.html";
-        File workDir = new File(Util.definePathTestClasses() + "\\work");
-        File html = new File(workDir.getAbsolutePath()+"\\" + fileName);
-        if (workDir.exists()){
+        File workDir = new File(Util.definePathTestClasses() + File.separator + "work");
+        File html = new File(workDir.getAbsolutePath() + File.separator + fileName);
+        if (workDir.exists()) {
             throw new IllegalStateException("Cannot run test. Dir already exists: " + workDir);
         } else {
             try {
                 workDir.mkdir();
-                resumePrinter.print(resume, workDir + "\\" + fileName);
+                resumePrinter.print(resume, workDir + File.separator + fileName);
                 Util.checkContentFile(html, "fiodob\n");
             } finally {
                 Files.deleteIfExists(html.toPath());
@@ -51,6 +51,6 @@ public class HtmlResumePrinterTest {
                 return null;
             }
         });
-        resumePrinter.print(new Resume(), Util.definePathTestClasses() + "\\work\\test");
+        resumePrinter.print(new Resume(), Util.definePathTestClasses() + File.separator + "work" + File.separator + "test");
     }
 }

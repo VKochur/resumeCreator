@@ -27,7 +27,6 @@ public class Util {
         }
     }
 
-
     private static String solveDirectoryToJar(String path) throws URISyntaxException {
         String cleanFromExclamationMark = path.substring(0, path.indexOf(".jar!"));
         URI uri = new URI(cleanFromExclamationMark);

@@ -7,15 +7,13 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
-import static org.junit.Assert.*;
-
 public class SummaryServiceImplTest {
 
     @Test
     public void testBuildResumeByEmptyData() throws Exception {
         SummaryService summaryService = new SummaryServiceImpl();
-        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "emptyTest.properties";
-        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "emptyTest.html";
+        String pathPropertiesFile = Util.definePathTestClasses() + File.separator + "emptyTest.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + File.separator + "emptyTest.html";
         summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
@@ -98,8 +96,8 @@ public class SummaryServiceImplTest {
     @Test
     public void testBuildResume() throws Exception {
         SummaryService summaryService = new SummaryServiceImpl();
-        String pathPropertiesFile = Util.definePathTestClasses() + "\\" + "test2.properties";
-        String pathHtmlFile = Util.definePathTestClasses() + "\\" + "test2.html";
+        String pathPropertiesFile = Util.definePathTestClasses() + File.separator + "test2.properties";
+        String pathHtmlFile = Util.definePathTestClasses() + File.separator + "test2.html";
         summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
         String expected = "<!doctype html>\n" +
                 "<html>\n" +
