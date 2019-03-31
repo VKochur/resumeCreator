@@ -9,7 +9,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>resume_builder.kochurov</name>
 
-    <packaging>jar</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -53,53 +52,17 @@
                 <directory>${basedir}/src/main/resources</directory>
             </resource>
         </resources>
-
         <plugins>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-dependency-plugin</artifactId>
-                <version>3.1.1</version>
-                <executions>
-                    <execution>
-                        <id>copy-dependencies</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>copy-dependencies</goal>
-                        </goals>
-                        <configuration>
-                            <excludeArtifactIds>
-                                junit,hamcrest-core
-                            </excludeArtifactIds>
-                            <outputDirectory>${project.build.directory}/${project.build.finalName}.lib</outputDirectory>
-                            <overWriteReleases>false</overWriteReleases>
-                            <overWriteSnapshots>false</overWriteSnapshots>
-                            <overWriteIfNewer>true</overWriteIfNewer>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.0.2</version>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
                 <configuration>
-                    <excludes>
-                        <exclude>
-                            com/simbirsoft/maketalents/resume_builder/MainForIde.class
-                        </exclude>
-                        <exclude>
-                            person.properties
-                        </exclude>
-                    </excludes>
-                    <archive>
-                        <manifest>
-                            <addClasspath>true</addClasspath>
-                            <classpathPrefix>${project.build.finalName}.lib</classpathPrefix>
-                            <mainClass>
-                                com.simbirsoft.maketalents.resume_builder.Main
-                            </mainClass>
-                        </manifest>
-                    </archive>
+                    <mainClass>
+                        com.simbirsoft.maketalents.resume_builder.MainSpringBootMultithreadingJar
+                    </mainClass>
+                    <layout>
+                        JAR
+                    </layout>
                 </configuration>
             </plugin>
         </plugins>

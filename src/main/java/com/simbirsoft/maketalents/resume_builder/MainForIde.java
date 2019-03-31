@@ -1,9 +1,8 @@
 package com.simbirsoft.maketalents.resume_builder;
 
-import com.simbirsoft.maketalents.resume_builder.service.impl.SummaryServiceImpl;
+import com.simbirsoft.maketalents.resume_builder.model.core.SummaryServiceImpl;
 
 import java.io.File;
-
 
 /**
  * Main class for running from IDE
@@ -13,8 +12,10 @@ public class MainForIde {
 
     public static void main(String[] args) {
         SummaryServiceImpl summaryService = new SummaryServiceImpl();
-        String pathPropertiesFile = new File("").getAbsolutePath() + "\\src\\main\\resources\\person.properties";
-        String pathHtmlFile = new File("").getAbsolutePath() + "\\src\\main\\webapp\\summary.html";
+        String pathPropertiesFile = new File("").getAbsolutePath()
+                + File.separator + "src" + File.separator + "main" + File.separator + "resources" + File.separator + "person.properties";
+        String pathHtmlFile = new File("").getAbsolutePath()
+                + File.separator + "src" + File.separator + "main" + File.separator + "webapp" + File.separator + "summary.html";
         summaryService.buildResume(pathPropertiesFile, pathHtmlFile);
     }
 }

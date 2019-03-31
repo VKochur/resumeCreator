@@ -1,18 +1,14 @@
-package com.simbirsoft.maketalents.resume_builder.dao;
+package com.simbirsoft.maketalents.resume_builder.model.core.data;
 
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 
-/**
- * Interface provides data about resume
- */
-public interface ResumeDao {
+public interface ManagerDataSource {
 
     /**
      * method gets Resume by unique key from storage
      * @param id unique key
-     * @return
-     * @throws Exception
+     * @return data from storage
+     * @throws Exception implementations may throws
      */
     Resume getResume(String id) throws Exception;
-
 }

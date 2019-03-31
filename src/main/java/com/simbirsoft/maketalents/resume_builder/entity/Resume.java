@@ -1,6 +1,6 @@
 package com.simbirsoft.maketalents.resume_builder.entity;
 
-import com.simbirsoft.maketalents.resume_builder.model.ResumeBuilder;
+import com.simbirsoft.maketalents.resume_builder.model.core.ResumeBuilder;
 
 import java.util.*;
 

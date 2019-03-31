@@ -1,24 +1,70 @@
 package com.simbirsoft.maketalents.resume_builder.config;
 
-import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Collector;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.PropertyReader;
-import com.simbirsoft.maketalents.resume_builder.dao.impl.concurrently.Provider;
-import com.simbirsoft.maketalents.resume_builder.service.image.ResumePrinter;
-import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.HtmlResumeCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.service.image.impl.html.ReplacerHtmlCodeCreator;
-import com.simbirsoft.maketalents.resume_builder.service.SummaryService;
+import com.simbirsoft.maketalents.resume_builder.model.core.SummaryService;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Collector;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.PropertyReader;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Provider;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumeCodeCreator;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.ReplacerHtmlCodeCreator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
 @Configuration
 public class AppConfig {
 
-    @Bean
+    @Bean("serviceGetsResumeByPartsAndPrintToStOut")
+    public SummaryService summaryServiceCollectorAndStOut() {
+        return new SummaryService() {
+            @Override
+            public ResumePrinter getPrinterData() {
+                return resumePrinterToStOut();
+            }
+
+            @Override
+            public ManagerDataSource getProviderData() {
+                return collector();
+            }
+        };
+    }
+
+    @Bean("serviceGetsResumeByPartsAndCreatesHtml")
+    public SummaryService summaryServiceCollectorAndHtml() {
+        return new SummaryService() {
+            @Override
+            public ResumePrinter getPrinterData() {
+                return resumePrinter();
+            }
+
+            @Override
+            public ManagerDataSource getProviderData() {
+                return collector();
+            }
+        };
+    }
+
+    @Bean("managerDataSourceFromProperties")
+    public ManagerDataSource managerDataSource() {
+        return new ManagerDataSourceImpl();
+    }
+
+    @Bean("resumePrinterByReplaceTemplate")
+    public ResumePrinter resumePrinter() {
+        HtmlResumePrinter htmlResumePrinter = new HtmlResumePrinter();
+        htmlResumePrinter.setHtmlResumeCodeCreator(getCodeCreator());
+        return htmlResumePrinter;
+    }
+
     public Collector collector() {
         Collector collector = new Collector();
         List<Provider> providers = new ArrayList<>();
@@ -28,8 +74,7 @@ public class AppConfig {
         return collector;
     }
 
-    @Bean("printerHtmlToStOut")
-    public ResumePrinter resumePrinter() {
+    public ResumePrinter resumePrinterToStOut() {
         return (resume, infoForPrinter) -> {
             HtmlResumeCodeCreator htmlResumeCodeCreator = getCodeCreator();
             htmlResumeCodeCreator.setResume(resume);
@@ -39,7 +84,6 @@ public class AppConfig {
         };
     }
 
-    @Bean("createrCodeByTemplate")
     public HtmlResumeCodeCreator getCodeCreator() {
         return new ReplacerHtmlCodeCreator() {
             @Override
@@ -105,21 +149,6 @@ public class AppConfig {
                 } else {
                     return "";
                 }
-            }
-        };
-    }
-
-    @Bean("serviceGetsResumeByPartsAndPrintToStOut")
-    public SummaryService summaryService() {
-        return new SummaryService() {
-            @Override
-            public ResumePrinter getPrinterData() {
-                return resumePrinter();
-            }
-
-            @Override
-            public ResumeDao getProviderData() {
-                return collector();
             }
         };
     }
