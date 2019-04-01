@@ -1,7 +1,8 @@
 package com.simbirsoft.maketalents.resume_builder.service.impl;
 
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
-import com.simbirsoft.maketalents.resume_builder.entity.Resume;
+import com.simbirsoft.maketalents.resume_builder.dto.ResumeDto;
+import com.simbirsoft.maketalents.resume_builder.dto.Util;
 import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,14 +15,17 @@ public class ResumeServiceImpl implements ResumeService{
     @Qualifier("resumeDaoFromPropertiesFile")
     private ResumeDao resumeDao;
 
+    @Autowired
+    Util utilForDTO;
+
     /**
-     * Method gets resume by properties file
+     * Method gets resumeDTO by properties file
      * @param pathPropertiesFile path to file
      * @return resume
      * @throws Exception
      */
     @Override
-    public Resume getResume(String pathPropertiesFile) throws Exception {
-        return resumeDao.getResume(pathPropertiesFile);
+    public ResumeDto getResumeDTO(String pathPropertiesFile) throws Exception {
+        return utilForDTO.getDtoByResume(resumeDao.getResume(pathPropertiesFile));
     }
 }

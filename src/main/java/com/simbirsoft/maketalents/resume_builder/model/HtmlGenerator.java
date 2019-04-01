@@ -1,6 +1,7 @@
 package com.simbirsoft.maketalents.resume_builder.model;
 
-import com.simbirsoft.maketalents.resume_builder.model.core.SummaryServiceImpl;
+import com.simbirsoft.maketalents.resume_builder.dto.Util;
+import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
 import org.apache.log4j.ConsoleAppender;
@@ -30,6 +31,9 @@ public class HtmlGenerator{
     @Qualifier("resumePrinterByReplaceTemplate")
     private ResumePrinter resumePrinter;
 
+    @Autowired
+    Util util;
+
     public void print(String pathPropertiesFile, String pathHtmlFile) {
         logger.info("Name properties file: " + new File(pathPropertiesFile).getName());
         logger.info("Dir properties file: " + new File(pathPropertiesFile).getParent());
@@ -37,7 +41,8 @@ public class HtmlGenerator{
         logger.info("Dir html file: " + new File(pathHtmlFile).getParent());
 
         try {
-            resumePrinter.print(resumeService.getResume(pathPropertiesFile), pathHtmlFile);
+            Resume resume = util.getResumeByDTO(resumeService.getResumeDTO(pathPropertiesFile));
+            resumePrinter.print(resume, pathHtmlFile);
             logger.info("success");
         } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);

@@ -1,14 +1,14 @@
 package com.simbirsoft.maketalents.resume_builder.service;
 
-import com.simbirsoft.maketalents.resume_builder.entity.Resume;
+import com.simbirsoft.maketalents.resume_builder.dto.ResumeDto;
 
 public interface ResumeService {
 
     /**
-     * method gets Resume by unique key
+     * method gets ResumeDto by unique key
      * @param id unique key
      * @return
      * @throws Exception
      */
-    Resume getResume(String id) throws Exception;
+    ResumeDto getResumeDTO(String id) throws Exception;
 }
