@@ -25,7 +25,7 @@ public class ResumeServiceImpl implements ResumeService{
      * @throws Exception
      */
     @Override
-    public ResumeDto getResumeDTO(String pathPropertiesFile) throws Exception {
+    public ResumeDto getResumeDto(String pathPropertiesFile) throws Exception {
         return utilForDTO.getDtoByResume(resumeDao.getResume(pathPropertiesFile));
     }
 }

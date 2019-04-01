@@ -10,5 +10,5 @@ public interface ResumeService {
      * @return
      * @throws Exception
      */
-    ResumeDto getResumeDTO(String id) throws Exception;
+    ResumeDto getResumeDto(String id) throws Exception;
 }

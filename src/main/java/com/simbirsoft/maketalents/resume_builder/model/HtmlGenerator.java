@@ -41,7 +41,7 @@ public class HtmlGenerator{
         logger.info("Dir html file: " + new File(pathHtmlFile).getParent());
 
         try {
-            Resume resume = util.getResumeByDTO(resumeService.getResumeDTO(pathPropertiesFile));
+            Resume resume = util.getResumeByDTO(resumeService.getResumeDto(pathPropertiesFile));
             resumePrinter.print(resume, pathHtmlFile);
             logger.info("success");
         } catch (Exception e) {
