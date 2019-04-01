@@ -4,6 +4,7 @@ import com.simbirsoft.maketalents.resume_builder.model.HtmlGenerator;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 
 import java.io.File;
@@ -26,5 +27,6 @@ public class MainSpringBootForIde {
                 File.separator + "src" + File.separator + "main" + File.separator + "webapp" +
                 File.separator + "springboot" + File.separator + "spring_boot_summary.html";
         htmlGenerator.print(pathPropertiesFile, pathHtmlFile);
+        ((ConfigurableApplicationContext) context).close();
     }
 }
