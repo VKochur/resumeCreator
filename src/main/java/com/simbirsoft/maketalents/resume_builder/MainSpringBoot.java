@@ -21,14 +21,7 @@ import java.io.IOException;
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 @SpringBootApplication
 public class MainSpringBoot {
-/*
-    todo удалить
-    статический логгер, так
-    как контекст
-    спринга вне
-    зависимости от
-    прямого вызова
-    */
+
     private static Logger logger;
 
     static {
@@ -44,6 +37,12 @@ public class MainSpringBoot {
     private static final String DEFAULT_NAME_PROPERTY_FILE = "resume.properties";
     private static final String DEFAULT_NAME_HTML_FILE = "resume";
 
+    /**
+     * Creates html file by file .properties
+     *
+     * @param args if args.length <= 2, uses DEFAULT_NAME_PROPERTY_FILE, DEFAULT_NAME_HTML_FILE and executable dir
+     *                  else args[0] - path to file .properties, args[1] - path to dir for html file, args[2] - name for html file
+     */
     public static void main(String[] args) {
 
         ApplicationContext context = SpringApplication.run(MainSpringBoot.class, args);
