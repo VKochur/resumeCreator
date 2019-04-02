@@ -82,16 +82,16 @@ C:\>java -jar "c:\temp\Новая папка\resume.jar" "c:\temp\Новая п�
 Возможные точки входа в программу:
 не используют ApplicationContext spring-boot
 com.simbirsoft.maketalents.resume_builder.Main - использовалась как точка входа в программу в создаваемом jar файле (требует изменения pom в части использования плагинов пример Commit d7b6bba8)
-com.simbirsoft.maketalents.resume_builder.MainForIde - используется для запуска программы из IDE,
+com.simbirsoft.maketalents.resume_builder.running_from_ide.MainForIde - используется для запуска программы из IDE,
 формируя на основе src/main/resources/person.properties файл src/main/webapp/summary.html
 
 указанные далее приложения используют SpringBoot
 приложения формируют html по указанному файлу properties
 com.simbirsoft.maketalents.resume_builder.MainSpringBoot - может использоваться как точка входа в jar, после настроек pom (изменение mainClass)
-com.simbirsoft.maketalents.resume_builder.MainSpringBootForIde - используется для запуска программы из IDE,
+com.simbirsoft.maketalents.resume_builder.running_from_ide.MainSpringBootForIde - используется для запуска программы из IDE,
 формируя на основе src/main/resources/springboot/spring_boot_person.properties файл src/main/webapp/springboot/spring_boot_summary.html
 
 приложения формируют html по 2м properties файлам. читают в отдельных потоках 2 properties файла, на основе которых создают резюме
-com.simbirsoft.maketalents.resume_builder.MainSpringBootMultiThreadingForIde - используется для запуска программы из IDE,
+com.simbirsoft.maketalents.resume_builder.running_from_ide.MainSpringBootMultiThreadingForIde - используется для запуска программы из IDE,
 выводя в stdout html код по резюме полученному на основе 2 файлов src/main/resources/concurrently/person1 и person2.properties
 com.simbirsoft.maketalents.resume_builder.MainSpringBootMultithreadingJar - используется как точка входа в jar

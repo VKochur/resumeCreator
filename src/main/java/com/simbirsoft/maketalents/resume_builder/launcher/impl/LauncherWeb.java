@@ -5,6 +5,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
+
+/**
+ * Launcher web application
+ */
 @SpringBootApplication
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 public class LauncherWeb implements Launcher {

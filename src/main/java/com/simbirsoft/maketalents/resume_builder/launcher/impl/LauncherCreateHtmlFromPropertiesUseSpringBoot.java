@@ -3,7 +3,6 @@ package com.simbirsoft.maketalents.resume_builder.launcher.impl;
 import com.simbirsoft.maketalents.resume_builder.launcher.Launcher;
 import com.simbirsoft.maketalents.resume_builder.model.HtmlGenerator;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
-
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
@@ -13,6 +12,9 @@ import java.io.File;
 
 import static com.simbirsoft.maketalents.resume_builder.launcher.Util.stopWebApplication;
 
+/**
+ * Launcher program for creates html by properties. uses spring-core
+ */
 @SpringBootApplication
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
@@ -26,7 +28,8 @@ public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
                 "if args.length <= 2, uses DEFAULT_NAME_PROPERTY_FILE = 'resume.properties', DEFAULT_NAME_HTML_FILE = 'resume' and executable dir\n" +
                 "else args[0] - path to file .properties, args[1] - path to dir for html file, args[2] - name for html file.\n" +
                 "\n" +
-                "writes log in 'executable dir/resume_builder.log'";}
+                "writes log in 'executable dir/resume_builder.log'";
+    }
 
     @Override
     public void launch(String[] args) {
@@ -36,7 +39,6 @@ public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
             String pathPropertiesFile;
             String pathDirHtmlFile;
             String htmlFileName;
-
             if (args.length > 2) {
                 pathPropertiesFile = args[0];
                 pathDirHtmlFile = args[1];
@@ -46,7 +48,6 @@ public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
                 pathDirHtmlFile = Util.getPathExecutableDir();
                 htmlFileName = DEFAULT_NAME_HTML_FILE;
             }
-
             htmlGenerator.setLogger(com.simbirsoft.maketalents.resume_builder.launcher.Util.getLogger());
             htmlGenerator.print(pathPropertiesFile, pathDirHtmlFile + File.separator + htmlFileName + ".html");
         } finally {

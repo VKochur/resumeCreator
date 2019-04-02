@@ -1,5 +1,6 @@
-package com.simbirsoft.maketalents.resume_builder;
+package com.simbirsoft.maketalents.resume_builder.running_from_ide;
 
+import com.simbirsoft.maketalents.resume_builder.MainJar;
 import com.simbirsoft.maketalents.resume_builder.launcher.LauncherTypes;
 import java.io.File;
 

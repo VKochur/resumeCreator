@@ -13,6 +13,9 @@ import java.io.File;
 
 import static com.simbirsoft.maketalents.resume_builder.launcher.Util.stopWebApplication;
 
+/**
+ * Launcher program for creates html by 2 properties files. uses spring-core
+ */
 @SpringBootApplication
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
 public class LauncherCreateHtmlFromPropertiesMultithreading implements Launcher {

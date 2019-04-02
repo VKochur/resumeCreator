@@ -6,6 +6,9 @@ import com.simbirsoft.maketalents.resume_builder.util.Util;
 
 import java.io.File;
 
+/**
+ * Launcher program for creates html by properties. not uses spring-core
+ */
 public class LauncherCreateHtmlFromProperties implements Launcher {
 
     private static final String DEFAULT_NAME_PROPERTY_FILE = "resume.properties";
