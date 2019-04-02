@@ -1,7 +1,5 @@
 package com.simbirsoft.maketalents.resume_builder.util;
 
-import com.simbirsoft.maketalents.resume_builder.Main;
-
 import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -12,10 +10,10 @@ public class Util {
     //get directory of executable file (.class or .jar)
     public static String getPathExecutableDir() {
         try {
-            URL url = Main.class.getProtectionDomain().getCodeSource().getLocation();
+            URL url = Util.class.getProtectionDomain().getCodeSource().getLocation();
             switch (url.getProtocol()) {
                 case "file":
-                    File file = new File(Main.class.getProtectionDomain().getCodeSource().getLocation().toURI());
+                    File file = new File(Util.class.getProtectionDomain().getCodeSource().getLocation().toURI());
                     return file.getParent();
                 case "jar":
                     return solveDirectoryToJar(url.getPath());
