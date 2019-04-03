@@ -28,7 +28,6 @@ public class ResumeTest {
         assertEquals(emails, cloneResume.getEmails());
         assertEquals(skills, cloneResume.getSkills());
 
-
         emails.remove(0);
         skills.remove("c++");
         assertNotEquals(emails, cloneResume.getEmails());

@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+/**
+ * Service for working with properties file
+ */
 @Service("resumeServiceForPropertiesFile")
 public class ResumeServiceImpl implements ResumeService{
 

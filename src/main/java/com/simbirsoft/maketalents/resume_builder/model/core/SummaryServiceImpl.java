@@ -1,11 +1,11 @@
 package com.simbirsoft.maketalents.resume_builder.model.core;
 
-import com.simbirsoft.maketalents.resume_builder.config.AppConfig;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumeCodeCreator;
 import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.HtmlResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.core.image.impl.html.ReplacerHtmlCodeByTemplate;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
 import org.apache.log4j.Priority;
@@ -55,19 +55,8 @@ public class SummaryServiceImpl implements SummaryService {
         }
     }
 
-    /**
-     * Creates html cod by replace template
-     * <p>
-     * template is html code in resources
-     * All substrings in template like ${keyValue} replaces to value : getSubstitution().getKey(keyValue) = value
-     * <p>
-     * <p>
-     * warning: code, that returns method getPreCode can be different from code in template
-     * if code in template not ends with '\n', getPreCode returns template's code and '\n' at the end
-     * if code in template ends with '\n', getPreCode returns template's code
-     */
     private HtmlResumeCodeCreator getCodeCreator() {
-        return new AppConfig().getCodeCreator();
+        return new ReplacerHtmlCodeByTemplate();
     }
 
     public Logger getLogger() {

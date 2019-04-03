@@ -1,7 +1,7 @@
 package com.simbirsoft.maketalents.resume_builder.launcher.impl;
 
 import com.simbirsoft.maketalents.resume_builder.launcher.Launcher;
-import com.simbirsoft.maketalents.resume_builder.model.HtmlGenerator;
+import com.simbirsoft.maketalents.resume_builder.model.generator.Generator;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,9 +33,10 @@ public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
 
     @Override
     public void launch(String[] args) {
-        ApplicationContext context = SpringApplication.run(LauncherCreateHtmlFromPropertiesUseSpringBoot.class, args);
+        ApplicationContext context = null;
         try {
-            HtmlGenerator htmlGenerator = context.getBean(HtmlGenerator.class);
+            context = SpringApplication.run(LauncherCreateHtmlFromPropertiesUseSpringBoot.class, args);
+            Generator generator = (Generator) context.getBean("generatorHtmlFromProperties");
             String pathPropertiesFile;
             String pathDirHtmlFile;
             String htmlFileName;
@@ -48,10 +49,12 @@ public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
                 pathDirHtmlFile = Util.getPathExecutableDir();
                 htmlFileName = DEFAULT_NAME_HTML_FILE;
             }
-            htmlGenerator.setLogger(com.simbirsoft.maketalents.resume_builder.launcher.Util.getLogger());
-            htmlGenerator.print(pathPropertiesFile, pathDirHtmlFile + File.separator + htmlFileName + ".html");
+            generator.setLogger(com.simbirsoft.maketalents.resume_builder.launcher.Util.getLogger());
+            generator.generate(pathPropertiesFile, pathDirHtmlFile + File.separator + htmlFileName + ".html");
         } finally {
-            stopWebApplication(context);
+            if (context != null) {
+                stopWebApplication(context);
+            }
         }
     }
 }

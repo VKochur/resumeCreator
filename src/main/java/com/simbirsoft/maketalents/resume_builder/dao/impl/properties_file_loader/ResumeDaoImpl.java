@@ -3,6 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.dao.impl.properties_file_loade
 import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
+import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
@@ -48,10 +49,6 @@ import java.io.IOException;
 @Repository("resumeDaoFromPropertiesFile")
 public class ResumeDaoImpl implements ResumeDao {
 
-    @Autowired
-    @Qualifier("managerDataSourceFromProperties")
-    ManagerDataSource managerDataSource;
-
     /**
      * Method returns Resume from properties file
      *
@@ -61,7 +58,12 @@ public class ResumeDaoImpl implements ResumeDao {
      */
     @Override
     public Resume getResume(String pathPropertiesFile) throws Exception {
+        ManagerDataSource managerDataSource = getManagerDataSource();
         return managerDataSource.getResume(pathPropertiesFile);
+    }
+
+    private ManagerDataSource getManagerDataSource() {
+        return new ManagerDataSourceImpl();
     }
 
 }

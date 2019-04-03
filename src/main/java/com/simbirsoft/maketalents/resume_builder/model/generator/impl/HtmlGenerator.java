@@ -1,8 +1,7 @@
-package com.simbirsoft.maketalents.resume_builder.model;
+package com.simbirsoft.maketalents.resume_builder.model.generator.impl;
 
-import com.simbirsoft.maketalents.resume_builder.dto.Util;
-import com.simbirsoft.maketalents.resume_builder.entity.Resume;
-import com.simbirsoft.maketalents.resume_builder.model.core.image.ResumePrinter;
+import com.simbirsoft.maketalents.resume_builder.model.generator.Generator;
+import com.simbirsoft.maketalents.resume_builder.model.presenter.Presenter;
 import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
 import org.apache.log4j.ConsoleAppender;
 import org.apache.log4j.Logger;
@@ -14,8 +13,8 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-@Component
-public class HtmlGenerator{
+@Component("generatorHtmlFromProperties")
+public class HtmlGenerator implements Generator {
 
     public HtmlGenerator() {
         logger = Logger.getLogger(HtmlGenerator.class);
@@ -25,24 +24,22 @@ public class HtmlGenerator{
     private Logger logger;
 
     @Autowired
+    @Qualifier("resumeServiceForPropertiesFile")
     private ResumeService resumeService;
 
     @Autowired
-    @Qualifier("resumePrinterByReplaceTemplate")
-    private ResumePrinter resumePrinter;
+    @Qualifier("createrHtml")
+    private Presenter presenter;
 
-    @Autowired
-    Util util;
+    public void generate(String pathPropertiesFile, String pathHtmlFile) {
 
-    public void print(String pathPropertiesFile, String pathHtmlFile) {
         logger.info("Name properties file: " + new File(pathPropertiesFile).getName());
         logger.info("Dir properties file: " + new File(pathPropertiesFile).getParent());
         logger.info("Name html file: " + new File(pathHtmlFile).getName());
         logger.info("Dir html file: " + new File(pathHtmlFile).getParent());
 
         try {
-            Resume resume = util.getResumeByDTO(resumeService.getResumeDto(pathPropertiesFile));
-            resumePrinter.print(resume, pathHtmlFile);
+            presenter.present(resumeService.getResumeDto(pathPropertiesFile), pathHtmlFile);
             logger.info("success");
         } catch (Exception e) {
             logger.log(Priority.ERROR, e.getMessage(), e);
