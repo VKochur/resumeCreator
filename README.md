@@ -37,9 +37,8 @@ MODE должен принимать одно из значений:
      WEB (запуск программы в как веб приложение. доступно на http://localhost:8080/)
 
 
-<p>
-BASIC, SPRING
-<br>
+
+######BASIC, SPRING
 Для указанных режимов, значения и смысл передаваемых при запуске аргументов совпадают. 
 </br>
 
@@ -61,9 +60,9 @@ BASIC, SPRING
 Пример:
 
     java -jar c:\temp\тест\resume.jar SPRING
-</p>
-<p>
-MULTI_THREADS_SPRING
+
+
+######MULTI_THREADS_SPRING
 <br>
 Программа читает данные из двух файлов в разных потоках, собирает данные и создает html файл. Путь к файлам задается в параметрах запуска.
 
@@ -84,7 +83,11 @@ MULTI_THREADS_SPRING
 Пример:
 
     java -jar c:\resume.jar MULTI_THREADS_SPRING
-</p>
+
+######WEB
+Запускает веб приложение, доступное на http://localhost:8080/
+
+    java -jar c:\resume.jar WEB
 
 #### Требования к файлу .properies
 Файл должен иметь кодировку utf-8 без BOM.
