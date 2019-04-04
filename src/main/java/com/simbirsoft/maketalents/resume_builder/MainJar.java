@@ -11,12 +11,18 @@ import java.util.Arrays;
  * <p>
  * main(String[] args)
  * program start from console
- * args[0] must be one of
+ * args[0] may be one of
  * BASIC,
  * SPRING,
  * MULTI_THREADS_SPRING,
  * WEB
  * <p>
+ * <p>
+ * Settings by default:
+ * if args.length == 0, program starts alike args[0] = WEB
+ * ------------------
+ * if args[0] == WEB
+ * run web application that are available by http://localhost:8080/
  * ------------------
  * if args[0] == BASIC
  * <p>
@@ -72,10 +78,10 @@ import java.util.Arrays;
  * html file = executable dir/createdFromPerson1Person2.html
  * <p>
  * --------------------
- * if args[0] == WEB
- * run web application that are available by http://localhost:8080/
  */
 public class MainJar {
+
+    private static final String[] ARGS_BY_DEFAULT = new String[]{"WEB"};
 
     private static String[] argsForLauncher;
     private static Launcher launcher;
@@ -110,19 +116,18 @@ public class MainJar {
     }
 
     private static void defineParamsForRunning(String[] args) {
+        //args by default
         if (args.length == 0) {
-            throw new IllegalArgumentException("Wrong parametrs for running. Must indicate launcher.\n" +
-                    "Valid: " + Arrays.toString(LauncherFactory.getAnalizedTypes()));
-        } else {
-            try {
-                LauncherTypes launcherType = LauncherTypes.valueOf(args[0]);
-                argsForLauncher = new String[args.length - 1];
-                System.arraycopy(args, 1, argsForLauncher, 0, args.length - 1);
-                launcher = LauncherFactory.getInstance(launcherType);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalArgumentException(e.getMessage() + "\n" +
-                        "Valid indicate launcher: " + Arrays.toString(LauncherFactory.getAnalizedTypes()));
-            }
+            args = ARGS_BY_DEFAULT;
+        }
+        try {
+            LauncherTypes launcherType = LauncherTypes.valueOf(args[0]);
+            argsForLauncher = new String[args.length - 1];
+            System.arraycopy(args, 1, argsForLauncher, 0, args.length - 1);
+            launcher = LauncherFactory.getInstance(launcherType);
+        } catch (IllegalArgumentException e) {
+            throw new IllegalArgumentException(e.getMessage() + "\n" +
+                    "Valid indicate launcher: " + Arrays.toString(LauncherFactory.getAnalizedTypes()));
         }
     }
 }

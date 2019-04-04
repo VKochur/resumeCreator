@@ -24,7 +24,7 @@ public class MultiThreadingResumeServiceImpl implements ResumeService{
     /**
      * Method gets resumeDTO by 2 properties file
      * Data in fist file mor important that second file.
-     * Resulting resume html contains by data from first file, and gets from second properties file info,
+     * Resulting resume contains by data from first file, and gets from second properties file info,
      * that not specified in first
      * @param compositeKey format "string: pathToFirstFile,pathToSecondFile",
      *      *                     example getResume("c:\temp\1.properties,c:\second.properties")

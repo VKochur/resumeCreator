@@ -15,7 +15,7 @@ import java.util.List;
  * Provides info about resume from 2 properties files
  * Files are reading in separate threads.
  * Data in fist file mor important that second file.
- * Resulting resume html contains by data from first file, and gets from second properties file info,
+ * Resulting resume contains by data from first file, and gets from second properties file info,
  * that not specified in first
  */
 @Repository("resumeDaoFromPropertiesMultiThreading")

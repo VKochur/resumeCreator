@@ -76,11 +76,11 @@ public class Provider extends Thread implements ManagerDataSource {
 
     /**
      * method get Resume from managerDataSource, that managerDataSource gives at moment of start present thread
-     * before getting Resume present thread must be started and terminated
+     * before getting Resume present thread must be started and terminated by this.startGettingResume(String idResume)
      *
      * @return calculated resume from managerDataSource at moment start present thread
      * @throws Exception throws IllegalThreadStateException if present thread's state not terminated,
-     * throws IllegalArgumentException if passed if not equals id, that was used at moment running present thread,
+     * throws IllegalArgumentException if passed id not equals id, that was used at moment running present thread,
      * also throws exception which was thrown by managerDataSource at moment started present thread
      */
     @Override
