@@ -29,11 +29,19 @@
                 </tr>
                 <tr>
                     <td class="text-right">Телефон:</td>
-                    <td>[[${phone}]]</td>
+                    <td>
+                        <span th:each="phone:${phones}">
+                            <span th:text="${phone}"/>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-right">e-mail:</td>
-                    <td>[[${email}]]</td>
+                    <td>
+                        <span th:each="email:${emails}">
+                            <span th:text="${email}"/>
+                        </span>
+                    </td>
                 </tr>
                 <tr>
                     <td class="text-right">Skype:</td>
@@ -42,30 +50,39 @@
             </table>
         </div>
         <div class="col-4">
-            <img src="[[${avatarUrl}]]" alt="avatar" class="img-fluid">
-            [[${avatarUrl}]]
+            <img th:src="${avatarUrl}" alt="avatar" class="img-fluid">
         </div>
     </div>
     <br>
     <div class="col-12">
         <h2>Цель:</h2>
-        <p>[[${target}]]</p>
+        <div th:each="target:${targets}">
+            <div th:text="${target}"/>
+        </div>
     </div>
     <div class="col-12">
         <h2>Опыт работы:</h2>
-        <p>[[${experience}]]</p>
+        <div th:each="experience:${experiences}">
+            <div th:text="${experience}"/>
+        </div>
     </div>
     <div class="col-12">
         <h2>Используемые технологии:</h2>
-        <p>[[${skills}]]</p>
+        <span th:each="skill:${skills}">
+            <span th:text="${skill}"/>
+        </span>
     </div>
     <div class="col-12">
         <h2>Образование:</h2>
-        <p>[[${baseEducation}]]</p>
+        <div th:each="baseEducation:${baseEducations}">
+            <div th:text="${baseEducation}"/>
+        </div>
     </div>
     <div class="col-12">
-        <h2>Дополнительное образование и курсы:</h2>
-        <p>[[${addedEducation}]]</p>
+        <h2>Дополнительное образование:</h2>
+        <div th:each="addedEducation:${addedEducations}">
+            <div th:text="${addedEducation}"/>
+        </div>
     </div>
     <div class="col-12">
         <h2>Дополнительная информация:</h2>
