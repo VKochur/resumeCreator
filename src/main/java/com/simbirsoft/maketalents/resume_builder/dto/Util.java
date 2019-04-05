@@ -9,6 +9,7 @@ public class Util {
 
     public Resume getResumeByDTO(ResumeDto resumeDto) {
         return new ResumeBuilder()
+                .setIdResume(resumeDto.getId())
                 .setCareerTarget(resumeDto.getCareerTarget())
                 .setName(resumeDto.getName())
                 .setDataOfBorn(resumeDto.getDateOfBorn())
@@ -27,6 +28,7 @@ public class Util {
 
     public ResumeDto getDtoByResume(Resume resume) {
         ResumeDto resumeDto = new ResumeDto();
+        resumeDto.setId(resume.getId());
         resumeDto.setCareerTarget(resume.getCareerTarget());
         resumeDto.setName(resume.getName());
         resumeDto.setDateOfBorn(resume.getDateOfBorn());

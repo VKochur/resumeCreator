@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.NotSupportedException;
 import java.io.IOException;
 
 /**
@@ -60,6 +61,11 @@ public class ResumeDaoImpl implements ResumeDao {
     public Resume getResume(String pathPropertiesFile) throws Exception {
         ManagerDataSource managerDataSource = getManagerDataSource();
         return managerDataSource.getResume(pathPropertiesFile);
+    }
+
+    @Override
+    public Resume saveResume(Resume resume) throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 
     private ManagerDataSource getManagerDataSource() {

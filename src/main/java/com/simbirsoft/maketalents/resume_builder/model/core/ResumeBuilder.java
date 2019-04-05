@@ -13,6 +13,11 @@ public class ResumeBuilder {
         resume = new Resume();
     }
 
+    public ResumeBuilder setIdResume(Long id){
+        resume.setId(id);
+        return this;
+    }
+
     public ResumeBuilder setCareerTarget(String careerTarget){
         resume.setCareerTarget(careerTarget);
         return this;

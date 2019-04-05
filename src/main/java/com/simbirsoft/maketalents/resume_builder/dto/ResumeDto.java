@@ -7,6 +7,7 @@ import java.util.Map;
  * DTO for Resume
  */
 public class ResumeDto {
+    private long id;
     private String careerTarget;
     private String name;
     private String dateOfBorn;
@@ -22,6 +23,14 @@ public class ResumeDto {
     private Map<String, Integer> skills;
 
     public ResumeDto() {
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getCareerTarget() {

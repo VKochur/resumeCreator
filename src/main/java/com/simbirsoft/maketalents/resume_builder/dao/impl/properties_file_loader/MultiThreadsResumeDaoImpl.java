@@ -8,6 +8,7 @@ import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrent
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.concurrently.Provider;
 import org.springframework.stereotype.Repository;
 
+import javax.transaction.NotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,6 +33,11 @@ public class MultiThreadsResumeDaoImpl implements ResumeDao {
     public Resume getResume(String compositeKey) throws Exception {
         ManagerDataSource managerDataSource = getManagerDataSource();
         return managerDataSource.getResume(compositeKey);
+    }
+
+    @Override
+    public Resume saveResume(Resume resume) throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 
     private ManagerDataSource getManagerDataSource() {

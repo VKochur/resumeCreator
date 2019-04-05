@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.NotSupportedException;
+
 /**
  * Service for working with properties file
  */
@@ -30,5 +32,10 @@ public class ResumeServiceImpl implements ResumeService{
     @Override
     public ResumeDto getResumeDto(String pathPropertiesFile) throws Exception {
         return utilForDTO.getDtoByResume(resumeDao.getResume(pathPropertiesFile));
+    }
+
+    @Override
+    public ResumeDto saveResumeDto(ResumeDto resumeDto) throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 }

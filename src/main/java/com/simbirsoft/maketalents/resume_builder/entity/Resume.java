@@ -2,25 +2,58 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 
 import com.simbirsoft.maketalents.resume_builder.model.core.ResumeBuilder;
 
+import javax.persistence.*;
 import java.util.*;
 
+@Entity
+@Table(name = "summary")
 public class Resume implements Cloneable {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private String careerTarget;
     private String name;
     private String dateOfBorn;
+
+    @ElementCollection
+    @CollectionTable (name = "phones", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> phoneNumbers;
     private List<String> emails;
     private String skypeLogin;
     private String urlAvatar;
+
+    @ElementCollection
+    @CollectionTable (name = "targets", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> targets;
+
+    @ElementCollection
+    @CollectionTable (name = "experiences", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> experiences;
+
+    @ElementCollection
+    @CollectionTable (name = "basic_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> basicEducations;
+
+    @ElementCollection
+    @CollectionTable (name = "added_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> additionalEducations;
     private String otherInfo;
+
+    @OneToMany
+    @MapKey(name="skill")
     private Map<String, Integer> skills;
 
     public Resume() {
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getCareerTarget() {
