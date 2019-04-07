@@ -9,15 +9,15 @@ import org.springframework.stereotype.Component;
 public class DbResumeDaoImpl implements ResumeDao {
 
     @Autowired
-    Repository repository;
+    ResumeRepository resumeRepository;
 
     @Override
     public Resume getResume(String id) throws Exception {
         Long idInRepository = Long.parseLong(id);
-        return repository.getOne(idInRepository);
+        return resumeRepository.getOne(idInRepository);
     }
 
     public Resume saveResume(Resume resume){
-        return repository.save(resume);
+        return resumeRepository.save(resume);
     }
 }

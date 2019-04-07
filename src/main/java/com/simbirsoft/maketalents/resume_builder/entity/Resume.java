@@ -20,7 +20,11 @@ public class Resume implements Cloneable {
     @ElementCollection
     @CollectionTable (name = "phones", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> phoneNumbers;
+
+    @ElementCollection
+    @CollectionTable (name = "emails", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> emails;
+
     private String skypeLogin;
     private String urlAvatar;
 
@@ -39,10 +43,12 @@ public class Resume implements Cloneable {
     @ElementCollection
     @CollectionTable (name = "added_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> additionalEducations;
+
     private String otherInfo;
 
-    @OneToMany
-    @MapKey(name="skill")
+   // @OneToMany
+   // @MapKey(name="skill")
+    @Transient
     private Map<String, Integer> skills;
 
     public Resume() {
