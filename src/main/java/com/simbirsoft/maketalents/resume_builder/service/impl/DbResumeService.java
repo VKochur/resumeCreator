@@ -23,6 +23,7 @@ public class DbResumeService implements ResumeService {
 
     @Override
     public ResumeDto getResumeDto(String id) throws Exception {
+        Resume resume = resumeDao.getResume(id);
         return util.getDtoByResume(resumeDao.getResume(id));
     }
 

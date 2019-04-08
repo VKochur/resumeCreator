@@ -3,44 +3,45 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 import com.simbirsoft.maketalents.resume_builder.model.core.ResumeBuilder;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.*;
 
 @Entity
 @Table(name = "summary")
-public class Resume implements Cloneable {
+public class Resume implements Cloneable{
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String careerTarget;
     private String name;
     private String dateOfBorn;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "phones", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> phoneNumbers;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "emails", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> emails;
 
     private String skypeLogin;
     private String urlAvatar;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "targets", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> targets;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "experiences", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> experiences;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "basic_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> basicEducations;
 
-    @ElementCollection
+    @ElementCollection//(fetch = FetchType.EAGER)
     @CollectionTable (name = "added_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> additionalEducations;
 
@@ -187,6 +188,7 @@ public class Resume implements Cloneable {
     @Override
     public String toString() {
         return new StringBuilder()
+                .append("ID:").append((getId() == null) ? "null" : getId().toString()).append("\n")
                 .append("FIO:").append(getName()).append("\n")
                 .append("Data of born: ").append(getDateOfBorn()).append("\n")
                 .append("Career target: ").append(getCareerTarget()).append("\n")
