@@ -3,7 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.entity;
 import com.simbirsoft.maketalents.resume_builder.model.core.ResumeBuilder;
 
 import javax.persistence.*;
-import java.io.Serializable;
+
 import java.util.*;
 
 @Entity
@@ -18,38 +18,37 @@ public class Resume implements Cloneable{
     private String name;
     private String dateOfBorn;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "phones", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> phoneNumbers;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "emails", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> emails;
 
     private String skypeLogin;
     private String urlAvatar;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "targets", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> targets;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "experiences", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> experiences;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "basic_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> basicEducations;
 
-    @ElementCollection//(fetch = FetchType.EAGER)
+    @ElementCollection
     @CollectionTable (name = "added_educations", joinColumns = @JoinColumn(name = "resume_id"))
     private List<String> additionalEducations;
 
     private String otherInfo;
 
-   // @OneToMany
-   // @MapKey(name="skill")
-    @Transient
+    @ElementCollection
+    @MapKeyColumn
     private Map<String, Integer> skills;
 
     public Resume() {

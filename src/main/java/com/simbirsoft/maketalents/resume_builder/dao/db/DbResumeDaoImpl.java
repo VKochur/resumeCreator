@@ -25,6 +25,7 @@ public class DbResumeDaoImpl implements ResumeDao {
         Hibernate.initialize(resume.getExperiences());
         Hibernate.initialize(resume.getBasicEducations());
         Hibernate.initialize(resume.getAdditionalEducations());
+        Hibernate.initialize(resume.getSkills());
 
         return resume;
     }
