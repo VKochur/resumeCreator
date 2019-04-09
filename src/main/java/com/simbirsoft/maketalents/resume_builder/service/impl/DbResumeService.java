@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.NotSupportedException;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service("resumeServiceForDb")
 public class DbResumeService implements ResumeService {
@@ -35,5 +37,14 @@ public class DbResumeService implements ResumeService {
         } catch (NotSupportedException e) {
             throw new IllegalStateException("occured NotSupportedException", e);
         }
+    }
+
+    @Override
+    public List<ResumeDto> getAll() throws NotSupportedException {
+        List<ResumeDto> resumeDtoList = new ArrayList<>();
+        for (Resume resume : resumeDao.getAll()) {
+            resumeDtoList.add(util.getDtoByResume(resume));
+        }
+        return resumeDtoList;
     }
 }

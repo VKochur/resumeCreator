@@ -3,7 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.running_from_ide;
 import com.simbirsoft.maketalents.resume_builder.dto.ResumeDto;
 import com.simbirsoft.maketalents.resume_builder.dto.Util;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
-import com.simbirsoft.maketalents.resume_builder.model.core.ResumeBuilder;
+import com.simbirsoft.maketalents.resume_builder.launcher.impl.LauncherWeb;
 import com.simbirsoft.maketalents.resume_builder.service.ResumeService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +23,9 @@ import java.util.*;
 @SpringBootApplication
 public class MainWeb {
     public static void main(String[] args) throws Exception {
+
+        new LauncherWeb().launch(args);
+        /*
         ApplicationContext context = SpringApplication.run(MainWeb.class, args);
         ResumeService resumeService = (ResumeService) context.getBean("resumeServiceForDb");
         Util utilDto = context.getBean(Util.class);
@@ -38,5 +41,6 @@ public class MainWeb {
         resumeDto = resumeService.getResumeDto( String.valueOf(resumeDto.getId()) );
         resume = utilDto.getResumeByDTO(resumeDto);
         System.out.println(resume);
+        */
     }
 }

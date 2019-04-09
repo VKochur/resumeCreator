@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import javax.transaction.NotSupportedException;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Provides info about resume from property file.
@@ -63,13 +64,17 @@ public class ResumeDaoImpl implements ResumeDao {
         return managerDataSource.getResume(pathPropertiesFile);
     }
 
+    private ManagerDataSource getManagerDataSource() {
+        return new ManagerDataSourceImpl();
+    }
+
     @Override
     public Resume saveResume(Resume resume) throws NotSupportedException {
         throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 
-    private ManagerDataSource getManagerDataSource() {
-        return new ManagerDataSourceImpl();
+    @Override
+    public List<Resume> getAll() throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
-
 }

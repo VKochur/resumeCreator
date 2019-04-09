@@ -35,11 +35,6 @@ public class MultiThreadsResumeDaoImpl implements ResumeDao {
         return managerDataSource.getResume(compositeKey);
     }
 
-    @Override
-    public Resume saveResume(Resume resume) throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
-    }
-
     private ManagerDataSource getManagerDataSource() {
         Collector collector = new Collector();
         List<Provider> providers = new ArrayList<>();
@@ -47,5 +42,15 @@ public class MultiThreadsResumeDaoImpl implements ResumeDao {
         providers.add(new PropertyReader());
         collector.setProviders(providers);
         return collector;
+    }
+
+    @Override
+    public Resume saveResume(Resume resume) throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public List<Resume> getAll() throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 }

@@ -3,6 +3,7 @@ package com.simbirsoft.maketalents.resume_builder.service;
 import com.simbirsoft.maketalents.resume_builder.dto.ResumeDto;
 
 import javax.transaction.NotSupportedException;
+import java.util.List;
 
 public interface ResumeService {
 
@@ -21,4 +22,11 @@ public interface ResumeService {
      * @throws NotSupportedException
      */
     ResumeDto saveResumeDto(ResumeDto resumeDto) throws NotSupportedException;
+
+    /**
+     * method for getting all resumeDto from source
+     * @return
+     * @throws NotSupportedException
+     */
+    List<ResumeDto> getAll() throws NotSupportedException;
 }

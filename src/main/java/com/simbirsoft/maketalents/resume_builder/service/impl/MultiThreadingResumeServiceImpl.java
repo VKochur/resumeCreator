@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.NotSupportedException;
+import java.util.List;
 
 /**
  * Service for working with 2 properties files in separate threads
@@ -40,6 +41,11 @@ public class MultiThreadingResumeServiceImpl implements ResumeService {
 
     @Override
     public ResumeDto saveResumeDto(ResumeDto resumeDto) throws NotSupportedException {
+        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public List<ResumeDto> getAll() throws NotSupportedException {
         throw new NotSupportedException("operation not supported by " + this.getClass().getName());
     }
 }
