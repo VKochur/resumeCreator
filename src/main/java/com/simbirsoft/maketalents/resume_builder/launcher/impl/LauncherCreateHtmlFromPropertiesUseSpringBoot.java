@@ -5,8 +5,11 @@ import com.simbirsoft.maketalents.resume_builder.model.generator.Generator;
 import com.simbirsoft.maketalents.resume_builder.util.Util;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import java.io.File;
 
@@ -16,7 +19,10 @@ import static com.simbirsoft.maketalents.resume_builder.launcher.Util.stopWebApp
  * Launcher program for creates html by properties. uses spring-core
  */
 @SpringBootApplication
+@EnableTransactionManagement
 @ComponentScan("com.simbirsoft.maketalents.resume_builder")
+@EnableJpaRepositories(basePackages = {"com.simbirsoft.maketalents.resume_builder.dao.db"})
+@EntityScan(basePackages = {"com.simbirsoft.maketalents.resume_builder.entity"})
 public class LauncherCreateHtmlFromPropertiesUseSpringBoot implements Launcher {
 
     private static final String DEFAULT_NAME_PROPERTY_FILE = "resume.properties";
