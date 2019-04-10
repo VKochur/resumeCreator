@@ -7,7 +7,7 @@ insert into phones (resume_id, phone_numbers) values (1, '888-888-88');
 insert into phones (resume_id, phone_numbers) values (1, '888-777-88');
 insert into phones (resume_id, phone_numbers) values (2, '5555-5555');
 insert into phones (resume_id, phone_numbers) values (3, '8-90-943-3242');
-insert into phones (resume_id, phone_numbers) values (4, '8-90-0000 -242');
+insert into phones (resume_id, phone_numbers) values (4, '8-90-0000-242');
 
 insert into emails (resume_id, emails) values (1, 'email1');
 insert into emails (resume_id, emails) values (1, 'email2_1@gmail.com');
@@ -21,12 +21,12 @@ insert into basic_educations (resume_id, basic_educations) values (2, 'Унив�
 insert into basic_educations (resume_id, basic_educations) values (3, 'Университет. Год выпуска. Специальность');
 insert into basic_educations (resume_id, basic_educations) values (4, null);
 
---insert into additional_educations (resume_id, additional_educations) values (1, 'IT курсы');
---insert into additional_educations (resume_id, additional_educations) values (1, 'Курсы английского');
---insert into additional_educations (resume_id, additional_educations) values (1, 'MBA');
---insert into additional_educations (resume_id, additional_educations) values (2, 'Курсы');
---insert into additional_educations (resume_id, additional_educations) values (3, 'Курсы');
---insert into additional_educations (resume_id, additional_educations) values (4, 'Курсы');
+insert into added_educations (resume_id, additional_educations) values (1, 'IT курсы');
+insert into added_educations (resume_id, additional_educations) values (1, 'Курсы английского');
+insert into added_educations (resume_id, additional_educations) values (1, 'MBA');
+insert into added_educations (resume_id, additional_educations) values (2, 'Курсы');
+insert into added_educations (resume_id, additional_educations) values (3, 'Курсы');
+insert into added_educations (resume_id, additional_educations) values (4, 'Курсы');
 
 insert into experiences (resume_id, experiences) values (1, 'Инженер программист. Фирма. С 2015 по н.в.');
 insert into experiences (resume_id, experiences) values (1, 'Программист. Предпрятие с 2012-2015гг.');

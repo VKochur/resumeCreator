@@ -109,8 +109,13 @@ public class GeneralForTestingBasicAndCoreSpringBootLauncher {
             //check launch by empty args
             launcher.launch(new String[] {});
         } finally {
-            Files.deleteIfExists(html.toPath());
-            Files.deleteIfExists(workDir.toPath());
+            try {
+                //NPE possibly
+                Files.deleteIfExists(html.toPath());
+            }
+            finally {
+                Files.deleteIfExists(workDir.toPath());
+            }
         }
     }
 }
