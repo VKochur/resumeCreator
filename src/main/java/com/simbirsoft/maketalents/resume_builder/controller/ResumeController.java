@@ -61,8 +61,8 @@ public class ResumeController {
 
     private ModelAndView showInfoOnMessagePage(String title, String message) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("title", "Illegal id");
-        modelAndView.addObject("message", "you must specify id for resume in browser address bar");
+        modelAndView.addObject("title", title);
+        modelAndView.addObject("message", message);
         modelAndView.setViewName("message");
         return modelAndView;
     }
