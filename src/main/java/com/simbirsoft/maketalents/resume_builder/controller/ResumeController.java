@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,12 +28,12 @@ public class ResumeController {
     ResumeService resumeServiceFromDb;
 
 
-    @RequestMapping("/")
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String helloPage() {
         return "hello";
     }
 
-    @RequestMapping("/resume")
+    @RequestMapping(value = "/resume", method = RequestMethod.GET)
     public String showListResumesFromDb(Model model) {
         try {
             model.addAttribute("resumes", resumeServiceFromDb.getAll());
@@ -43,7 +44,7 @@ public class ResumeController {
         return "resume_list";
     }
 
-    @RequestMapping("/resume/db")
+    @RequestMapping(value = "/resume/db", method = RequestMethod.GET)
     public ModelAndView showResumeByIdFormDb(@RequestParam("id") String id) {
         if (id.isEmpty()) {
             return showInfoOnMessagePage("Illegal id", "you must specify id for resume in browser address bar");
@@ -67,7 +68,7 @@ public class ResumeController {
         return modelAndView;
     }
 
-    @RequestMapping("/resume/build")
+    @RequestMapping(value = "/resume/build", method = RequestMethod.GET)
     public ModelAndView showResumeFormFile(@RequestParam("path") String pathToFile) {
         if (pathToFile.isEmpty()) {
             return showInfoOnMessagePage("Illegal path to file", "you must specify path to properties file in browser address bar");
