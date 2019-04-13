@@ -35,17 +35,13 @@ public class ResumeController {
 
     @RequestMapping(value = "/resume", method = RequestMethod.GET)
     public String showListResumesFromDb(Model model) {
-        try {
-            model.addAttribute("resumes", resumeServiceFromDb.getAll());
-            model.addAttribute("title", "All resumes from db");
-        } catch (NotSupportedException e) {
-            throw new IllegalStateException("Unexpected exception " + e.getMessage(), e);
-        }
+        model.addAttribute("resumes", resumeServiceFromDb.getAll());
+        model.addAttribute("title", "All resumes from db");
         return "resume_list";
     }
 
     @RequestMapping(value = "/resume/db", method = RequestMethod.GET)
-    public ModelAndView showResumeByIdFormDb(@RequestParam("id") String id) {
+    public ModelAndView showResumeByIdFromDb(@RequestParam("id") String id) {
         if (id.isEmpty()) {
             return showInfoOnMessagePage("Illegal id", "you must specify id for resume in browser address bar");
         }
@@ -69,7 +65,7 @@ public class ResumeController {
     }
 
     @RequestMapping(value = "/resume/build", method = RequestMethod.GET)
-    public ModelAndView showResumeFormFile(@RequestParam("path") String pathToFile) {
+    public ModelAndView showResumeFromFile(@RequestParam("path") String pathToFile) {
         if (pathToFile.isEmpty()) {
             return showInfoOnMessagePage("Illegal path to file", "you must specify path to properties file in browser address bar");
         }

@@ -7,7 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.NotSupportedException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,12 +26,12 @@ public class DbResumeDaoImpl implements ResumeDao {
      * id must be contain value parsable as Long
      * @param id unique key.
      * @return Resume
-     * @throws Exception SQLException,
+     * method can throws
      * NumberFormatException if id's value not parsable as Long,
      * NoSuchElementException if the Resume by id not found
      */
     @Override
-    public Resume getResume(String id) throws Exception {
+    public Resume getResume(String id){
         Long idInRepository = Long.parseLong(id);
         Resume resume = resumeRepository.findById(idInRepository).get();
 
@@ -51,16 +50,20 @@ public class DbResumeDaoImpl implements ResumeDao {
      * method for saving resume in db
      * @param resume data
      * @return saved resume with specific id
+     * throws IllegalStateException if db contains resumeInDb : resumeInDb.getId() == resume.getId()
      */
     @Override
-    public Resume saveResume(Resume resume){
-        return resumeRepository.save(resume);
+    public Resume createResume(Resume resume){
+        if (resumeRepository.findById(resume.getId()).isPresent()) {
+            throw new IllegalStateException("resume with key = " + resume.getId() + " already exists. For updating use method 'updateResume'");
+        } else {
+            return resumeRepository.save(resume);
+        }
     }
 
     /**
      *
      * @return all resume from db
-     * @throws NotSupportedException
      */
     @Override
     public List<Resume> getAll(){
@@ -70,5 +73,34 @@ public class DbResumeDaoImpl implements ResumeDao {
             resumeList.add(resume);
         }
         return resumeList;
+    }
+
+    /**
+     *
+     * @param resume new data for resume
+     * @return updated resume from db
+     * throws IllegalStateException if db not contains resumeInDb : resumeInDb.getId() == resume.getId()
+     */
+    @Override
+    public Resume updateResume(Resume resume) {
+        if (resumeRepository.findById(resume.getId()).isPresent()) {
+            return resumeRepository.save(resume);
+        } else {
+            throw new IllegalStateException("resume with key = " + resume.getId() + " not found. For creation use method 'createResume'");
+        }
+    }
+
+    /**
+     * method for delete resume in db
+     * id must be contain value parsable as Long
+     * @param id unique key for resume, which should be removed
+     * @return deleted Resume
+     * NoSuchElementException if the Resume by id not found
+     */
+    @Override
+    public Resume deleteResume(String id) {
+        Resume resumeFormRepository = getResume(id);
+        resumeRepository.deleteById(Long.parseLong(id));
+        return resumeFormRepository;
     }
 }

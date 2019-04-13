@@ -23,16 +23,20 @@ import java.util.List;
 public class MultiThreadsResumeDaoImpl implements ResumeDao {
 
     /**
-     *  Method returns Resume from 2 properties files
+     * Method returns Resume from 2 properties files
      * @param compositeKey format "string: pathToFirstFile,pathToSecondFile",
      *                     example getResume("c:\temp\1.properties,c:\second.properties")
      * @return
      * @throws Exception throws IOException
      */
     @Override
-    public Resume getResume(String compositeKey) throws Exception {
+    public Resume getResume(String compositeKey){
         ManagerDataSource managerDataSource = getManagerDataSource();
-        return managerDataSource.getResume(compositeKey);
+        try {
+            return managerDataSource.getResume(compositeKey);
+        } catch (Exception e) {
+            throw new IllegalStateException("occured exception: " + e.getMessage(), e);
+        }
     }
 
     private ManagerDataSource getManagerDataSource() {
@@ -45,12 +49,22 @@ public class MultiThreadsResumeDaoImpl implements ResumeDao {
     }
 
     @Override
-    public Resume saveResume(Resume resume) throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public Resume createResume(Resume resume) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 
     @Override
-    public List<Resume> getAll() throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public List<Resume> getAll() {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public Resume updateResume(Resume resume) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public Resume deleteResume(String id) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 }

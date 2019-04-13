@@ -4,11 +4,8 @@ import com.simbirsoft.maketalents.resume_builder.dao.ResumeDao;
 import com.simbirsoft.maketalents.resume_builder.entity.Resume;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.ManagerDataSource;
 import com.simbirsoft.maketalents.resume_builder.model.core.data.impl.properties_file_loader.ManagerDataSourceImpl;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
-import javax.transaction.NotSupportedException;
 import java.io.IOException;
 import java.util.List;
 
@@ -59,9 +56,13 @@ public class ResumeDaoImpl implements ResumeDao {
      * @throws IOException
      */
     @Override
-    public Resume getResume(String pathPropertiesFile) throws Exception {
+    public Resume getResume(String pathPropertiesFile) {
         ManagerDataSource managerDataSource = getManagerDataSource();
-        return managerDataSource.getResume(pathPropertiesFile);
+        try {
+            return managerDataSource.getResume(pathPropertiesFile);
+        } catch (Exception e) {
+            throw new IllegalStateException("occured exception: " + e.getMessage(), e);
+        }
     }
 
     private ManagerDataSource getManagerDataSource() {
@@ -69,12 +70,22 @@ public class ResumeDaoImpl implements ResumeDao {
     }
 
     @Override
-    public Resume saveResume(Resume resume) throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public Resume createResume(Resume resume) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 
     @Override
-    public List<Resume> getAll() throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public List<Resume> getAll() {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public Resume updateResume(Resume resume) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public Resume deleteResume(String id) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 }

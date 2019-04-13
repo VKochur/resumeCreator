@@ -15,7 +15,7 @@ import java.util.List;
  * Service for working with properties file
  */
 @Service("resumeServiceForPropertiesFile")
-public class ResumeServiceImpl implements ResumeService{
+public class ResumeServiceImpl implements ResumeService {
 
     @Autowired
     @Qualifier("resumeDaoFromPropertiesFile")
@@ -26,22 +26,32 @@ public class ResumeServiceImpl implements ResumeService{
 
     /**
      * Method gets resumeDTO by properties file
+     *
      * @param pathPropertiesFile path to file
      * @return resume
-     * @throws Exception
      */
     @Override
-    public ResumeDto getResumeDto(String pathPropertiesFile) throws Exception {
+    public ResumeDto getResumeDto(String pathPropertiesFile) {
         return utilForDTO.getDtoByResume(resumeDao.getResume(pathPropertiesFile));
     }
 
     @Override
-    public ResumeDto saveResumeDto(ResumeDto resumeDto) throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public ResumeDto saveResumeDto(ResumeDto resumeDto) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 
     @Override
-    public List<ResumeDto> getAll() throws NotSupportedException {
-        throw new NotSupportedException("operation not supported by " + this.getClass().getName());
+    public List<ResumeDto> getAll() {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public ResumeDto updateResume(ResumeDto resumeDto) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
+    }
+
+    @Override
+    public ResumeDto deleteResume(String id) {
+        throw new UnsupportedOperationException("operation not supported by " + this.getClass().getName());
     }
 }
