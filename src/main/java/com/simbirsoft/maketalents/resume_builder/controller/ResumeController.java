@@ -80,6 +80,11 @@ public class ResumeController {
         }
     }
 
+    @RequestMapping(value = "resume/db/update", method = RequestMethod.GET)
+    public String getPageForUpdatingDb(){
+        return "resume_updating";
+    }
+
     private ModelAndView showExceptionOnMessagePage(Exception e) {
         ModelAndView modelAndView = new ModelAndView();
         StringWriter sw = new StringWriter();

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+
+    <script type="text/javascript">
+
+        $(init);
+
+        function init() {
+            $("#getResumeById").bind('click', getResumeById);
+            $("#createNewResume").bind('click', sayHello);
+        }
+
+        function getResumeById() {
+            $.getJSON("http://localhost:8080/rest/resume/" + $("#idForGetting").val(), function (data, textStatus, jqXHR) {
+                $("#name").val(data.name);
+                $("#careerTarget").val(data.careerTarget);
+                $("#dateOfBorn").val(data.dateOfBorn);
+                $("#phone").val(data.phoneNumbers);
+                $("#email").val(data.emails);
+                $("#skype").val(data.skypeLogin);
+                $("#urlAvatar").val(data.urlAvatar);
+                $("#targets").val(data.targets);
+                $("#experiences").val(data.experiences);
+                $("#basicEducation").val(data.basicEducation);
+                $("#addedEducation").val(data.additionalEducation);
+                $("#skills").val(data.skills);
+                $("#otherInfo").val(data.otherInfo);
+            });
+        }
+
+        function sayHello() {
+            $.JSON("http://localhost:8080/rest/resume/1", function (data, textStatus, jqXHR) {
+                $("#name").val(data.name);
+                $("#careerTarget").val(data.careerTarget);
+                $("#dateOfBorn").val(data.dateOfBorn);
+                $("#phone").val(data.phoneNumbers);
+                $("#email").val(data.emails);
+            });
+        }
+
+
+    </script>
+
+    <title>Страница для проведения изменений в бд</title>
+</head>
+<body>
+
+<div>
+    <tr>
+        <td><button type="button" id = "getResumeById">Получить по id:</button></td>
+        <td><input type="text" id="idForGetting"></td>
+    </tr>
+</div>
+
+<h1>Резюме</h1>
+
+<div id = "resumeData" class="">
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Фамилия Имя Отчество:</span>
+    </div>
+    <input type="text" class="form-control" id="name">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Желаемая должность:</span>
+    </div>
+    <input type="text" class="form-control" id="careerTarget">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Дата рождения:</span>
+    </div>
+    <input type="text" class="form-control" id="dateOfBorn">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Контактный телефон:</span>
+    </div>
+    <input type="text" class="form-control" id="phone">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Email:</span>
+    </div>
+    <input type="text" class="form-control" id="email">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Skype:</span>
+    </div>
+    <input type="text" class="form-control" id="skype">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Url фото:</span>
+    </div>
+    <input type="text" class="form-control" id="urlAvatar">
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Цель обращения:</span>
+    </div>
+    <textarea class="form-control" id = "targets" rows="3"/>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Опыт работы:</span>
+    </div>
+    <textarea class="form-control" id = "experiences" rows="3"/>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Технологии и опыт использования:</span>
+    </div>
+    <textarea class="form-control" id = "skills" rows="3"/>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Образование:</span>
+    </div>
+    <textarea class="form-control" id = "basicEducation" rows="3"/>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Дополнительное образование:</span>
+    </div>
+    <textarea class="form-control" id = "addedEducation" rows="3"/>
+</div>
+
+<div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <span class="input-group-text">Дополнительное информация:</span>
+    </div>
+    <input class="form-control" id = "otherInfo" rows="3"/>
+</div>
+</div>
+
+<button type="button" id="createNewResume">Создать новое резюме</button>
+
+
+</body>
+</html>
