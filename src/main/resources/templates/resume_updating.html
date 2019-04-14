@@ -13,148 +13,239 @@
 
     <script type="text/javascript">
 
-        $(init);
-
         function init() {
             $("#getResumeById").bind('click', getResumeById);
-            $("#createNewResume").bind('click', sayHello);
+            $("#createNewResume").bind('click', createResume);
         }
 
-        function getResumeById() {
-            $.getJSON("http://localhost:8080/rest/resume/" + $("#idForGetting").val(), function (data, textStatus, jqXHR) {
+        function getResumeById(id) {
+
+            cleanAll();
+            id = parseInt(id);
+            $.getJSON("http://localhost:8080/rest/resume/" + id, function (data, textStatus, jqXHR) {
+
                 $("#name").val(data.name);
                 $("#careerTarget").val(data.careerTarget);
                 $("#dateOfBorn").val(data.dateOfBorn);
-                $("#phone").val(data.phoneNumbers);
-                $("#email").val(data.emails);
                 $("#skype").val(data.skypeLogin);
                 $("#urlAvatar").val(data.urlAvatar);
-                $("#targets").val(data.targets);
-                $("#experiences").val(data.experiences);
-                $("#basicEducation").val(data.basicEducation);
-                $("#addedEducation").val(data.additionalEducation);
-                $("#skills").val(data.skills);
                 $("#otherInfo").val(data.otherInfo);
+
+                $("#phone").val(arrToSection(data.phoneNumbers));
+                $("#email").val(arrToSection(data.emails));
+                $("#targets").val(arrToSection(data.targets));
+                $("#experiences").val(arrToSection(data.experiences));
+                $("#basicEducation").val(arrToSection(data.basicEducations));
+                $("#addedEducation").val(arrToSection(data.additionalEducations));
+
+                s = "";
+                $.each(data.skills, function (index, value) {
+                    s += index + ":" + value + "\n";
+                })
+                $("#skills").val(s.substring(0, s.length - 1));
+
+            }).done(function () {
+                //success
+                $("#response").html("Id = " + id + "; Success")
+            }).fail(function () {
+                $("#response").html("Id = " + id + "; Not found")
             });
         }
 
-        function sayHello() {
-            $.JSON("http://localhost:8080/rest/resume/1", function (data, textStatus, jqXHR) {
-                $("#name").val(data.name);
-                $("#careerTarget").val(data.careerTarget);
-                $("#dateOfBorn").val(data.dateOfBorn);
-                $("#phone").val(data.phoneNumbers);
-                $("#email").val(data.emails);
-            });
+        function arrToSection(arr) {
+            s = "";
+            $.each(arr, function (index, value) {
+                s += value + "\n";
+            })
+            return s.substring(0, s.length - 1);
         }
 
+        function cleanAll() {
+            $("#name").val(null);
+            $("#careerTarget").val(null);
+            $("#dateOfBorn").val(null);
+            $("#skype").val(null);
+            $("#urlAvatar").val(null);
+            $("#phone").val(null);
+            $("#email").val(null);
+            $("#targets").val(null);
+            $("#experiences").val(null);
+            $("#basicEducation").val(null);
+            $("#addedEducation").val(null);
+            $("#skills").val(null);
+            $("#otherInfo").val(null);
+            $("#response").val(null);
+        }
 
+        function buildJSON() {
+            JSONObject = {
+                name: $("#name").val(),
+                careerTarget: $("#careerTarget").val(),
+                dateOfBorn: $("#dateOfBorn").val(),
+                skypeLogin: $("#skype").val(),
+                urlAvatar: $("#urlAvatar").val(),
+                otherInfo: $("#otherInfo").val(),
+
+                phoneNumbers: buildSectionToArr($("#phone").val()),
+                emails: buildSectionToArr($("#email").val()),
+                targets: buildSectionToArr($("#targets").val()),
+                experiences: buildSectionToArr($("#experiences").val()),
+                basicEducations: buildSectionToArr($("#basicEducation").val()),
+                additionalEducations: buildSectionToArr($("#addedEducation").val()),
+
+                skills: buildSkills($("#skills").val())
+            };
+            return JSONObject;
+        }
+
+        function buildSkills(skills) {
+            arrSkills = skills.split("\n");
+            s = "";
+            for (var i = 0; i < arrSkills.length; i++) {
+                temp = arrSkills[i].split(":");
+                s += "\"" + temp[0] + "\":" + temp[1] + ",";
+            }
+            s = "{" + s.substring(0, s.length - 1)+ "}";
+            return s.parse();
+        }
+
+        function buildSectionToArr(section) {
+            return section.split("\n");
+        }
+
+        function createResume() {
+
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/rest/resume",
+                contentType: "application/json;utf-8",
+                data: JSON.stringify(buildJSON()),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    if (result != 0) {
+                        $('#response').html("Created resume. Id = " + result.id);
+                    }
+                },
+                error: function (jqXHR, testStatus, errorThrown) {
+                    $('#response').html(JSON.stringify(jqXHR))
+                }
+            });
+        }
     </script>
 
     <title>Страница для проведения изменений в бд</title>
 </head>
-<body>
+<body onload="init()">
 
 <div>
     <tr>
-        <td><button type="button" id = "getResumeById">Получить по id:</button></td>
-        <td><input type="text" id="idForGetting"></td>
+        <td>
+            <button type="button" id="getResumeById" onclick="getResumeById($('#idForGetting').val())">Получить по id:
+            </button>
+        </td>
+        <td><input type="number" id="idForGetting"></td>
     </tr>
+</div>
+
+<div>
+    <h4 id="response"></h4>
 </div>
 
 <h1>Резюме</h1>
 
-<div id = "resumeData" class="">
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Фамилия Имя Отчество:</span>
+<div id="resumeData" class="color-rect-border">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Фамилия Имя Отчество:</span>
+        </div>
+        <input type="text" class="form-control" id="name">
     </div>
-    <input type="text" class="form-control" id="name">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Желаемая должность:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Желаемая должность:</span>
+        </div>
+        <input type="text" class="form-control" id="careerTarget">
     </div>
-    <input type="text" class="form-control" id="careerTarget">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Дата рождения:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Дата рождения:</span>
+        </div>
+        <input type="text" class="form-control" id="dateOfBorn">
     </div>
-    <input type="text" class="form-control" id="dateOfBorn">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Контактный телефон:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Контактный телефон:</span>
+        </div>
+        <textarea class="form-control" id="phone" rows="2"></textarea>
     </div>
-    <input type="text" class="form-control" id="phone">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Email:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Email:</span>
+        </div>
+        <textarea class="form-control" id="email" rows="2"></textarea>
     </div>
-    <input type="text" class="form-control" id="email">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Skype:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Skype:</span>
+        </div>
+        <input type="text" class="form-control" id="skype">
     </div>
-    <input type="text" class="form-control" id="skype">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Url фото:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Url фото:</span>
+        </div>
+        <input type="text" class="form-control" id="urlAvatar">
     </div>
-    <input type="text" class="form-control" id="urlAvatar">
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Цель обращения:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Цель обращения:</span>
+        </div>
+        <textarea class="form-control" id="targets" rows="3"></textarea>
     </div>
-    <textarea class="form-control" id = "targets" rows="3"/>
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Опыт работы:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Опыт работы:</span>
+        </div>
+        <textarea class="form-control" id="experiences" rows="3"></textarea>
     </div>
-    <textarea class="form-control" id = "experiences" rows="3"/>
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Технологии и опыт использования:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Технологии и опыт использования:</span>
+        </div>
+        <textarea class="form-control" id="skills" rows="3"></textarea>
     </div>
-    <textarea class="form-control" id = "skills" rows="3"/>
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Образование:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Образование:</span>
+        </div>
+        <textarea class="form-control" id="basicEducation" rows="3"></textarea>
     </div>
-    <textarea class="form-control" id = "basicEducation" rows="3"/>
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Дополнительное образование:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Дополнительное образование:</span>
+        </div>
+        <textarea class="form-control" id="addedEducation" rows="3"></textarea>
     </div>
-    <textarea class="form-control" id = "addedEducation" rows="3"/>
-</div>
 
-<div class="input-group mb-3">
-    <div class="input-group-prepend">
-        <span class="input-group-text">Дополнительное информация:</span>
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Дополнительное информация:</span>
+        </div>
+        <input class="form-control" id="otherInfo" rows="3"/>
     </div>
-    <input class="form-control" id = "otherInfo" rows="3"/>
-</div>
 </div>
 
 <button type="button" id="createNewResume">Создать новое резюме</button>

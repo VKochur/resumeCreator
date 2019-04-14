@@ -24,6 +24,7 @@ public class DbResumeDaoImpl implements ResumeDao {
     /**
      * Get Resume by id
      * id must be contain value parsable as Long
+     *
      * @param id unique key.
      * @return Resume
      * method can throws
@@ -31,7 +32,7 @@ public class DbResumeDaoImpl implements ResumeDao {
      * NoSuchElementException if the Resume by id not found
      */
     @Override
-    public Resume getResume(String id){
+    public Resume getResume(String id) {
         Long idInRepository = Long.parseLong(id);
         Resume resume = resumeRepository.findById(idInRepository).get();
 
@@ -48,25 +49,26 @@ public class DbResumeDaoImpl implements ResumeDao {
 
     /**
      * method for saving resume in db
+     *
      * @param resume data
      * @return saved resume with specific id
      * throws IllegalStateException if db contains resumeInDb : resumeInDb.getId() == resume.getId()
      */
     @Override
-    public Resume createResume(Resume resume){
-        if (resumeRepository.findById(resume.getId()).isPresent()) {
-            throw new IllegalStateException("resume with key = " + resume.getId() + " already exists. For updating use method 'updateResume'");
-        } else {
-            return resumeRepository.save(resume);
+    public Resume createResume(Resume resume) {
+        if (resume.getId() != null) {
+            if (resumeRepository.findById(resume.getId()).isPresent()) {
+                throw new IllegalStateException("resume with key = " + resume.getId() + " already exists. For updating use method 'updateResume'");
+            }
         }
+        return resumeRepository.save(resume);
     }
 
     /**
-     *
      * @return all resume from db
      */
     @Override
-    public List<Resume> getAll(){
+    public List<Resume> getAll() {
         Iterable<Resume> iterable = resumeRepository.findAll();
         List<Resume> resumeList = new ArrayList<>();
         for (Resume resume : iterable) {
@@ -76,7 +78,6 @@ public class DbResumeDaoImpl implements ResumeDao {
     }
 
     /**
-     *
      * @param resume new data for resume
      * @return updated resume from db
      * throws IllegalStateException if db not contains resumeInDb : resumeInDb.getId() == resume.getId()
@@ -93,6 +94,7 @@ public class DbResumeDaoImpl implements ResumeDao {
     /**
      * method for delete resume in db
      * id must be contain value parsable as Long
+     *
      * @param id unique key for resume, which should be removed
      * @return deleted Resume
      * NoSuchElementException if the Resume by id not found
