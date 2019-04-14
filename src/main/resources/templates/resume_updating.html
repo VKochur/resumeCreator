@@ -13,17 +13,13 @@
 
     <script type="text/javascript">
 
-        function init() {
-            $("#getResumeById").bind('click', getResumeById);
-            $("#createNewResume").bind('click', createResume);
-        }
-
         function getResumeById(id) {
 
             cleanAll();
-            id = parseInt(id);
+
             $.getJSON("http://localhost:8080/rest/resume/" + id, function (data, textStatus, jqXHR) {
 
+                $("#idInDb").val(data.id),
                 $("#name").val(data.name);
                 $("#careerTarget").val(data.careerTarget);
                 $("#dateOfBorn").val(data.dateOfBorn);
@@ -61,6 +57,7 @@
         }
 
         function cleanAll() {
+            $("#idInDb").val(null);
             $("#name").val(null);
             $("#careerTarget").val(null);
             $("#dateOfBorn").val(null);
@@ -106,7 +103,7 @@
                 s += "\"" + temp[0] + "\":" + temp[1] + ",";
             }
             s = "{" + s.substring(0, s.length - 1)+ "}";
-            return s.parse();
+            return $.parseJSON(s);
         }
 
         function buildSectionToArr(section) {
@@ -114,8 +111,6 @@
         }
 
         function createResume() {
-
-
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8080/rest/resume",
@@ -125,6 +120,7 @@
                 async: false,
                 success: function (result) {
                     if (result != 0) {
+                        $('#idInDb').val(result.id);
                         $('#response').html("Created resume. Id = " + result.id);
                     }
                 },
@@ -133,29 +129,62 @@
                 }
             });
         }
+
+        function updateResume(id){
+            $.ajax({
+                type: "PUT",
+                url: "http://localhost:8080/rest/resume/" + id,
+                contentType: "application/json;utf-8",
+                data: JSON.stringify(buildJSON()),
+                dataType: "json",
+                async: false,
+                success: function (result) {
+                    if (result != 0) {
+                        $('#idInDb').val(result.id);
+                        $('#response').html("Updated resume. Id = " + result.id);
+                    }
+                },
+                error: function (jqXHR, testStatus, errorThrown) {
+                    $('#response').html(JSON.stringify(jqXHR))
+                }
+            });
+        }
+
+        function deleteResume(id){
+            $.ajax({
+                type: "DELETE",
+                url: "http://localhost:8080/rest/resume/" + id,
+                async: false,
+                success: function (result) {
+                    if (result != 0) {
+                        $('#idInDb').val(null);
+                        $('#response').html("Deleted resume. Id = " + result.id);
+                    }
+                },
+                error: function (jqXHR, testStatus, errorThrown) {
+                    $('#response').html(JSON.stringify(jqXHR))
+                }
+            });
+        }
+
     </script>
 
     <title>Страница для проведения изменений в бд</title>
 </head>
-<body onload="init()">
+<body>
 
-<div>
-    <tr>
-        <td>
-            <button type="button" id="getResumeById" onclick="getResumeById($('#idForGetting').val())">Получить по id:
-            </button>
-        </td>
-        <td><input type="number" id="idForGetting"></td>
-    </tr>
-</div>
 
-<div>
-    <h4 id="response"></h4>
-</div>
-
-<h1>Резюме</h1>
-
+<div class="row">
+    <div class="col-10">
+<h3 class="text-center">Данные по резюме</h3>
 <div id="resumeData" class="color-rect-border">
+    <div class="input-group mb-3">
+        <div class="input-group-prepend">
+            <span class="input-group-text">Id в базе:</span>
+        </div>
+        <input type="text" readonly = "readonly" class="form-control" id="idInDb">
+    </div>
+
     <div class="input-group mb-3">
         <div class="input-group-prepend">
             <span class="input-group-text">Фамилия Имя Отчество:</span>
@@ -247,8 +276,39 @@
         <input class="form-control" id="otherInfo" rows="3"/>
     </div>
 </div>
+    </div>
+    <div class="col-2">
+        <div id = "cmd">
+            <div class="row">
+                <div class="col-7">
+                    <button type="button" class="btn btn-outline-primary" id="getResumeById" onclick="getResumeById($('#idForGetting').val())">Получить по id:</button>
+                </div>
+                <div class="col-5"><input type="number"  class="form-control" id="idForGetting">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-success" id="createNewResume" onclick="createResume()">Создать новое резюме по введеным данным</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-warning" id="updateResume" onclick="updateResume($('#idForGetting').val())">Изменить резюме в соответствии с данными</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-danger" id="deleteResume" onclick="deleteResume($('#idForGetting').val())">Удалить текущее резюме</button>
+                </div>
+            </div>
+        </div>
 
-<button type="button" id="createNewResume">Создать новое резюме</button>
+        <br>
+        <div class="page" id = "response"></div>
+    </div>
+</div>
+
+
 
 
 </body>
