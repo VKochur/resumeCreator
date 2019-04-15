@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -9,108 +9,259 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <title>Страница для проведения изменений в бд</title>
+</head>
+<body>
 
-    <script type="text/javascript">
 
-        function getResumeById(id) {
+<div class="row">
+    <div class="col-9">
+        <h3 class="text-center">Данные по резюме</h3>
+        <div id="resumeData" class="color-rect-border">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Id в базе:</span>
+                </div>
+                <input type="text" readonly="readonly" class="form-control" id="idInDb">
+            </div>
 
-            cleanAll();
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Фамилия Имя Отчество:</span>
+                </div>
+                <input type="text" class="form-control" id="name">
+            </div>
 
-            $.getJSON("http://localhost:8080/rest/resume/" + id, function (data, textStatus, jqXHR) {
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Желаемая должность:</span>
+                </div>
+                <input type="text" class="form-control" id="careerTarget">
+            </div>
 
-                $("#idInDb").val(data.id),
-                $("#name").val(data.name);
-                $("#careerTarget").val(data.careerTarget);
-                $("#dateOfBorn").val(data.dateOfBorn);
-                $("#skype").val(data.skypeLogin);
-                $("#urlAvatar").val(data.urlAvatar);
-                $("#otherInfo").val(data.otherInfo);
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дата рождения:</span>
+                </div>
+                <input type="text" class="form-control" id="dateOfBorn">
+            </div>
 
-                $("#phone").val(arrToSection(data.phoneNumbers));
-                $("#email").val(arrToSection(data.emails));
-                $("#targets").val(arrToSection(data.targets));
-                $("#experiences").val(arrToSection(data.experiences));
-                $("#basicEducation").val(arrToSection(data.basicEducations));
-                $("#addedEducation").val(arrToSection(data.additionalEducations));
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Контактный телефон:</span>
+                </div>
+                <textarea class="form-control" id="phone" rows="2"></textarea>
+            </div>
 
-                s = "";
-                $.each(data.skills, function (index, value) {
-                    s += index + ":" + value + "\n";
-                })
-                $("#skills").val(s.substring(0, s.length - 1));
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Email:</span>
+                </div>
+                <textarea class="form-control" id="email" rows="2"></textarea>
+            </div>
 
-            }).done(function () {
-                //success
-                $("#response").html("Id = " + id + "; Success")
-            }).fail(function () {
-                $("#response").html("Id = " + id + "; Not found")
-            });
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Skype:</span>
+                </div>
+                <input type="text" class="form-control" id="skype">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Url фото:</span>
+                </div>
+                <input type="text" class="form-control" id="urlAvatar">
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Цель обращения:</span>
+                </div>
+                <textarea class="form-control" id="targets" rows="3"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Опыт работы:</span>
+                </div>
+                <textarea class="form-control" id="experiences" rows="3"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Технологии и опыт использования:</span>
+                </div>
+                <textarea class="form-control" id="skills" rows="3"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Образование:</span>
+                </div>
+                <textarea class="form-control" id="basicEducation" rows="3"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дополнительное образование:</span>
+                </div>
+                <textarea class="form-control" id="addedEducation" rows="3"></textarea>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Дополнительное информация:</span>
+                </div>
+                <input class="form-control" id="otherInfo" rows="3"/>
+            </div>
+        </div>
+    </div>
+    <div class="col-3">
+        <div id="cmd">
+            <div class="row">
+                <div class="col-7">
+                    <button type="button" class="btn btn-outline-primary" id="getResumeById"
+                            onclick="getResumeById($('#idForGetting').val())">Получить по id:
+                    </button>
+                </div>
+                <div class="col-5"><input type="number" class="form-control" id="idForGetting">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-success" id="createNewResume" onclick="createResume()">
+                        Создать новое резюме по введеным данным
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-warning" id="updateResume"
+                            onclick="updateResume($('#idInDb').val())">Изменить резюме в соответствии с данными
+                    </button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <button type="button" class="btn btn-outline-danger" id="deleteResume"
+                            onclick="deleteResume($('#idInDb').val())">Удалить текущее резюме
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <br>
+        <div class="page" id="response"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript">
+    function getResumeById(id) {
+
+        if (id.length == 0) {
+            $("#response").html("Need specify id");
+            return;
         }
 
-        function arrToSection(arr) {
+        cleanAll();
+
+        $.getJSON("http://localhost:8080/rest/resume/" + id, function (data, textStatus, jqXHR) {
+
+            $("#idInDb").val(data.id);
+            $("#name").val(data.name);
+            $("#careerTarget").val(data.careerTarget);
+            $("#dateOfBorn").val(data.dateOfBorn);
+            $("#skype").val(data.skypeLogin);
+            $("#urlAvatar").val(data.urlAvatar);
+            $("#otherInfo").val(data.otherInfo);
+
+            $("#phone").val(arrToSection(data.phoneNumbers));
+            $("#email").val(arrToSection(data.emails));
+            $("#targets").val(arrToSection(data.targets));
+            $("#experiences").val(arrToSection(data.experiences));
+            $("#basicEducation").val(arrToSection(data.basicEducations));
+            $("#addedEducation").val(arrToSection(data.additionalEducations));
+
             s = "";
-            $.each(arr, function (index, value) {
-                s += value + "\n";
+            $.each(data.skills, function (index, value) {
+                s += index + ":" + value + "\n";
             })
-            return s.substring(0, s.length - 1);
+
+            $("#skills").val(s.substring(0, s.length - 1));
+        }).done(function () {
+            //success
+            $("#response").html("Found success. Id = " + id)
+        }).fail(function (XMLHttpRequest, textStatus, errorThrown) {
+            $("#response").html("Not found. Id = " + id)
+        });
+    }
+
+    function arrToSection(arr) {
+        s = "";
+        $.each(arr, function (index, value) {
+            s += value + "\n";
+        })
+        return s.substring(0, s.length - 1);
+    }
+
+    function cleanAll() {
+        $("#idInDb").val(null);
+        $("#name").val(null);
+        $("#careerTarget").val(null);
+        $("#dateOfBorn").val(null);
+        $("#skype").val(null);
+        $("#urlAvatar").val(null);
+        $("#phone").val(null);
+        $("#email").val(null);
+        $("#targets").val(null);
+        $("#experiences").val(null);
+        $("#basicEducation").val(null);
+        $("#addedEducation").val(null);
+        $("#skills").val(null);
+        $("#otherInfo").val(null);
+        $("#response").val(null);
+    }
+
+    function buildJSON() {
+        JSONObject = {
+            name: $("#name").val(),
+            careerTarget: $("#careerTarget").val(),
+            dateOfBorn: $("#dateOfBorn").val(),
+            skypeLogin: $("#skype").val(),
+            urlAvatar: $("#urlAvatar").val(),
+            otherInfo: $("#otherInfo").val(),
+
+            phoneNumbers: buildSectionToArr($("#phone").val()),
+            emails: buildSectionToArr($("#email").val()),
+            targets: buildSectionToArr($("#targets").val()),
+            experiences: buildSectionToArr($("#experiences").val()),
+            basicEducations: buildSectionToArr($("#basicEducation").val()),
+            additionalEducations: buildSectionToArr($("#addedEducation").val()),
+
+            skills: buildSkills($("#skills").val())
+        };
+        return JSONObject;
+    }
+
+    function buildSkills(skills) {
+        arrSkills = skills.split("\n");
+        s = "";
+        for (var i = 0; i < arrSkills.length; i++) {
+            temp = arrSkills[i].split(":");
+            s += "\"" + temp[0] + "\":" + temp[1] + ",";
         }
+        s = "{" + s.substring(0, s.length - 1) + "}";
+        return $.parseJSON(s);
+    }
 
-        function cleanAll() {
-            $("#idInDb").val(null);
-            $("#name").val(null);
-            $("#careerTarget").val(null);
-            $("#dateOfBorn").val(null);
-            $("#skype").val(null);
-            $("#urlAvatar").val(null);
-            $("#phone").val(null);
-            $("#email").val(null);
-            $("#targets").val(null);
-            $("#experiences").val(null);
-            $("#basicEducation").val(null);
-            $("#addedEducation").val(null);
-            $("#skills").val(null);
-            $("#otherInfo").val(null);
-            $("#response").val(null);
-        }
+    function buildSectionToArr(section) {
+        return section.split("\n");
+    }
 
-        function buildJSON() {
-            JSONObject = {
-                name: $("#name").val(),
-                careerTarget: $("#careerTarget").val(),
-                dateOfBorn: $("#dateOfBorn").val(),
-                skypeLogin: $("#skype").val(),
-                urlAvatar: $("#urlAvatar").val(),
-                otherInfo: $("#otherInfo").val(),
-
-                phoneNumbers: buildSectionToArr($("#phone").val()),
-                emails: buildSectionToArr($("#email").val()),
-                targets: buildSectionToArr($("#targets").val()),
-                experiences: buildSectionToArr($("#experiences").val()),
-                basicEducations: buildSectionToArr($("#basicEducation").val()),
-                additionalEducations: buildSectionToArr($("#addedEducation").val()),
-
-                skills: buildSkills($("#skills").val())
-            };
-            return JSONObject;
-        }
-
-        function buildSkills(skills) {
-            arrSkills = skills.split("\n");
-            s = "";
-            for (var i = 0; i < arrSkills.length; i++) {
-                temp = arrSkills[i].split(":");
-                s += "\"" + temp[0] + "\":" + temp[1] + ",";
-            }
-            s = "{" + s.substring(0, s.length - 1)+ "}";
-            return $.parseJSON(s);
-        }
-
-        function buildSectionToArr(section) {
-            return section.split("\n");
-        }
-
-        function createResume() {
+    function createResume() {
+        try {
             $.ajax({
                 type: "POST",
                 url: "http://localhost:8080/rest/resume",
@@ -118,19 +269,26 @@
                 data: JSON.stringify(buildJSON()),
                 dataType: "json",
                 async: false,
-                success: function (result) {
+                success: function (result, textStatus, errorThrown) {
                     if (result != 0) {
                         $('#idInDb').val(result.id);
-                        $('#response').html("Created resume. Id = " + result.id);
+                        $('#response').html("Success. Created resume. Id = " + result.id);
+                    } else {
+                        $('#response').html(textStatus);
                     }
                 },
                 error: function (jqXHR, testStatus, errorThrown) {
                     $('#response').html(JSON.stringify(jqXHR))
                 }
             });
+        } catch (e) {
+            //not correct user's data
+            $('#response').html(e);
         }
+    }
 
-        function updateResume(id){
+    function updateResume(id) {
+        try {
             $.ajax({
                 type: "PUT",
                 url: "http://localhost:8080/rest/resume/" + id,
@@ -141,175 +299,36 @@
                 success: function (result) {
                     if (result != 0) {
                         $('#idInDb').val(result.id);
-                        $('#response').html("Updated resume. Id = " + result.id);
+                        $('#response').html("Success. Updated resume. Id = " + result.id);
                     }
                 },
                 error: function (jqXHR, testStatus, errorThrown) {
                     $('#response').html(JSON.stringify(jqXHR))
                 }
             });
+        } catch (e) {
+            //not correct user's data
+            $('#response').html(e);
         }
+    }
 
-        function deleteResume(id){
-            $.ajax({
-                type: "DELETE",
-                url: "http://localhost:8080/rest/resume/" + id,
-                async: false,
-                success: function (result) {
-                    if (result != 0) {
-                        $('#idInDb').val(null);
-                        $('#response').html("Deleted resume. Id = " + result.id);
-                    }
-                },
-                error: function (jqXHR, testStatus, errorThrown) {
-                    $('#response').html(JSON.stringify(jqXHR))
+    function deleteResume(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "http://localhost:8080/rest/resume/" + id,
+            async: false,
+            success: function (result) {
+                if (result != 0) {
+                    $('#idInDb').val(null);
+                    $('#response').html("Success. Deleted resume. Id = " + result.id);
                 }
-            });
-        }
-
-    </script>
-
-    <title>Страница для проведения изменений в бд</title>
-</head>
-<body>
-
-
-<div class="row">
-    <div class="col-10">
-<h3 class="text-center">Данные по резюме</h3>
-<div id="resumeData" class="color-rect-border">
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Id в базе:</span>
-        </div>
-        <input type="text" readonly = "readonly" class="form-control" id="idInDb">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Фамилия Имя Отчество:</span>
-        </div>
-        <input type="text" class="form-control" id="name">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Желаемая должность:</span>
-        </div>
-        <input type="text" class="form-control" id="careerTarget">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Дата рождения:</span>
-        </div>
-        <input type="text" class="form-control" id="dateOfBorn">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Контактный телефон:</span>
-        </div>
-        <textarea class="form-control" id="phone" rows="2"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Email:</span>
-        </div>
-        <textarea class="form-control" id="email" rows="2"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Skype:</span>
-        </div>
-        <input type="text" class="form-control" id="skype">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Url фото:</span>
-        </div>
-        <input type="text" class="form-control" id="urlAvatar">
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Цель обращения:</span>
-        </div>
-        <textarea class="form-control" id="targets" rows="3"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Опыт работы:</span>
-        </div>
-        <textarea class="form-control" id="experiences" rows="3"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Технологии и опыт использования:</span>
-        </div>
-        <textarea class="form-control" id="skills" rows="3"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Образование:</span>
-        </div>
-        <textarea class="form-control" id="basicEducation" rows="3"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Дополнительное образование:</span>
-        </div>
-        <textarea class="form-control" id="addedEducation" rows="3"></textarea>
-    </div>
-
-    <div class="input-group mb-3">
-        <div class="input-group-prepend">
-            <span class="input-group-text">Дополнительное информация:</span>
-        </div>
-        <input class="form-control" id="otherInfo" rows="3"/>
-    </div>
-</div>
-    </div>
-    <div class="col-2">
-        <div id = "cmd">
-            <div class="row">
-                <div class="col-7">
-                    <button type="button" class="btn btn-outline-primary" id="getResumeById" onclick="getResumeById($('#idForGetting').val())">Получить по id:</button>
-                </div>
-                <div class="col-5"><input type="number"  class="form-control" id="idForGetting">
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-outline-success" id="createNewResume" onclick="createResume()">Создать новое резюме по введеным данным</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-outline-warning" id="updateResume" onclick="updateResume($('#idForGetting').val())">Изменить резюме в соответствии с данными</button>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <button type="button" class="btn btn-outline-danger" id="deleteResume" onclick="deleteResume($('#idForGetting').val())">Удалить текущее резюме</button>
-                </div>
-            </div>
-        </div>
-
-        <br>
-        <div class="page" id = "response"></div>
-    </div>
-</div>
-
-
-
+            },
+            error: function (jqXHR, testStatus, errorThrown) {
+                $('#response').html(JSON.stringify(jqXHR))
+            }
+        });
+    }
+</script>
 
 </body>
 </html>
