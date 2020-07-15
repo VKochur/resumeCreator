@@ -22,6 +22,7 @@ ENV MAVEN_CONFIG "$USER_HOME_DIR/.m2"
 #CMD ["mvn"]
 
 RUN mkdir -p /usr/resume_creator/src
+RUN mkdir -p /usr/resume_creator/db
 COPY src /usr/resume_creator/src
 COPY pom.xml /usr/resume_creator/pom.xml
 

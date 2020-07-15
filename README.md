@@ -144,3 +144,8 @@ MODE может принимать одно из значений:
 com.simbirsoft.maketalents.resume_builder.MainJar - точка входа в программу
 <br>
 package com.simbirsoft.maketalents.resume_builder.running_from_ide - содержит классы для удобства запуска программы из ide в различных режимах
+
+#### docker
+
+    пример построения image "docker build -t resume_builder_image ."
+    пример запуска контейнера на основе построенного image "docker run -p 8080:8080 -v resume_builder_db:/usr/resume_creator/db -d resume_builder_image"
